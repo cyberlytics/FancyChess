@@ -18,3 +18,6 @@
 - *Als User würde ich gerne in meinem Profil all meine vergangengen Spiele anschauen können.
 - Als User möchte ich im Menü einstellen können, das man seine möglichen Züge sieht, wenn man auf eine Figur klickt.
 - Als User möchte ich ein Tutorial spielen können.
+- Als User möchte ich über einen "Passwort vergessen"- Button mein Passwort zurücksenden können.
+
+- Als User muss ich ein Capture bestätigen um mein Account zu erstellen.
