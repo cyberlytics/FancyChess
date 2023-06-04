@@ -8,37 +8,34 @@ export default function Profil() {
         <title>Profil</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-      </main>
+      <body>
+          <div className={styles.leftpannel}>
+              <div className={styles.navpannel}>
+
+              </div>
+          </div>
+
+          <div className={styles.midpannel}>
+              <div className={styles.profilpicture}></div>
+              <div className={styles.profilpannel}>
+
+              </div>
+          </div>
+
+          <div className={styles.rightpannel}></div>
+
+      </body>
 
       <footer>
       </footer>
-
-      <style jsx>{`
-        main {
-          background-color: black;
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-      `}</style>
-
-      <style jsx global>{`
+        <style global jsx>{`
         html,
-        body {
-          padding: 0;
+        body{
+          height: 100%;
+          width: 100%;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
+          }
+        `}</style>
     </div>
   )
 }

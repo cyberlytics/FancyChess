@@ -1,5 +1,45 @@
-.test{
-  width: 400px;
-  height: 400px;
+.leftpannel{
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  background-color: red;
+}
+.navpannel{
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  background-color: green;
+  left: 5%;
+  top: 5%;
+}
+.midpannel{
+  position: absolute;
+  width: 50%;
+  height: 90%;
+  background-color: blue;
+  top: 5%;
+  left: 25%;
+}
+.profilpicture{
+  position: absolute;
+  width: 30%;
+  height: 30%;
   background-color: black;
+  left: 2%;
+  top: 2%;
+}
+.profilpannel{
+  position: absolute;
+  width: 64%;
+  height: 30%;
+  background-color: lightblue;
+  left: 34%;
+  top: 2%;
+}
+.rightpannel{
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  background-color: green;
+  left: 80%;
 }
