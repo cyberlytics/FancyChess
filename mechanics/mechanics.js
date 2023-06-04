@@ -17,3 +17,15 @@ function convertColumn(column) {
         return 7;
     }
 }
+
+function generateChess() {
+    let schachbrett = [];
+    for(let i = 0; i < 8; i++) {
+        let unterbrett = [];
+        for(let j = 0; j < 8; j++) {
+            unterbrett.push("-");
+        }
+        schachbrett.push(unterbrett);
+    }
+    return schachbrett;
+}
