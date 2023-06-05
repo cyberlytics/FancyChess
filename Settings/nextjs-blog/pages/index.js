@@ -1,9 +1,15 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import Image from "next/image";
+import { useState } from 'react';
 
 
 export default function Home() {
+    const [showPossibleMoves, setShowPossibleMoves] = useState(false);
+
+    const handleTogglePossibleMoves = () => {
+        setShowPossibleMoves(!showPossibleMoves);
+    };
+
   return (
 
 
@@ -26,18 +32,27 @@ export default function Home() {
             <h3>Password: pw123xy</h3>
         </a>
     </div>
+
           <div className={styles.grid}>
               <a className={styles.card}>
                   <h3>E-Mail: test@123.com</h3>
               </a>
+              <a className={styles.card}>
+                  <h3>Show possible moves</h3>
+                  <button onClick={handleTogglePossibleMoves}>
+                      {showPossibleMoves ? 'ON' : 'OFF'}
+                  </button>
+              </a>
           </div>
+
+
 
 
       </main>
 
       <footer>
           Fancy Chess{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
+          <img src="/logo.png" alt="logo" className={styles.logo} />
       </footer>
 
       <style jsx>{`
