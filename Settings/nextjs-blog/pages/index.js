@@ -51,7 +51,6 @@ export default function Home() {
       </main>
 
       <footer>
-          Fancy Chess{' '}
           <img src="/logo.png" alt="logo" className={styles.logo} />
       </footer>
 
@@ -70,6 +69,7 @@ export default function Home() {
           display: flex;
           justify-content: center;
           align-items: center;
+        "font-family: "Hiragino Mincho ProN;
         }
         footer img {
           margin-left: 0.5rem;
