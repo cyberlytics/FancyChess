@@ -1,0 +1,39 @@
+.board {
+    text-align: center;
+    font-size: 1.5rem;
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+}
+    
+
+.cell_w {
+    width: 5.6rem;
+    height: 5.6rem;
+    background-color:rgb(226, 184, 154);  
+}
+
+.cell_b {
+    width: 5.6rem;
+    height: 5.6rem;
+    background-color: rgb(40, 40, 40);
+}
+
+.row {
+    border: 0.5rem solid black;
+}
+
+.cell_l {
+    width: 5.6rem;
+    height: 5.6rem;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.table{
+    border-color: white;
+    border-collapse: separate;
+}
