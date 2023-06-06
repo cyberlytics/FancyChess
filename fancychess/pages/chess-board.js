@@ -4,10 +4,16 @@ import Script from 'next/script';
 import styles from '../styles/chess-board.module.css'
 
 import React from 'react';
-
+import { useSession, signIn, signOut } from "next-auth/react"
 
 
 export default function ChessBoard() {
+    const { data: session } = useSession()
+    if (!session) {
+        return(
+          <button onClick={() => signIn()}>Sign in</button>
+        )
+    }
 
     const number_to_label = (num) => {
         switch (num){
