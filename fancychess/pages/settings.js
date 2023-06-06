@@ -1,14 +1,22 @@
+import { useSession, signIn, signOut } from "next-auth/react"
 import Head from 'next/head';
 import styles from '../styles/settings.module.css';
 import { useState } from 'react';
 
 
 export default function Home() {
-    const [showPossibleMoves, setShowPossibleMoves] = useState(false);
+  const { data: session } = useSession()
+  if (!session) {
+    return(
+      <button onClick={() => signIn()}>Sign in</button>
+    )
+  }
 
-    const handleTogglePossibleMoves = () => {
-        setShowPossibleMoves(!showPossibleMoves);
-    };
+  const [showPossibleMoves, setShowPossibleMoves] = useState(false);
+
+  const handleTogglePossibleMoves = () => {
+      setShowPossibleMoves(!showPossibleMoves);
+  };
 
   return (
 
