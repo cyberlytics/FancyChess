@@ -17,7 +17,7 @@ export default function Profil() {
           </div>
 
           <div className={styles.midpannel}>
-              <div className={styles.profilpicture}></div>
+              <div role='profilpicture' className={styles.profilpicture}></div>
               <div className={styles.profilpannel}>
 
               </div>
@@ -39,7 +39,8 @@ export default function Profil() {
           width: 100%;
           margin: 0;
           }
-        `}</style>
+        `}
+        </style>
     </div>
   )
 }
