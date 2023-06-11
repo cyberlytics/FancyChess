@@ -36,7 +36,10 @@ export default function Home() {
                     <h2>Logout</h2>
                 </a>
             </div>
-            <img src="/logo.png" alt="logo" className={styles.logo} />
+            <Link href={"http://localhost:3000"}>
+                <img src="/logo.png" alt="logo" className={styles.logo} />
+            </Link>
+
         </div>
 
         <main className={styles.content}>
