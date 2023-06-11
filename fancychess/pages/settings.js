@@ -1,6 +1,11 @@
 import Head from 'next/head';
 import styles from '../styles/settings.module.css';
 import { useState } from 'react';
+import Link from "next/link";
+
+
+
+
 
 
 export default function Home() {
@@ -12,47 +17,42 @@ export default function Home() {
 
   return (
 
-
-
     <div className={styles.container}>
       <Head>
         <title>Settings</title>
           <link rel="icon" href="../public/logo.ico" />
       </Head>
 
-      <main>
-        <h1 className={styles.title}>
-          Settings
-        </h1>
-    <div className={styles.grid}>
-        <a className={styles.card}>
-            <h3>Username: Neznaika</h3>
-        </a>
+        <div className={styles.sidebar}>
+            <div className={styles.menu}>
+                <h1>Fancy Chess</h1>
+                <Link href="./profil" className={styles.link}>
+                    <h2>Account</h2>
+                </Link>
+                <a href="./settings" className={styles.link}>
+                    <h2>Settings</h2>
+                </a>
+                <a href="#" className={styles.link} id="logout">
+                    <h2>Logout</h2>
+                </a>
+            </div>
+            <img src="/logo.png" alt="logo" className={styles.logo} /> {/* Neuer Code: Das Logo-Element */}
+        </div>
 
-        <a className={styles.card}>
-            <h3>Password: pw123xy</h3>
-        </a>
-    </div>
+        <main className={styles.content}>
+            <h1 className={styles.title}>Settings</h1>
 
-          <div className={styles.grid}>
-              <a className={styles.card}>
-                  <h3>E-Mail: test@123.com</h3>
-              </a>
-              <a className={styles.card}>
-                  <h3>Show possible moves</h3>
-                  <button onClick={handleTogglePossibleMoves}>
-                      {showPossibleMoves ? 'ON' : 'OFF'}
-                  </button>
-              </a>
-          </div>
-
-
-
-
-      </main>
+            <div className={styles.grid}>
+                <a className={styles.card}>
+                    <h3>Show possible moves</h3>
+                    <button onClick={handleTogglePossibleMoves}>
+                        {showPossibleMoves ? 'ON' : 'OFF'}
+                    </button>
+                </a>
+            </div>
+        </main>
 
       <footer>
-          <img src="/logo.png" alt="logo" className={styles.logo} />
       </footer>
 
       <style jsx>{`
@@ -61,20 +61,10 @@ export default function Home() {
           flex: 1;
           display: flex;
           flex-direction: column;
-          align-items: center;
         }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        "font-family: "Hiragino Mincho ProN;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
+        
+
+        
         
       `}</style>
 
