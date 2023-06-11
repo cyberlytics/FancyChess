@@ -1,8 +1,8 @@
 .container {
   min-height: 100vh;
   display: flex;
-  background: rgb(86, 80, 222);
-  background: linear-gradient(180deg, rgba(86, 80, 222, 1) 0%, rgba(7, 164, 215, 1) 100%);
+  background: rgb(80,70,255);
+  background: linear-gradient(180deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
 }
 
 .sidebar {
