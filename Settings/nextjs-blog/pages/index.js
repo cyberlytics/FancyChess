@@ -17,26 +17,16 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Settings</title>
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main>
         <h1 className={styles.title}>
           Settings
         </h1>
-    <div className={styles.grid}>
-        <a className={styles.card}>
-            <h3>Username: Neznaika</h3>
-        </a>
 
-        <a className={styles.card}>
-            <h3>Password: pw123xy</h3>
-        </a>
-    </div>
 
           <div className={styles.grid}>
-              <a className={styles.card}>
-                  <h3>E-Mail: test@123.com</h3>
-              </a>
               <a className={styles.card}>
                   <h3>Show possible moves</h3>
                   <button onClick={handleTogglePossibleMoves}>
@@ -44,11 +34,9 @@ export default function Home() {
                   </button>
               </a>
           </div>
-
-
-
-
       </main>
+
+
 
       <footer>
           <img src="/logo.png" alt="logo" className={styles.logo} />
