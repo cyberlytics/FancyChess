@@ -1,6 +1,9 @@
 let schwarzerKoenig = [-1, -1];
 let weisserKoenig = [-1, -1];
 
+let counter = 0; // zaehlt, wie lange kein Stein geschlagen bzw. kein Bauer bewegt wurde
+let stellungen = {}; // speichert alle bisherigen Brettstellungen + wer dort jeweils als Naechstes dran war
+
 function convertColumn(column) {
     if(column == "A" || column == "a") {
         return 0;
@@ -24,6 +27,43 @@ function convertColumn(column) {
 // wie eine Figur aufgebaut sein wird:
 // Array
 // [ID, Typ, Farbe]
+
+function boardToCode(board, turn) {
+    let code = "";
+    code += turn;
+    for(let i = 0; i < 8; i++) {
+        for(let j = 0; j < 8; j++) {
+            if(board[i][j] == "-") {
+                code += "-";
+            } else if(board[i][j][1] == "Koenig" && board[i][j][2] == "S") {
+                code += "A";
+            } else if(board[i][j][1] == "Koenig" && board[i][j][2] == "W") {
+                code += "B";
+            } else if(board[i][j][1] == "Dame" && board[i][j][2] == "S") {
+                code += "C";
+            } else if(board[i][j][1] == "Dame" && board[i][j][2] == "W") {
+                code += "D";
+            } else if(board[i][j][1] == "Turm" && board[i][j][2] == "S") {
+                code += "E";
+            } else if(board[i][j][1] == "Turm" && board[i][j][2] == "W") {
+                code += "F";
+            } else if(board[i][j][1] == "Laeufer" && board[i][j][2] == "S") {
+                code += "G";
+            } else if(board[i][j][1] == "Laeufer" && board[i][j][2] == "W") {
+                code += "H";
+            } else if(board[i][j][1] == "Springer" && board[i][j][2] == "S") {
+                code += "I";
+            } else if(board[i][j][1] == "Springer" && board[i][j][2] == "W") {
+                code += "J";
+            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "S") {
+                code += "K";
+            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "W") {
+                code += "L";
+            }
+        }
+    }
+    return code;
+}
 
 function generateChess() {
     // Funktion wird vermutlich noch umgeschrieben, um direkt ein Schachbrett mit Grundstellung zu generieren
@@ -54,6 +94,46 @@ function checkCheck(board, X, Y) {
 // Funktion zum Überprüfen, ob ein bedrohter König die Bedrohung durch einen Halbzug abwehren kann (wenn nein, ist er matt gesetzt und das Spiel ist vorbei!)
 function checkCheckmate(board, X, Y) {
     // COMING SOON
+    return false;
+}
+
+// COMING SOON
+// Funktion zum Überprüfen, ob ein Patt (engl. Stalemate) vorliegt
+function checkStalemate() {
+    // COMING SOON
+    return false;
+}
+
+// COMING SOON
+// Funktion zum Überprüfen, ob ein Remis (engl. Draw) vorliegt
+function checkDraw() {
+    // COMING SOON
+    if(checkStalemate()) {
+        return true;
+    }
+    // weitere Fälle kommen noch
+    return false;
+}
+
+// COMING SOON
+// Funktion fuer das Frontend, falls die Bedenkzeit ueberschritten ist
+function onTimeout() {
+    // COMING SOON
+}
+
+// COMING SOON
+// Funktion, wenn sich ein Spieler beschwert und ein Remis entstehen soll
+// Passiert, wenn: 50 Zuege lang kein Stein geschlagen wurde oder kein Bauer bewegt wurde - oder wenn eine Brettstellung drei Mal aufgetreten ist
+function complaint(board, turn) {
+    if(counter > 49) {
+        // Remis
+        return true;
+    }
+    let schachbrett = boardToCode(board, turn);
+    if(stellungen[schachbrett] > 2) {
+        // Remis
+        return true;
+    }
     return false;
 }
 
@@ -238,7 +318,25 @@ function checkMove(board, pieceX, pieceY, newX, newY) {
             return false;
         }
     } else if(board[pieceY][pieceX][1] == "Springer") {
-        // COMING SOON
+        if(newX == pieceX - 1 && newY == pieceY + 2) {
+            return true;
+        } else if(newX == pieceX - 2 && newY == pieceY + 1) {
+            return true;
+        } else if(newX == pieceX - 2 && newY == pieceY - 1) {
+            return true;
+        } else if(newX == pieceX - 1 && newY == pieceY - 2) {
+            return true;
+        } else if(newX == pieceX + 1 && newY == pieceY + 2) {
+            return true;
+        } else if(newX == pieceX + 2 && newY == pieceY + 1) {
+            return true;
+        } else if(newX == pieceX + 1 && newY == pieceY - 2) {
+            return true;
+        } else if(newX == pieceX + 2 && newY == pieceY - 1) {
+            return true;
+        } else {
+            return false;
+        }
     } else if(board[pieceY][pieceX][1] == "Bauer") {
         // COMING SOON
     } else {
