@@ -38,10 +38,15 @@ function generateChess() {
     return schachbrett;
 }
 
-// COMING SOON
 // Funktion zum Überprüfen der Bedrohung! (englisch "being under check")
 function checkCheck(board, X, Y) {
-    // COMING SOON
+    for(let x = 0; x < 8; x++) {
+        for(let y = 0; y < 8; y++) {
+            if(checkMove(board, x, y, X, Y)) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 
