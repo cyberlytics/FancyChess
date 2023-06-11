@@ -36,7 +36,7 @@ export default function Home() {
                     <h2>Logout</h2>
                 </a>
             </div>
-            <img src="/logo.png" alt="logo" className={styles.logo} /> {/* Neuer Code: Das Logo-Element */}
+            <img src="/logo.png" alt="logo" className={styles.logo} />
         </div>
 
         <main className={styles.content}>

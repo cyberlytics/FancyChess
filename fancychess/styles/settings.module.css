@@ -21,6 +21,10 @@
   transform: translateX(-50%);
 }
 
+.logo {
+  height: 5em;
+}
+
 .content {
   flex: 1;
   display: flex;
@@ -80,9 +84,7 @@
   color: whitesmoke;
 }
 
-.logo {
-  height: 5em;
-}
+
 
 @media (max-width: 600px) {
   .grid {
