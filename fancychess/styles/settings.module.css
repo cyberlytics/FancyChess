@@ -1,0 +1,96 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  background: rgb(80,70,255);
+  background: linear-gradient(180deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+}
+
+.sidebar {
+  flex: 0 0 15%;
+  overflow: auto;
+  background: rgb(80, 70, 255);
+  background: linear-gradient(0deg, rgba(80, 70, 255, 1) 0%, rgba(56, 140, 167, 1) 32%, rgba(0, 212, 255, 1) 100%);
+  position: relative;
+  text-align: center;
+}
+
+.sidebar .logo {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  height: 5em;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.link{
+  text-decoration: none;
+  color:black;
+  text-align: center;
+
+}
+
+.title {
+  margin-top: 0;
+  line-height: 1.15;
+  font-size: 3.6rem;
+  font-family: "Hiragino Mincho ProN";
+}
+
+
+.grid {
+  display: flex;
+  justify-content: center;
+  max-width: 300px;
+  margin-top: 5rem;
+}
+
+.card {
+  margin: 1.8rem;
+  flex-basis: 300px;
+  padding: 1.2rem;
+  text-align: center;
+  color: inherit;
+  border: 2px solid #eaeaea;
+  border-radius: 35px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  border-color: indigo;
+}
+
+.card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: whitesmoke;
+}
+
+
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+

@@ -1,0 +1,49 @@
+.leftpannel{
+  width: 15%;
+  height: 100%;
+  background: rgb(80,70,255);
+  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  float:left;
+}
+.navpannel{
+  width: 90%;
+  height: 90%;
+  background: green;
+  margin-top: 14%;
+  margin-left: 5%;
+}
+.midpannel{
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  float: left;
+}
+.profilpicture{
+  width: 25%;
+  height: 25%;
+  background-color: black;
+  float:left;
+  margin-top: 3%;
+}
+.profilpannel{
+  width: 64%;
+  height: 25%;
+  background-color: lightblue;
+  float:right;
+  margin-top: 3%;
+  margin-right: 4%;
+}
+.gamehistory{
+  width: 96%;
+  height: 61%;
+  background-color: gray;
+  float: left;
+  margin-top: 3%;
+}
+.rightpannel{
+  width: 15%;
+  height: 100%;
+  background: rgb(80,70,255);
+  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  float:right;
+}
