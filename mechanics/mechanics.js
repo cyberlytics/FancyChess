@@ -66,15 +66,7 @@ function boardToCode(board, turn) {
 }
 
 function generateChess() {
-    // Funktion wird vermutlich noch umgeschrieben, um direkt ein Schachbrett mit Grundstellung zu generieren
-    let schachbrett = [];
-    for(let i = 0; i < 8; i++) {
-        let unterbrett = [];
-        for(let j = 0; j < 8; j++) {
-            unterbrett.push("-");
-        }
-        schachbrett.push(unterbrett);
-    }
+    let schachbrett = [[[1, "Turm", "W"], [2, "Springer", "W"], [3, "Laeufer", "W"], [4, "Dame", "W"], [5, "Koenig", "W"], [6, "Laeufer", "W"], [7, "Springer", "W"], [8, "Turm", "W"]], [[9, "unusedBauer", "W"], [10, "unusedBauer", "W"], [11, "unusedBauer", "W"], [12, "unusedBauer", "W"], [13, "unusedBauer", "W"], [14, "unusedBauer", "W"], [15, "unusedBauer", "W"], [16, "unusedBauer", "W"]], [], [], [], [], [[17, "unusedBauer", "S"], [18, "unusedBauer", "S"], [19, "unusedBauer", "S"], [20, "unusedBauer", "S"], [21, "unusedBauer", "S"], [22, "unusedBauer", "S"], [23, "unusedBauer", "S"], [24, "unusedBauer", "S"]], [[25, "Turm", "S"], [26, "Springer", "S"], [27, "Laeufer", "S"], [28, "Dame", "S"], [29, "Koenig", "S"], [30, "Laeufer", "S"], [31, "Springer", "S"], [32, "Turm", "S"]]];
     return schachbrett;
 }
 
@@ -118,6 +110,12 @@ function checkDraw() {
 // COMING SOON
 // Funktion fuer das Frontend, falls die Bedenkzeit ueberschritten ist
 function onTimeout() {
+    // COMING SOON
+}
+
+// COMING SOON
+// Funktion zum Aufgeben
+function forfeit(player) {
     // COMING SOON
 }
 
@@ -337,7 +335,9 @@ function checkMove(board, pieceX, pieceY, newX, newY) {
         } else {
             return false;
         }
-    } else if(board[pieceY][pieceX][1] == "Bauer") {
+    } else if(board[pieceY][pieceX][1] == "unusedBauer") {
+        // COMING SOON
+    } else if(board[pieceY][pieceX][1] == "usedBauer") {
         // COMING SOON
     } else {
         alert("Programmierfehler in der checkMove-Funktion!");
