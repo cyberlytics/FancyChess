@@ -360,8 +360,16 @@ function move(board, pieceX, pieceY, newX, newY) {
 
     if(checkMove(board, pieceX, pieceY, newX, newY)) {
         board[newY][newX] = board[pieceY][pieceX];
-        // BAUER CHECK COMING SOON
-        // wegen Schlagen & wegen unused->used & wegen Umwandlung
+        if(board[newY][newX][1] == "unusedBauer" || board[newY][newX][1] == "usedBauer") {
+            if((newY == 0 && board[newY][newX][2] == "S") || (newY == 7 && board[newY][newX][2] == "W")) {
+                // Umwandlung COMING SOON
+            }
+
+            // COMING SOON: Schlagen... Hier wird vermutlich Frontend-Wissen erfordert
+        }
+        if(board[newY][newX][1] == "unusedBauer") {
+            board[newY][newX][1] == "usedBauer";
+        }
         board[pieceY][pieceX] = "-";
         if(board[newY][newX][1] == "Koenig") {
             if(board[newY][newX][2] == "S") {
