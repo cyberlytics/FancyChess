@@ -336,9 +336,17 @@ function checkMove(board, pieceX, pieceY, newX, newY) {
             return false;
         }
     } else if(board[pieceY][pieceX][1] == "unusedBauer") {
-        // COMING SOON
+        if(newY == pieceY + 1 && newX == pieceX && board[newY][newX] == "-") {
+            return true;
+        } else if(newY == pieceY + 2 && newX == pieceX && board[newY][newX] == "-" && board[pieceY + 1][pieceX] == "-") {
+            return true;
+        }
+        return false;
     } else if(board[pieceY][pieceX][1] == "usedBauer") {
-        // COMING SOON
+        if(newY == pieceY + 1 && newX == pieceX && board[newY][newX] == "-") {
+            return true;
+        }
+        return false;
     } else {
         alert("Programmierfehler in der checkMove-Funktion!");
         return false;
@@ -352,6 +360,8 @@ function move(board, pieceX, pieceY, newX, newY) {
 
     if(checkMove(board, pieceX, pieceY, newX, newY)) {
         board[newY][newX] = board[pieceY][pieceX];
+        // BAUER CHECK COMING SOON
+        // wegen Schlagen & wegen unused->used & wegen Umwandlung
         board[pieceY][pieceX] = "-";
         if(board[newY][newX][1] == "Koenig") {
             if(board[newY][newX][2] == "S") {
