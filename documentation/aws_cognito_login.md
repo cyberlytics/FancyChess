@@ -216,3 +216,10 @@ export default function Profil() {
     }
 }
 ```
+Anmerkung: Damit man sich mit Cognito auch einloggen kann muss man seine AWS Cognito Zugangsdaten hinterlegen.
+Diese Daten werden im Normalfall in der `.env` Datei abgelegt. Diese Datei sollte PRIVAT bleiben.
+```gitignore
+COGNITO_CLIENT_ID= 
+COGNITO_CLIENT_SECRET=
+COGNITO_ISSUER=
+```
