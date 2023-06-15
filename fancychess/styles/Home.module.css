@@ -1,0 +1,49 @@
+.link{
+  text-decoration: none;
+  color:black;
+  text-align: center;
+  
+}
+
+#menu{
+  background: rgb(80,70,255);
+  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  float:left;
+  width: 15%;
+  height: 100%;
+}
+
+#logout{
+  top: 95%;
+  bottom: 0;
+  margin-bottom: 5%;
+}
+
+#game{
+  background: rgb(80,70,255);
+  background: linear-gradient(180deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  float:left;
+  width: 70%;
+}
+
+#log{
+  background: rgb(80,70,255);
+  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  float:left;
+  width: 15%;
+  height: 100%;
+}
+
+#playerMoveHistory{
+  background-color: azure;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#innermenu{
+  text-align: center;
+  background-color:#ffffff87;
+  height:fit-content;
+  width: auto;
+  margin: 5%;
+}
