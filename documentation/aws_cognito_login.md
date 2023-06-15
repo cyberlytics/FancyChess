@@ -65,7 +65,7 @@ Nun wollen wir, das unser Client auch ein Secret besitzt, damit wir später die 
 
 Wähle also "Generate a client secret" aus!
 
-Anschließend soll man eine Callback URL festlegen. Dort werden wir weitergeleitet, nachdem wir uns erfolgreich eingeloggt haben.
+Anschließend soll man eine Callback-URL festlegen. Dort werden wir weitergeleitet, nachdem wir uns erfolgreich eingeloggt haben.
 Da aber zu diesem Zeitpunkt der Entpunkt wahrscheinlich noch nicht besteht, tragen wir hier "myapp://." ein.  \
 *Dies muss später - sobald die Main-Page besteht - nachgetragen werden.*
 
@@ -78,4 +78,141 @@ __*Fertig*__
 
 ### Schritt 2: AuthJS mit Cognito verbinden
                                                   
-//TODO
+Beginnen wir mit dem Erstellen eines Nextjs Projektes.\
+Dies funktioniert recht simple, indem man ein neues Projekt erstellt und anschließend  `create-next-app@latest` \
+in die Konsole eingibt.\
+<br>
+![Nextjs](aws_cognito_img/authjs_2.png)   
+
+Hier kann man sich durchklicken und anschließend hat man ein erstes Demo-Projekt.
+
+![Nextjs](aws_cognito_img/authjs_3.png) 
+
+Nun wollen wir aber AuthJS verwenden in Kombination mit Cognito.\
+Dazu geben wir `npm install next-auth` in die Konsole ein.
+\
+Nachdem alles installiert worden ist ändern wir die Ordnerstruktur ab, damit unser Modul auch zurechtfindet.
+- src / pages / api / auth
+
+Anschließend erstellen wir die `[...nextauth].js` Datei. Diese stellt dann schlussendlich unsere Verbindung zu unserem Provider her.
+
+![Authjs](aws_cognito_img/authjs_4.png)
+
+Quellcode:
+````javascript
+import NextAuth from "next-auth"
+import CognitoProvider from "next-auth/providers/cognito";
+export const authOptions = {
+    // Configure one or more authentication providers
+    providers: [
+        CognitoProvider({
+            clientId: process.env.COGNITO_CLIENT_ID,
+            clientSecret: process.env.COGNITO_CLIENT_SECRET,
+            issuer: process.env.COGNITO_ISSUER,
+        })
+    ]
+}
+export default NextAuth(authOptions)
+````
+
+Im nun folgenden müssen ein paar Dateien eingefügt werden. Bei jeder wird erklärt, was diese macht.
+
+Damit wir unsere Session Seitenübergreifend nutzen können, müssen wir diese irgendwie zur Verfügung stellen.
+Dies machen wir hier in der `_app.jsx` Datei.
+
+![Authjs](aws_cognito_img/authjs_5.png) 
+
+Quellcode:
+````javascript
+import { SessionProvider } from "next-auth/react"
+
+export default function App({
+    Component,
+    pageProps: { session, ...pageProps },
+}) {
+    return (
+        <SessionProvider session={session}>
+            <Component {...pageProps} />
+        </SessionProvider>
+    )
+}
+````
+
+Jetzt wollen wir aber vielleicht aber auch einen Login-Button damit wir uns einloggen können.
+Dazu überprüfen wir zuerst, ob wir eingeloggt sind und geben dann den entsprechenden Button zurück.
+
+Siehe Beispiel:
+
+![Authjs](aws_cognito_img/authjs_6.png)
+
+Quellcode:
+````javascript
+import { useSession, signIn, signOut } from "next-auth/react"
+export default function Component() {
+    const { data: session } = useSession()
+    if (session) {
+        return (
+            <>
+                Signed in as {session.user.email} <br />
+                <button onClick={() => signOut()}>Sign out</button>
+            </>
+        )
+    }
+    return (
+        <>
+            Not signed in <br />
+            <button onClick={() => signIn()}>Sign in</button>
+        </>
+    )
+}
+````
+
+Und das hier ist unser kleiner Login-Button. :)
+
+![Authjs](aws_cognito_img/authjs_8.png)
+
+Sobald wir darauf klicken, werden wir auch schon zu unserem Provider - in diesem Falle AWS Cognito - weitergeleitet.
+
+![Authjs](aws_cognito_img/authjs_7.png) 
+
+Viel Spaß. :D
+
+
+*__Bonus:__ Weitere Seiten einbinden*
+
+Jetzt wollen wir aber z.B. mehrere Seiten geschützt haben durch unsere Session.
+Dies können wir folgendermaßen erreichen:
+- Einfach eine neue `Datei.js` in unserem Hauptverzeichnis erstellen und `import { useSession, signIn, signOut } from "next-auth/react"`
+benutzen. 
+- Hier wurden jetzt noch die Buttons mit eingefügt. Diese muss man natürlich nicht einfügen wenn man sich schon auf der vorherigen Seite eingeloggt hat. Wichtig ist es halt, das man zu 
+beginn jeder Seite übeprüft, ob man eingeloggt ist.
+
+So sieht es dann in Aktion aus:
+<div style="text-align:center">
+<img src="aws_cognito_img/authjs_9.png" />
+<img src="aws_cognito_img/authjs_10.png" />
+</div>
+
+Und hier ist der Quellcode:
+```javascript
+import { useSession, signIn, signOut } from "next-auth/react"
+
+export default function Profil() {
+    const { data: session } = useSession()
+    if (!session) {
+        return(
+            <div>
+            <h1>Leider noch nicht eingeloggt!</h1>
+            <button onClick={() => signIn()}>Sign in</button>
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <h1>Hallo :)</h1>
+                <button onClick={() => signOut()}>Sign out</button>
+            </div>
+        )
+    }
+}
+```
