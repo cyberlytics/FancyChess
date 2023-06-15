@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/settings.module.css';
 import { useState } from 'react';
 import Link from "next/link";
+import Menu from './menu.js';
 
 
 
@@ -24,7 +25,8 @@ export default function Home() {
       </Head>
 
         <div className={styles.sidebar}>
-            <div className={styles.menu}>
+        <Menu />
+           {/* <div className={styles.menu}>
                 <h1>Fancy Chess</h1>
                 <Link href="./profil" className={styles.link}>
                     <h2>Account</h2>
@@ -38,7 +40,7 @@ export default function Home() {
             </div>
             <Link href={"http://localhost:3000"}>
                 <img src="/logo.png" alt="logo" className={styles.logo} />
-            </Link>
+            </Link>*/}
 
         </div>
 
