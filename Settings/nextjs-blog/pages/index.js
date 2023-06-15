@@ -26,6 +26,8 @@ export default function Home() {
         </h1>
 
 
+
+
           <div className={styles.grid}>
               <a className={styles.card}>
                   <h3>Show possible moves</h3>
