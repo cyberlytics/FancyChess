@@ -27,16 +27,18 @@ export default function Home() {
 
           <div className="section" id={styles.log}>
 
-            <p id="time">00:00
+            <p id="time" className={styles.time}>00:00
             </p>
-            
-            <button id="inviteLink">
-              inviteLink
-            </button>
-            
-            <button id="startbutton">
-              Start/End
-            </button>
+              <div className={styles.buttons}>
+                  <button id="inviteLink">
+                      inviteLink
+                  </button>
+
+                  <button id="startbutton">
+                      Start/End
+                  </button>
+              </div>
+
 
             <div id={styles.playerMoveHistory}>
               <p>ertser Zug</p>

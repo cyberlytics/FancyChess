@@ -1,17 +1,28 @@
 #innermenu{
     text-align: center;
     background-color:#ffffff87;
-    height:68vw;
+    height:100vh;
     width: auto;
     margin: 5%;
+    display: flex;
+    flex-direction: column;
   }
 
  .link{
     text-decoration: none;
     color: black;
  }
-  
 
-  .logo {
+.lower_menu_section {
+    margin-top: auto;
+    margin-bottom: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
     height: 5em;
   }
