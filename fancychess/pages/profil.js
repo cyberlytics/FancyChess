@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import styles from '../styles/profil.module.css';
 import Link from "next/link";
+import Menu from './menu.js';
 
 export default function Profil() {
   return (
@@ -11,9 +12,10 @@ export default function Profil() {
       </Head>
       <body>
           <div className={styles.leftpannel}>
-              <div className={styles.navpannel}>
+            <Menu />
+              {/*<div className={styles.navpannel}>
                   <h1>Fancy Chess</h1>
-              </div>
+                </div>*/}
           </div>
 
           <div className={styles.midpannel}>
@@ -38,6 +40,9 @@ export default function Profil() {
           height: 100vh;
           width: 100%;
           margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
           }
         `}
         </style>

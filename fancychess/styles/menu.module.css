@@ -1,0 +1,17 @@
+#innermenu{
+    text-align: center;
+    background-color:#ffffff87;
+    height:68vw;
+    width: auto;
+    margin: 5%;
+  }
+
+ .link{
+    text-decoration: none;
+    color: black;
+ }
+  
+
+  .logo {
+    height: 5em;
+  }

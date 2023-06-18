@@ -14,7 +14,7 @@
   text-align: center;
 }
 
-.sidebar .logo {
+/*.sidebar .logo {
   position: absolute;
   bottom: 10px;
   left: 50%;
@@ -23,7 +23,7 @@
 
 .logo {
   height: 5em;
-}
+}*/
 
 .content {
   flex: 1;

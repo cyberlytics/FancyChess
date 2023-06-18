@@ -1,33 +1,30 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import ChessBoard from './chess-board.js'
+import ChessBoard from './chess-board.js';
+import Menu from './menu.js';
 import Link from 'next/link';
 
 export default function Home() {
+
+  const callAPI = async () => {
+    try {
+      const res = await fetch('https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart');
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>FancyChess</title>
-          <link rel="icon" href="../public/logo.ico" />
+          <link rel="icon"  href="../public/logo.ico" />
       </Head>
-      <body>
+
           <div className="section" id={styles.menu}>
-            <div is="innermenu">
-              <h1>Fancy Chess</h1>
-
-              <Link href="./profil" className={styles.link}>
-                <h2>Account</h2>
-              </Link>
-
-              <a href="./settings" className={styles.link}>
-                <h2>Settings</h2>
-              </a>
-
-              <a href="#" className={styles.link} id="logout">
-                <h2>Logout</h2>
-              </a>
-
-            </div>
+            <Menu />
 
           </div>
 
@@ -45,11 +42,11 @@ export default function Home() {
             </p>
             
             <button id="inviteLink">
-              Invite Link
+              inviteLink
             </button>
             
-            <button>
-              Start/End
+            <button id="startbutton" onClick={callAPI}>
+              Start
             </button>
 
             <div id={styles.playerMoveHistory}>
@@ -58,7 +55,7 @@ export default function Home() {
             </div>
 
           </div>
-      </body>
+
 
       <style global jsx>{`
         html,
@@ -66,6 +63,9 @@ export default function Home() {
           background-image: url("../public/background.jpg");
           height: 100vh;
           margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
           }
         `}</style>
     
