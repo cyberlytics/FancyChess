@@ -8,69 +8,58 @@ export default function Home() {
     <div>
       <Head>
         <title>FancyChess</title>
-          <link rel="icon" href="../public/logo.ico" />
+        <link rel="icon" href="../public/logo.ico" />
       </Head>
       <body>
-          <div className="section" id={styles.menu}>
-            <div is="innermenu">
-              <h1>Fancy Chess</h1>
+        <div className="section" id={styles.menu}>
+          <div is="innermenu">
+            <h1>Fancy Chess</h1>
 
-              <Link href="./profil" className={styles.link}>
-                <h2>Account</h2>
-              </Link>
+            <Link href="./profil" className={styles.link}>
+              <h2>Account</h2>
+            </Link>
 
-              <a href="./settings" className={styles.link}>
-                <h2>Settings</h2>
-              </a>
+            <a href="./settings" className={styles.link}>
+              <h2>Settings</h2>
+            </a>
 
-              <a href="#" className={styles.link} id="logout">
-                <h2>Logout</h2>
-              </a>
-
-            </div>
+            <a href="#" className={styles.link} id="logout">
+              <h2>Logout</h2>
+            </a>
 
           </div>
 
-          <div className="section" id={styles.game}>
-            <div className="board" id={styles.board}>
-                <ChessBoard />
+        </div>
 
-            </div>
+        <div className="section" id={styles.game}>
+          <div className="board" id={styles.board}>
+            <ChessBoard />
 
           </div>
 
-          <div className="section" id={styles.log}>
+        </div>
 
-            <p id="time" className={styles.time}>00:00
-            </p>
-<<<<<<< HEAD:fancychess/pages/home.js
-            
+        <div className="section" id={styles.log}>
+
+          <p id="time" className={styles.time}>00:00
+          </p>
+          <div className={styles.buttons}>
             <button id="inviteLink">
-              Invite Link
+              inviteLink
             </button>
-            
-            <button>
+
+            <button id="startbutton">
               Start/End
             </button>
-=======
-              <div className={styles.buttons}>
-                  <button id="inviteLink">
-                      inviteLink
-                  </button>
-
-                  <button id="startbutton">
-                      Start/End
-                  </button>
-              </div>
-
->>>>>>> arthur:fancychess/pages/index.js
-
-            <div id={styles.playerMoveHistory}>
-              <p>ertser Zug</p>
-              <p>zweiter Zug</p>
-            </div>
-
           </div>
+
+
+          <div id={styles.playerMoveHistory}>
+            <p>ertser Zug</p>
+            <p>zweiter Zug</p>
+          </div>
+
+        </div>
       </body>
 
       <style global jsx>{`
@@ -81,7 +70,7 @@ export default function Home() {
           margin: 0;
           }
         `}</style>
-    
+
 
     </div>
   )
