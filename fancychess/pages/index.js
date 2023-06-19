@@ -18,7 +18,7 @@ export default function Home() {
           </div>
 
           <div className="section" id={styles.game}>
-            <div classname="board" id={styles.board}>
+            <div className="board" id={styles.board}>
                 <ChessBoard />
 
             </div>

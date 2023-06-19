@@ -2,8 +2,10 @@ import Head from 'next/head';
 import styles from '../styles/menu.module.css';
 import ChessBoard from './chess-board.js'
 import Link from 'next/link';
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Menu() {
+  const { data: session } = useSession()
   return (
 
     <div id={styles.innermenu}>
@@ -21,11 +23,13 @@ export default function Menu() {
         </Link>
 
         <div className={styles.lower_menu_section}>
-            <Link href="#" className={styles.link} id={styles.logout}>
+            { session ? 
+              <Link href="/" onClick={() => signOut()} className={styles.link} id={styles.logout}>
                 <h2>Logout</h2>
-            </Link>
-
-
+              </Link> :
+              <Link href="/" onClick={() => signIn()} className={styles.link} id={styles.logout}>
+                <h2>Login</h2>
+              </Link> }
         </div>
 
 
