@@ -35,29 +35,29 @@ function boardToCode(board, turn) {
         for(let j = 0; j < 8; j++) {
             if(board[i][j] == "-") {
                 code += "-";
-            } else if(board[i][j][1] == "K" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "Koenig" && board[i][j][2] == "S") {
                 code += "A";
-            } else if(board[i][j][1] == "K" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "Koenig" && board[i][j][2] == "W") {
                 code += "B";
-            } else if(board[i][j][1] == "D" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "Dame" && board[i][j][2] == "S") {
                 code += "C";
-            } else if(board[i][j][1] == "D" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "Dame" && board[i][j][2] == "W") {
                 code += "D";
-            } else if(board[i][j][1] == "T" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "Turm" && board[i][j][2] == "S") {
                 code += "E";
-            } else if(board[i][j][1] == "T" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "Turm" && board[i][j][2] == "W") {
                 code += "F";
-            } else if(board[i][j][1] == "L" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "Laeufer" && board[i][j][2] == "S") {
                 code += "G";
-            } else if(board[i][j][1] == "L" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "Laeufer" && board[i][j][2] == "W") {
                 code += "H";
-            } else if(board[i][j][1] == "S" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "Springer" && board[i][j][2] == "S") {
                 code += "I";
-            } else if(board[i][j][1] == "S" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "Springer" && board[i][j][2] == "W") {
                 code += "J";
-            } else if(board[i][j][1] == "B" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "S") {
                 code += "K";
-            } else if(board[i][j][1] == "B" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "W") {
                 code += "L";
             }
         }
@@ -65,10 +65,12 @@ function boardToCode(board, turn) {
     return code;
 }
 
-module.exports = boardToCode;
-
 function generateChess() {
     let schachbrett = [[[1, "Turm", "W"], [2, "Springer", "W"], [3, "Laeufer", "W"], [4, "Dame", "W"], [5, "Koenig", "W"], [6, "Laeufer", "W"], [7, "Springer", "W"], [8, "Turm", "W"]], [[9, "unusedBauer", "W"], [10, "unusedBauer", "W"], [11, "unusedBauer", "W"], [12, "unusedBauer", "W"], [13, "unusedBauer", "W"], [14, "unusedBauer", "W"], [15, "unusedBauer", "W"], [16, "unusedBauer", "W"]], [], [], [], [], [[17, "unusedBauer", "S"], [18, "unusedBauer", "S"], [19, "unusedBauer", "S"], [20, "unusedBauer", "S"], [21, "unusedBauer", "S"], [22, "unusedBauer", "S"], [23, "unusedBauer", "S"], [24, "unusedBauer", "S"]], [[25, "Turm", "S"], [26, "Springer", "S"], [27, "Laeufer", "S"], [28, "Dame", "S"], [29, "Koenig", "S"], [30, "Laeufer", "S"], [31, "Springer", "S"], [32, "Turm", "S"]]];
+    schwarzerKoenig[0] = 4;
+    schwarzerKoenig[1] = 7;
+    weisserKoenig[0] = 4;
+    weisserKoenig[1] = 0;
     return schachbrett;
 }
 
@@ -84,25 +86,116 @@ function checkCheck(board, X, Y) {
     return false;
 }
 
-// COMING SOON
 // Funktion zum Überprüfen, ob ein bedrohter König die Bedrohung durch einen Halbzug abwehren kann (wenn nein, ist er matt gesetzt und das Spiel ist vorbei!)
 function checkCheckmate(board, X, Y) {
-    // COMING SOON
-    return false;
+    let flag = false;
+    let zuege = [];
+
+    // alle moeglichen Zuege des Koenigs pruefen
+    for(let ty = 0; ty < 8; ty++) {
+        for(let tx = 0; tx < 8; tx++) {
+            if(checkMove(board, X, Y, tx, ty)) {
+                let koord = [];
+                koord.push(tx);
+                koord.push(ty);
+                zuege.push(koord);
+            }
+        }
+    }
+
+    for(let zug = 0; zug < zuege.length; zug++) {
+        if(!checkCheck(board, zuege[zug][0], zuege[zug][1])) {
+            flag = true;
+        }
+    }
+
+    if(flag) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // COMING SOON
 // Funktion zum Überprüfen, ob ein Patt (engl. Stalemate) vorliegt
-function checkStalemate() {
-    // COMING SOON
-    return false;
+function checkStalemate(board) {
+    // Sind Koenige bedroht?
+    let sKoenigX = schwarzerKoenig[0];
+    let sKoenigY = schwarzerKoenig[1];
+    let wKoenigX = weisserKoenig[0];
+    let wKoenigY = weisserKoenig[1];
+    if((checkCheck(board, sKoenigX, sKoenigY)) || (checkCheck(board, wKoenigX, wKoenigY))) {
+        return false;
+    }
+
+    // Kann ein Spieler keinen gueltigen Zug mehr machen?
+    let emptyFigur = ["-", "-", "-"]; // kp ob gebraucht
+
+    for(let ty = 0; ty < 8; ty++) {
+        for(let tx = 0; tx < 8; tx++) {
+            if(board[ty][tx] == "-") {
+                board[ty][tx] = emptyFigur;
+            }
+        }
+    }
+
+    let schwarzeFiguren = [];
+    let weisseFiguren = [];
+
+    let schwarzFlag = false;
+    let weissFlag = false;
+
+    for(let y = 0; y < 8; y++) {
+        for(let x = 0; x < 8; x++) {
+            let tempArr = [];
+            tempArr.push(x);
+            tempArr.push(y);
+            if(board[y][x][2] == "S") {
+                schwarzeFiguren.push(tempArr);
+            } else if(board[y][x][2] == "W") {
+                weisseFiguren.push(tempArr);
+            }
+        }
+    }
+
+    // wenn auch nur eine gültige Bewegung für einen Spieler vorhanden ist, wird der Flag auf True gesetzt
+
+    for(let s = 0; s < schwarzeFiguren.length; s++) {
+        let sx = schwarzeFiguren[s][0];
+        let sy = schwarzeFiguren[s][1];
+        for(let tmpy1 = 0; tmpy1 < 8; tmpy1++) {
+            for(let tmpx1 = 0; tmpx1 < 8; tmpx1++) {
+                if(checkMove(board, sx, sy, tmpx1, tmpy1)) {
+                    schwarzFlag = true;
+                }
+            }
+        }
+    }
+
+    for(let w = 0; w < weisseFiguren.length; w++) {
+        let wx = weisseFiguren[w][0];
+        let wy = weisseFiguren[w][1];
+        for(let tmpy2 = 0; tmpy2 < 8; tmpy2++) {
+            for(let tmpx2 = 0; tmpx2 < 8; tmpx2++) {
+                if(checkMove(board, wx, wy, tmpx2, tmpy2)) {
+                    weissFlag = true;
+                }
+            }
+        }
+    }
+
+    if(schwarzFlag && weissFlag) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 // COMING SOON
 // Funktion zum Überprüfen, ob ein Remis (engl. Draw) vorliegt
-function checkDraw() {
+function checkDraw(board) {
     // COMING SOON
-    if(checkStalemate()) {
+    if(checkStalemate(board)) {
         return true;
     }
     // weitere Fälle kommen noch
@@ -117,11 +210,22 @@ function onTimeout() {
 
 // COMING SOON
 // Funktion zum Aufgeben
-function forfeit(player) {
-    // COMING SOON
+function forfeit(board, player) {
+    let koenigX = -1;
+    let koenigY = -1;
+    if(player == "S") {
+        koenigX = schwarzerKoenig[0];
+        koenigY = schwarzerKoenig[1];
+    } else if(player == "W") {
+        koenigX = weisserKoenig[0];
+        koenigY = weisserKoenig[1];
+    } else {
+        return board;
+    }
+    board[koenigY][koenigX] = "-";
+    return board;
 }
 
-// COMING SOON
 // Funktion, wenn sich ein Spieler beschwert und ein Remis entstehen soll
 // Passiert, wenn: 50 Zuege lang kein Stein geschlagen wurde oder kein Bauer bewegt wurde - oder wenn eine Brettstellung drei Mal aufgetreten ist
 function complaint(board, turn) {
@@ -392,7 +496,14 @@ function move(board, pieceX, pieceY, newX, newY) {
     // Unterer Code sollte funktionieren.
 
     if(checkMove(board, pieceX, pieceY, newX, newY)) {
+        if(board[newY][newX] == "-") {
+            if(board[pieceY][pieceX][1] == "unusedBauer" || board[pieceY][pieceX][1] == "usedBauer") {
+                counter++;
+            }
+        }
+
         board[newY][newX] = board[pieceY][pieceX];
+
         if(board[newY][newX][1] == "unusedBauer" || board[newY][newX][1] == "usedBauer") {
             if((newY == 0 && board[newY][newX][2] == "S") || (newY == 7 && board[newY][newX][2] == "W")) {
                 // Umwandlung COMING SOON
@@ -403,7 +514,9 @@ function move(board, pieceX, pieceY, newX, newY) {
         if(board[newY][newX][1] == "unusedBauer") {
             board[newY][newX][1] == "usedBauer";
         }
+
         board[pieceY][pieceX] = "-";
+
         if(board[newY][newX][1] == "Koenig") {
             if(board[newY][newX][2] == "S") {
                 schwarzerKoenig[0] = newX;
@@ -419,6 +532,19 @@ function move(board, pieceX, pieceY, newX, newY) {
             // weiss hat gewonnen
         } else if(checkCheckmate(board, weisserKoenig[0], weisserKoenig[1])) {
             // schwarz hat gewonnen
+        }
+        if(counter > 74) {
+            // Unentschieden ohne Zutun des Spielers
+        }
+        let farbe = board[pieceY][pieceX][2];
+        let schachbrett = boardToCode(board, farbe);
+        if(!stellungen[schachbrett] > 0) {
+            stellungen[schachbrett] = 1;
+        } else {
+            stellungen[schachbrett] = stellungen[schachbrett] + 1;
+        }
+        if(stellungen[schachbrett] > 4) {
+            // Remis ohne Zutun des Spielers
         }
         return board;
     } else {
