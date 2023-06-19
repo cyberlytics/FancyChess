@@ -41,8 +41,9 @@ export default function Home() {
 
           <div className="section" id={styles.log}>
 
-            <p id="time">00:00
+            <p id="time" className={styles.time}>00:00
             </p>
+<<<<<<< HEAD:fancychess/pages/home.js
             
             <button id="inviteLink">
               Invite Link
@@ -51,6 +52,18 @@ export default function Home() {
             <button>
               Start/End
             </button>
+=======
+              <div className={styles.buttons}>
+                  <button id="inviteLink">
+                      inviteLink
+                  </button>
+
+                  <button id="startbutton">
+                      Start/End
+                  </button>
+              </div>
+
+>>>>>>> arthur:fancychess/pages/index.js
 
             <div id={styles.playerMoveHistory}>
               <p>ertser Zug</p>

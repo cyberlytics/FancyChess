@@ -7,8 +7,8 @@ export default function Menu() {
   return (
 
     <div id={styles.innermenu}>
-        <Link href={"http://localhost:3000"} className={styles.link}>
-            <h1>Fancy Chess</h1>
+        <Link href={"http://localhost:3000"}>
+            <img src="/logo.png" alt="logo" className={styles.logo} />
         </Link>
         
 
@@ -20,13 +20,16 @@ export default function Menu() {
             <h2>Settings</h2>
         </Link>
 
-        <Link href="#" className={styles.link} id={styles.logout}>
-            <h2>Logout</h2>
-        </Link>
+        <div className={styles.lower_menu_section}>
+            <Link href="#" className={styles.link} id={styles.logout}>
+                <h2>Logout</h2>
+            </Link>
 
-        <Link href={"http://localhost:3000"}>
-            <img src="/logo.png" alt="logo" className={styles.logo} />
-        </Link>
+
+        </div>
+
+
+
 
 
 
