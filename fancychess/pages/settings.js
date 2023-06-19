@@ -3,18 +3,18 @@ import styles from '../styles/settings.module.css';
 import { useState } from 'react';
 import Link from "next/link";
 import Menu from './menu.js';
-
-
-
-
-
+import { useSession, signIn } from "next-auth/react"
 
 export default function Home() {
-    const [showPossibleMoves, setShowPossibleMoves] = useState(false);
+  const { data: session } = useSession()
+  if (!session) {
+    return(() => signIn());
+  }
+  const [showPossibleMoves, setShowPossibleMoves] = useState(false);
 
-    const handleTogglePossibleMoves = () => {
-        setShowPossibleMoves(!showPossibleMoves);
-    };
+  const handleTogglePossibleMoves = () => {
+    setShowPossibleMoves(!showPossibleMoves);
+  };
 
   return (
 

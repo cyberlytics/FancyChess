@@ -2,8 +2,14 @@ import Head from 'next/head';
 import styles from '../styles/profil.module.css';
 import Link from "next/link";
 import Menu from './menu.js';
+import { useSession, signIn } from "next-auth/react"
 
 export default function Profil() {
+  const { data: session } = useSession()
+  if (!session) {
+    return(() => signIn());
+  }
+
   return (
     <div className={styles.container}>
       <Head>
