@@ -1,39 +1,62 @@
-
 .container {
   min-height: 100vh;
-  padding: 0 0.5rem;
+  display: flex;
+  background: rgb(80,70,255);
+  background: linear-gradient(180deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+}
+
+.sidebar {
+  flex: 0 0 15%;
+  overflow: auto;
+  background: rgb(80, 70, 255);
+  background: linear-gradient(0deg, rgba(80, 70, 255, 1) 0%, rgba(56, 140, 167, 1) 32%, rgba(0, 212, 255, 1) 100%);
+  position: relative;
+  text-align: center;
+}
+
+/*.sidebar .logo {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  height: 5em;
+}*/
+
+.content {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: start;
+}
 
-  background-image: url('/background.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
+.main-content {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.link{
+  text-decoration: none;
+  color:black;
+  text-align: center;
 
 }
 
-
-
 .title {
-  margin: 0 0 1rem;
+  margin-top: 0;
   line-height: 1.15;
   font-size: 3.6rem;
   font-family: "Hiragino Mincho ProN";
 }
 
-.title {
-  text-align: center;
-}
-
-
 
 .grid {
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-
   max-width: 300px;
   margin-top: 5rem;
 }
@@ -52,7 +75,6 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: black;
   border-color: indigo;
 }
 
@@ -62,9 +84,7 @@
   color: whitesmoke;
 }
 
-.logo {
-  height: 5em;
-}
+
 
 @media (max-width: 600px) {
   .grid {
@@ -72,3 +92,5 @@
     flex-direction: column;
   }
 }
+
+
