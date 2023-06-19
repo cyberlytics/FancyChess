@@ -2,8 +2,11 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js'
 import Link from 'next/link';
+import WinLosePopUp from './win-lose-pop-up.js';
+import { useState } from 'react';
 
 export default function Home() {
+  const [buttonPopup, setButtonPopUp] = useState(false);
   return (
     <div>
       <Head>
@@ -23,6 +26,11 @@ export default function Home() {
               <h2>Settings</h2>
             </a>
 
+            <a className={styles.link}>
+              <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
+
+            </a>
+
             <a href="#" className={styles.link} id="logout">
               <h2>Logout</h2>
             </a>
@@ -34,7 +42,8 @@ export default function Home() {
         <div className="section" id={styles.game}>
           <div className="board" id={styles.board}>
             <ChessBoard />
-
+            <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
+            </WinLosePopUp>
           </div>
 
         </div>

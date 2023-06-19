@@ -35,35 +35,37 @@ function boardToCode(board, turn) {
         for(let j = 0; j < 8; j++) {
             if(board[i][j] == "-") {
                 code += "-";
-            } else if(board[i][j][1] == "Koenig" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "K" && board[i][j][2] == "S") {
                 code += "A";
-            } else if(board[i][j][1] == "Koenig" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "K" && board[i][j][2] == "W") {
                 code += "B";
-            } else if(board[i][j][1] == "Dame" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "D" && board[i][j][2] == "S") {
                 code += "C";
-            } else if(board[i][j][1] == "Dame" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "D" && board[i][j][2] == "W") {
                 code += "D";
-            } else if(board[i][j][1] == "Turm" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "T" && board[i][j][2] == "S") {
                 code += "E";
-            } else if(board[i][j][1] == "Turm" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "T" && board[i][j][2] == "W") {
                 code += "F";
-            } else if(board[i][j][1] == "Laeufer" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "L" && board[i][j][2] == "S") {
                 code += "G";
-            } else if(board[i][j][1] == "Laeufer" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "L" && board[i][j][2] == "W") {
                 code += "H";
-            } else if(board[i][j][1] == "Springer" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "S" && board[i][j][2] == "S") {
                 code += "I";
-            } else if(board[i][j][1] == "Springer" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "S" && board[i][j][2] == "W") {
                 code += "J";
-            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "S") {
+            } else if(board[i][j][1] == "B" && board[i][j][2] == "S") {
                 code += "K";
-            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "W") {
+            } else if(board[i][j][1] == "B" && board[i][j][2] == "W") {
                 code += "L";
             }
         }
     }
     return code;
 }
+
+module.exports = boardToCode;
 
 function generateChess() {
     let schachbrett = [[[1, "Turm", "W"], [2, "Springer", "W"], [3, "Laeufer", "W"], [4, "Dame", "W"], [5, "Koenig", "W"], [6, "Laeufer", "W"], [7, "Springer", "W"], [8, "Turm", "W"]], [[9, "unusedBauer", "W"], [10, "unusedBauer", "W"], [11, "unusedBauer", "W"], [12, "unusedBauer", "W"], [13, "unusedBauer", "W"], [14, "unusedBauer", "W"], [15, "unusedBauer", "W"], [16, "unusedBauer", "W"]], [], [], [], [], [[17, "unusedBauer", "S"], [18, "unusedBauer", "S"], [19, "unusedBauer", "S"], [20, "unusedBauer", "S"], [21, "unusedBauer", "S"], [22, "unusedBauer", "S"], [23, "unusedBauer", "S"], [24, "unusedBauer", "S"]], [[25, "Turm", "S"], [26, "Springer", "S"], [27, "Laeufer", "S"], [28, "Dame", "S"], [29, "Koenig", "S"], [30, "Laeufer", "S"], [31, "Springer", "S"], [32, "Turm", "S"]]];

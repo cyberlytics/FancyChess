@@ -72,3 +72,16 @@
   padding-right: 2em;
 }
 
+#logout{
+  top: 95%;
+  bottom: 0;
+  margin-bottom: 5%;
+}
+
+#innermenu{
+  text-align: center;
+  background-color:#ffffff87;
+  height:fit-content;
+  width: auto;
+  margin: 5%;
+}

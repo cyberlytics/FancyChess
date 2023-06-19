@@ -3,7 +3,7 @@ import Profil from '../pages/profil';
 import '@testing-library/jest-dom';
 
 describe('Profil', () => {
-  it('renders a heading', () => {
+  it('look if Profil Picture is there', () => {
     render(<Profil />);
 
     const profil_pic = screen.getByRole('profilpicture');
