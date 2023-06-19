@@ -1,75 +1,50 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import ChessBoard from './chess-board.js'
+import ChessBoard from './chess-board.js';
+import Menu from './menu.js';
 import Link from 'next/link';
-import WinLosePopUp from './win-lose-pop-up.js';
-import { useState } from 'react';
 
 export default function Home() {
-  const [buttonPopup, setButtonPopUp] = useState(false);
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>FancyChess</title>
-        <link rel="icon" href="../public/logo.ico" />
+          <link rel="icon"  href="../public/logo.ico" />
       </Head>
-      <body>
-        <div className="section" id={styles.menu}>
-          <div is="innermenu">
-            <h1>Fancy Chess</h1>
 
-            <Link href="./profil" className={styles.link}>
-              <h2>Account</h2>
-            </Link>
-
-            <a href="./settings" className={styles.link}>
-              <h2>Settings</h2>
-            </a>
-
-            <a className={styles.link}>
-              <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
-
-            </a>
-
-            <a href="#" className={styles.link} id="logout">
-              <h2>Logout</h2>
-            </a>
+          <div className="section" id={styles.menu}>
+            <Menu />
 
           </div>
 
-        </div>
+          <div className="section" id={styles.game}>
+            <div classname="board" id={styles.board}>
+                <ChessBoard />
 
-        <div className="section" id={styles.game}>
-          <div className="board" id={styles.board}>
-            <ChessBoard />
-            <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
-            </WinLosePopUp>
+            </div>
+
           </div>
 
-        </div>
+          <div className="section" id={styles.log}>
 
-        <div className="section" id={styles.log}>
-
-          <p id="time" className={styles.time}>00:00
-          </p>
-          <div className={styles.buttons}>
+            <p id="time">00:00
+            </p>
+            
             <button id="inviteLink">
               inviteLink
             </button>
-
+            
             <button id="startbutton">
               Start/End
             </button>
+
+            <div id={styles.playerMoveHistory}>
+              <p>ertser Zug</p>
+              <p>zweiter Zug</p>
+            </div>
+
           </div>
 
-
-          <div id={styles.playerMoveHistory}>
-            <p>ertser Zug</p>
-            <p>zweiter Zug</p>
-          </div>
-
-        </div>
-      </body>
 
       <style global jsx>{`
         html,
@@ -77,9 +52,12 @@ export default function Home() {
           background-image: url("../public/background.jpg");
           height: 100vh;
           margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
           }
         `}</style>
-
+    
 
     </div>
   )
