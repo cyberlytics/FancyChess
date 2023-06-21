@@ -18,3 +18,23 @@
     max-width: 640px;
     background-color: #fff;
 }
+
+.profilpic_winner{
+    width: 20vh;
+    height: 20vh;
+    background-color: green;
+    float:left;
+}
+
+.profilpic_loser{
+    width: 20vh;
+    height: 20vh;
+    background-color: red;
+    float:right;
+}
+
+.accept_button{
+    float: left;
+    margin-left: 25%;
+    margin-top: 15%;
+}
