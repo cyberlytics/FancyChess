@@ -4,7 +4,93 @@ import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import Link from 'next/link';
 
-export default function Home() {
+// get Static Props async function to negate the CORS-Error and to fetch the api
+export const getStaticProps = async () => {
+
+  const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart';
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  return {
+    props: {chessboardData: data}
+  }
+}
+
+export default function Home({chessboardData}) {
+
+  // Async Function to fetch the API with getStaticProps and place the figures
+  const callAPI = async () => {
+    console.log("Call API");
+
+    // Search trough data of the json we got from the api
+    const data = chessboardData;
+    const body = JSON.parse(data["body"]);
+    const spielfeld = body["spielfeld"];
+    console.log(spielfeld);
+
+    // Place each chess-figure
+    for (let k in spielfeld){
+ 
+      let Container = document.getElementById(k);
+      let button = document.createElement('button');
+      button.id = spielfeld[k];
+      button.classList.add(styles.button_click);
+
+      if (spielfeld[k] != "-"){
+
+        let image = document.createElement('img');
+        let src = "../";
+      
+        switch (spielfeld[k]){
+          case "t":
+            src += "Rook-W.svg";
+            break;
+          case "T":
+            src += "Rook-B.svg";
+            break;
+          case "s":
+            src += "Knight-W.svg";
+            break;
+          case "S":
+            src += "Knight-B.svg";
+            break;
+          case "l":
+            src += "Bishop-W.svg";
+            break;
+          case "L":
+            src += "Bishop-B.svg";
+            break;
+          case "d":
+            src += "Queen-W.svg";
+            break;
+          case "D":
+            src += "Queen-B.svg";
+            break;
+          case "k":
+            src += "King-W.svg";
+            break;
+          case "K":
+            src += "King-B.svg";
+            break;
+          case "b":
+            src += "Pawn-W.svg";
+            break;
+          case "B":
+            src += "Pawn-B.svg";
+            break;
+        }
+
+        image.src = src;
+        image.id = spielfeld[k];
+
+        button.appendChild(image);
+      } 
+
+      Container.appendChild(button);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +104,7 @@ export default function Home() {
           </div>
 
           <div className="section" id={styles.game}>
-            <div classname="board" id={styles.board}>
+            <div className="board" id={styles.board}>
                 <ChessBoard />
 
             </div>
@@ -34,12 +120,12 @@ export default function Home() {
               inviteLink
             </button>
             
-            <button id="startbutton">
+            <button id="startbutton" onClick={callAPI}>
               Start/End
             </button>
 
             <div id={styles.playerMoveHistory}>
-              <p>ertser Zug</p>
+              <p>erster Zug</p>
               <p>zweiter Zug</p>
             </div>
 
