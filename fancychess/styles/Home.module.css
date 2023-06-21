@@ -85,3 +85,9 @@
   width: auto;
   margin: 5%;
 }
+
+.button_click{
+  width:100%;
+  background-color: transparent;
+  border-color: transparent;
+}
