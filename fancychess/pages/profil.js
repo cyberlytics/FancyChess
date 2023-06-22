@@ -7,7 +7,12 @@ import { useSession, signIn } from "next-auth/react"
 export default function Profil() {
   const { data: session } = useSession()
   if (!session) {
-    return(() => signIn());
+    return(
+      <div>
+        <body onLoad={signIn()}>
+        </body>
+      </div>
+    );
   }
 
   return (
