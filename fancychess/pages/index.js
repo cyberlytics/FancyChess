@@ -2,7 +2,10 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
+import { useState } from 'react';
 import Link from 'next/link';
+
+
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
 export const getStaticProps = async () => {
@@ -18,6 +21,12 @@ export const getStaticProps = async () => {
 }
 
 export default function Home({chessboardData}) {
+
+  const [checkGame , setGameStart] = useState(false);
+
+  const handleStartEnd = () => {
+    setGameStart(!checkGame);
+  };
 
   // Async Function to fetch the API with getStaticProps and place the figures
   const callAPI = async () => {
@@ -115,14 +124,16 @@ export default function Home({chessboardData}) {
 
             <p id="time">00:00
             </p>
-            
-            <button id="inviteLink">
-              inviteLink
-            </button>
-            
-            <button id="startbutton" onClick={callAPI}>
-              Start/End
-            </button>
+
+            <div className={styles.buttons}>
+              <button id="inviteLink">
+                inviteLink
+              </button>
+
+              <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
+                {checkGame ? 'END' : 'START'}
+              </button>
+            </div>
 
             <div id={styles.playerMoveHistory}>
               <p>erster Zug</p>
