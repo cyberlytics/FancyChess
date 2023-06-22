@@ -52,6 +52,7 @@ export default function Profil() {
           <div className={styles.midpannel}>
               <div role='profilpicture' className={styles.profilpicture}>
                 {dropdownmenu()}
+                <img src="/Pawn-B.svg" className={styles.profilPicture_user} />
               </div>
               
               <div className={styles.profilpannel}>
