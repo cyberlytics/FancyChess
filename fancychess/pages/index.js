@@ -3,6 +3,9 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import Link from 'next/link';
+import WinLosePopUp from './win-lose-pop-up.js'
+import { useState } from 'react';
+
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
 export const getStaticProps = async () => {
@@ -91,6 +94,9 @@ export default function Home({chessboardData}) {
     }
   }
 
+  //für Pop up window zum testen
+  const [buttonPopup, setButtonPopUp] = useState(false);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -106,6 +112,8 @@ export default function Home({chessboardData}) {
           <div className="section" id={styles.game}>
             <div className="board" id={styles.board}>
                 <ChessBoard />
+                <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
+                </WinLosePopUp>
 
             </div>
 
@@ -127,6 +135,11 @@ export default function Home({chessboardData}) {
             <div id={styles.playerMoveHistory}>
               <p>erster Zug</p>
               <p>zweiter Zug</p>
+              <a className={styles.link}>
+                <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
+                
+              </a>
+              
             </div>
 
           </div>
