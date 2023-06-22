@@ -47,13 +47,13 @@ export default function Profil() {
       <body>
           <div className={styles.leftpannel}>
             <Menu />
-              {/*<div className={styles.navpannel}>
-                  <h1>Fancy Chess</h1>
-                </div>*/}
           </div>
 
           <div className={styles.midpannel}>
-              <div role='profilpicture' className={styles.profilpicture}></div>
+              <div role='profilpicture' className={styles.profilpicture}>
+                {dropdownmenu()}
+              </div>
+              
               <div className={styles.profilpannel}>
 
               </div>
