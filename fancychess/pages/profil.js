@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/profil.module.css';
 import Link from "next/link";
 import {Dropdown} from "@nextui-org/react";
+import Menu from './menu.js';
 
 export default function Profil() {
   const dropdownmenu = () => {

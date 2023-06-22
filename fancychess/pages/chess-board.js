@@ -36,7 +36,7 @@ export default function ChessBoard() {
     
                     // Const variables to create diffrent div-Container in each cell
                     const key_x = number_to_label(x);
-                    const key_y = y;
+                    const key_y = invert_number(y);
                     const label = create_label(x,y);
                     const color = create_color(x,y);
     
@@ -53,11 +53,11 @@ export default function ChessBoard() {
     // Function for creating diffrent dif-Container in each cell
     const create_div = (x,y,color,label) => {
 
-        const key_x = number_to_label(x);
+        const key_x = x.toLowerCase();
         const key_y = y;
 
         return(
-            <div key={`div(${key_y},${key_x})`} className={color} id={`div(${key_y},${key_x})`}>
+            <div key={`div(${key_y},${key_x})`} className={color} id={`${key_x}${key_y}`}>
                 {label}
             </div>
         )
@@ -152,7 +152,7 @@ export default function ChessBoard() {
     // Main return of chess-board.js (table will be created here)
     return (
         <div className={styles.board}>
-            <table className={styles.table} key = {`1`}>
+            <table className={styles.table} key = {`1`} id = {"chess-board"}>
                 <tbody>
                     {create_rows()}
                 </tbody>

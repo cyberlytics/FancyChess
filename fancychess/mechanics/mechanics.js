@@ -137,6 +137,37 @@ function complaint(board, turn) {
     return false;
 }
 
+// TEMPORÄRE FUNKTION
+// Dies ist nur eine temporäre Funktion, um den Gewinner zu ermitteln!
+// Hier wird vorausgesetzt, dass ein König geschlagen wurde!
+// Nach jedem Zug sollte diese Funktion einmal aufgerufen werden.
+// FUNKTION WIRD NOCH AKTUALISIERT!!!
+function checkWinner(board) {
+    let weisserKoenigVorhanden = false;
+    let schwarzerKoenigVorhanden = false;
+
+    for(let i = 0; i < 8; i++) {
+        for(let j = 0; j < 8; j++) {
+            if(board[i][j][1] == "Koenig" && board[i][j][2] == "S") {
+                schwarzerKoenigVorhanden = true;
+            }
+            if(board[i][j][1] == "Koenig" && board[i][j][2] == "W") {
+                weisserKoenigVorhanden = true;
+            }
+        }
+    }
+
+    if(!weisserKoenigVorhanden && !schwarzerKoenigVorhanden) {
+        return "error"; // Beide Koenige nicht mehr vorhanden, Fehler
+    } else if(!schwarzerKoenigVorhanden) {
+        return "W"; // Weiss hat gewonnen, weil der schwarze Koenig nicht mehr vorhanden ist
+    } else if(!weisserKoenigVorhanden) {
+        return "S"; // Schwarz hat gewonnen, weil der weisse Koenig nicht mehr vorhanden ist
+    } else {
+        return "continue"; // Noch kein Gewinner fest
+    }
+}
+
 // Rochade NOCH NICHT IMPLEMENTIERT!!!
 function checkMove(board, pieceX, pieceY, newX, newY) {
     // Fallunterscheidung je nach Typ der Figur
