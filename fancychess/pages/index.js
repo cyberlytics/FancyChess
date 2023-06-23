@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
+import UserNotLoggedIn from './user_not_logged_in.js';
 import { useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
@@ -164,14 +165,9 @@ export default function Home({chessboardData}) {
       )
     }
     return (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
+        <div>
+          <UserNotLoggedIn></UserNotLoggedIn>
+        </div>
     )
-
-
-
-
 
 }

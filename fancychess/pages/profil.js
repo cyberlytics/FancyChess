@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/profil.module.css';
 import Link from "next/link";
 import Menu from './menu.js';
+import UserNotLoggedIn from './user_not_logged_in.js';
 import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Profil() {
@@ -55,10 +56,9 @@ export default function Profil() {
         )
     }
     return (
-        <>
-            Not signed in <br />
-            <button onClick={() => signIn()}>Sign in</button>
-        </>
+        <div>
+            <UserNotLoggedIn></UserNotLoggedIn>
+        </div>
     )
 
 

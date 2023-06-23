@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from "next/link";
 import Menu from './menu.js';
 import { useSession, signIn, signOut } from "next-auth/react"
+import UserNotLoggedIn from './user_not_logged_in.js';
 
 
 
@@ -18,7 +19,7 @@ export default function Settings() {
         setShowPossibleMoves(!showPossibleMoves);
     };
 
-    if (!session) {
+    if (session) {
         return (
 
             <div className={styles.container}>
@@ -93,10 +94,9 @@ export default function Settings() {
         )
     }
     return (
-        <>
-            Not signed in <br />
-            <button onClick={() => signIn()}>Sign in</button>
-        </>
+        <div>
+            <UserNotLoggedIn></UserNotLoggedIn>
+        </div>
     )
 
 
