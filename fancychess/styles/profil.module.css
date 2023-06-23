@@ -22,13 +22,7 @@
   width: 25%;
   height: 25%;
   float:left;
-  margin-top: 3%;
-}
-.profilpicture_user{
-  width: 25%;
-  height: 25%;
-  float:left;
-  margin-top: 3%;
+  margin-top: 1%;
 }
 .profilpannel{
   width: 64%;
@@ -51,4 +45,15 @@
   background: rgb(80,70,255);
   background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
   float:right;
+}
+.selct-picture-button{
+  width: 50px;
+  height: 50px;
+  background-color: rgb(139, 139, 139);
+  border-radius: 50%;
+  padding: 5px;
+  margin: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
