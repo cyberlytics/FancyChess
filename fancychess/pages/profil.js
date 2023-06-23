@@ -2,39 +2,44 @@ import Head from 'next/head';
 import styles from '../styles/profil.module.css';
 import Link from "next/link";
 import Menu from './menu.js';
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Profil() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Profil</title>
-        <link rel="icon" href="../public/logo.ico" />
-      </Head>
-      <body>
-          <div className={styles.leftpannel}>
-            <Menu />
-              {/*<div className={styles.navpannel}>
+    const { data: session } = useSession()
+
+
+    if (!session) {
+        return (
+            <div className={styles.container}>
+                <Head>
+                    <title>Profil</title>
+                    <link rel="icon" href="../public/logo.ico" />
+                </Head>
+                <body>
+                <div className={styles.leftpannel}>
+                    <Menu />
+                    {/*<div className={styles.navpannel}>
                   <h1>Fancy Chess</h1>
                 </div>*/}
-          </div>
+                </div>
 
-          <div className={styles.midpannel}>
-              <div role='profilpicture' className={styles.profilpicture}></div>
-              <div className={styles.profilpannel}>
+                <div className={styles.midpannel}>
+                    <div role='profilpicture' className={styles.profilpicture}></div>
+                    <div className={styles.profilpannel}>
 
-              </div>
-              <div className={styles.gamehistory}>
+                    </div>
+                    <div className={styles.gamehistory}>
 
-              </div>
-          </div>
+                    </div>
+                </div>
 
-          <div className={styles.rightpannel}></div>
+                <div className={styles.rightpannel}></div>
 
-      </body>
+                </body>
 
-      <footer>
-      </footer>
-        <style global jsx>{`
+                <footer>
+                </footer>
+                <style global jsx>{`
         html,
         body{
           height: 100vh;
@@ -45,7 +50,18 @@ export default function Profil() {
             sans-serif;
           }
         `}
-        </style>
-    </div>
-  )
+                </style>
+            </div>
+        )
+    }
+    return (
+        <>
+            Not signed in <br />
+            <button onClick={() => signIn()}>Sign in</button>
+        </>
+    )
+
+
+
+
 }

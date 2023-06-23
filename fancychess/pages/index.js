@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import { useState } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
 
 
@@ -21,6 +22,7 @@ export const getStaticProps = async () => {
 }
 
 export default function Home({chessboardData}) {
+  const { data: session } = useSession()
 
   const [checkGame , setGameStart] = useState(false);
 
@@ -100,50 +102,52 @@ export default function Home({chessboardData}) {
     }
   }
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>FancyChess</title>
-          <link rel="icon"  href="../public/logo.ico" />
-      </Head>
 
-          <div className="section" id={styles.menu}>
-            <Menu />
+    if (!session) {
+      return (
+          <div className={styles.container}>
+            <Head>
+              <title>FancyChess</title>
+              <link rel="icon"  href="../public/logo.ico" />
+            </Head>
 
-          </div>
+            <div className="section" id={styles.menu}>
+              <Menu />
 
-          <div className="section" id={styles.game}>
-            <div className="board" id={styles.board}>
+            </div>
+
+            <div className="section" id={styles.game}>
+              <div className="board" id={styles.board}>
                 <ChessBoard />
 
+              </div>
+
             </div>
 
-          </div>
+            <div className="section" id={styles.log}>
 
-          <div className="section" id={styles.log}>
+              <p id="time">00:00
+              </p>
 
-            <p id="time">00:00
-            </p>
+              <div className={styles.buttons}>
+                <button id="inviteLink">
+                  inviteLink
+                </button>
 
-            <div className={styles.buttons}>
-              <button id="inviteLink">
-                inviteLink
-              </button>
+                <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
+                  {checkGame ? 'END' : 'START'}
+                </button>
+              </div>
 
-              <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
-                {checkGame ? 'END' : 'START'}
-              </button>
+              <div id={styles.playerMoveHistory}>
+                <p>erster Zug</p>
+                <p>zweiter Zug</p>
+              </div>
+
             </div>
 
-            <div id={styles.playerMoveHistory}>
-              <p>erster Zug</p>
-              <p>zweiter Zug</p>
-            </div>
 
-          </div>
-
-
-      <style global jsx>{`
+            <style global jsx>{`
         html,
         body{
           background-image: url("../public/background.jpg");
@@ -154,8 +158,20 @@ export default function Home({chessboardData}) {
             sans-serif;
           }
         `}</style>
-    
 
-    </div>
-  )
+
+          </div>
+      )
+    }
+    return (
+        <>
+          Not signed in <br />
+          <button onClick={() => signIn()}>Sign in</button>
+        </>
+    )
+
+
+
+
+
 }

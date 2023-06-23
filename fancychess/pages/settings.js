@@ -3,30 +3,33 @@ import styles from '../styles/settings.module.css';
 import { useState } from 'react';
 import Link from "next/link";
 import Menu from './menu.js';
+import { useSession, signIn, signOut } from "next-auth/react"
 
 
 
 
 
 
-export default function Home() {
+export default function Settings() {
+    const { data: session } = useSession()
     const [showPossibleMoves, setShowPossibleMoves] = useState(false);
 
     const handleTogglePossibleMoves = () => {
         setShowPossibleMoves(!showPossibleMoves);
     };
 
-  return (
+    if (!session) {
+        return (
 
-    <div className={styles.container}>
-      <Head>
-        <title>Settings</title>
-          <link rel="icon" href="../public/logo.ico" />
-      </Head>
+            <div className={styles.container}>
+                <Head>
+                    <title>Settings</title>
+                    <link rel="icon" href="../public/logo.ico" />
+                </Head>
 
-        <div className={styles.sidebar}>
-        <Menu />
-           {/* <div className={styles.menu}>
+                <div className={styles.sidebar}>
+                    <Menu />
+                    {/* <div className={styles.menu}>
                 <h1>Fancy Chess</h1>
                 <Link href="./profil" className={styles.link}>
                     <h2>Account</h2>
@@ -42,25 +45,25 @@ export default function Home() {
                 <img src="/logo.png" alt="logo" className={styles.logo} />
             </Link>*/}
 
-        </div>
+                </div>
 
-        <main className={styles.content}>
-            <h1 className={styles.title}>Settings</h1>
+                <main className={styles.content}>
+                    <h1 className={styles.title}>Settings</h1>
 
-            <div className={styles.grid}>
-                <a className={styles.card}>
-                    <h3>Show possible moves</h3>
-                    <button onClick={handleTogglePossibleMoves}>
-                        {showPossibleMoves ? 'ON' : 'OFF'}
-                    </button>
-                </a>
-            </div>
-        </main>
+                    <div className={styles.grid}>
+                        <a className={styles.card}>
+                            <h3>Show possible moves</h3>
+                            <button onClick={handleTogglePossibleMoves}>
+                                {showPossibleMoves ? 'ON' : 'OFF'}
+                            </button>
+                        </a>
+                    </div>
+                </main>
 
-      <footer>
-      </footer>
+                <footer>
+                </footer>
 
-      <style jsx>{`
+                <style jsx>{`
         main {
           padding: 3rem 0;
           flex: 1;
@@ -73,7 +76,7 @@ export default function Home() {
         
       `}</style>
 
-      <style jsx global>{`
+                <style jsx global>{`
         html,
         body {
           padding: 0;
@@ -86,6 +89,16 @@ export default function Home() {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
-  )
+            </div>
+        )
+    }
+    return (
+        <>
+            Not signed in <br />
+            <button onClick={() => signIn()}>Sign in</button>
+        </>
+    )
+
+
+
 }
