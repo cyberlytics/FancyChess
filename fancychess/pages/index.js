@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
 import WinLosePopUp from './win-lose-pop-up.js'
-import { useState } from 'react';
 
 
 
@@ -109,13 +108,6 @@ export default function Home({chessboardData}) {
   //für Pop up window zum testen
   const [buttonPopup, setButtonPopUp] = useState(false);
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>FancyChess</title>
-          <link rel="icon"  href="../public/logo.ico" />
-      </Head>
-
     if (!session) {
       return (
           <div className={styles.container}>
@@ -125,7 +117,7 @@ export default function Home({chessboardData}) {
             </Head>
 
             <div className="section" id={styles.menu}>
-              <Menu />
+              <Menu/>
 
             </div>
 
@@ -139,30 +131,12 @@ export default function Home({chessboardData}) {
 
             </div>
 
-            <div className="section" id={styles.log}>
+            <div>
 
           <div className="section" id={styles.log}>
 
             <p id="time">00:00
             </p>
-            
-            <button id="inviteLink">
-              inviteLink
-            </button>
-            
-            <button id="startbutton" onClick={callAPI}>
-              Start/End
-            </button>
-
-            <div id={styles.playerMoveHistory}>
-              <p>erster Zug</p>
-              <p>zweiter Zug</p>
-              <a className={styles.link}>
-                <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
-                
-              </a>
-              
-            </div>
 
               <div className={styles.buttons}>
                 <button id="inviteLink">
@@ -177,6 +151,10 @@ export default function Home({chessboardData}) {
               <div id={styles.playerMoveHistory}>
                 <p>erster Zug</p>
                 <p>zweiter Zug</p>
+                <a className={styles.link}>
+                  <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
+
+                </a>
               </div>
 
             </div>
@@ -192,9 +170,10 @@ export default function Home({chessboardData}) {
             Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
             sans-serif;
           }
-        `}</style>
+         `}</style>
 
 
+          </div>
           </div>
       )
     }
