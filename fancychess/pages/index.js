@@ -51,7 +51,7 @@ export default function Home({chessboardData}) {
       button.id = spielfeld[k];
       button.classList.add(styles.button_click);
 
-      if (spielfeld[k] != "-"){
+      if (spielfeld[k] !== "-"){
 
         let image = document.createElement('img');
         let src = "../";

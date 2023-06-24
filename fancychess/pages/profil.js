@@ -4,17 +4,11 @@ import Link from "next/link";
 import {Dropdown} from "@nextui-org/react";
 import Menu from './menu.js';
 import { useSession, signIn } from "next-auth/react"
+import UserNotLoggedIn from "./user_not_logged_in";
 
 export default function Profil() {
   const { data: session } = useSession()
-  if (!session) {
-    return(
-      <div>
-        <body onLoad={signIn()}>
-        </body>
-      </div>
-    );
-  }
+
 
   const dropdownmenu = () => {
       return(
@@ -49,6 +43,7 @@ export default function Profil() {
     }
   }
 
+    if (session) {
   return (
     <div className={styles.container}>
       <Head>
@@ -62,7 +57,7 @@ export default function Profil() {
 
           <div className={styles.midpannel}>
               <div role='profilpicture' className={styles.profilpicture}>
-                {dropdownmenu()}
+                {}
               </div>
               
               <div className={styles.profilpannel}>
@@ -93,5 +88,17 @@ export default function Profil() {
         </style>
     </div>
   )
+
+
+}
+return (
+    <div>
+        <UserNotLoggedIn></UserNotLoggedIn>
+    </div>
+)
+
+
+
+
 
 }
