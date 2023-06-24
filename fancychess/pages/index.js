@@ -2,7 +2,14 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
+import UserNotLoggedIn from './user_not_logged_in.js';
+import { useState } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
+import WinLosePopUp from './win-lose-pop-up.js'
+
+
+
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
 export const getStaticProps = async () => {
@@ -18,6 +25,13 @@ export const getStaticProps = async () => {
 }
 
 export default function Home({chessboardData}) {
+  const { data: session } = useSession()
+
+  const [checkGame , setGameStart] = useState(false);
+
+  const handleStartEnd = () => {
+    setGameStart(!checkGame);
+  };
 
   // Async Function to fetch the API with getStaticProps and place the figures
   const callAPI = async () => {
@@ -37,7 +51,7 @@ export default function Home({chessboardData}) {
       button.id = spielfeld[k];
       button.classList.add(styles.button_click);
 
-      if (spielfeld[k] != "-"){
+      if (spielfeld[k] !== "-"){
 
         let image = document.createElement('img');
         let src = "../";
@@ -91,48 +105,62 @@ export default function Home({chessboardData}) {
     }
   }
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>FancyChess</title>
-          <link rel="icon"  href="../public/logo.ico" />
-      </Head>
+  //für Pop up window zum testen
+  const [buttonPopup, setButtonPopUp] = useState(false);
 
-          <div className="section" id={styles.menu}>
-            <Menu />
+    if (!session) {
+      return (
+          <div className={styles.container}>
+            <Head>
+              <title>FancyChess</title>
+              <link rel="icon"  href="../public/logo.ico" />
+            </Head>
 
-          </div>
-
-          <div className="section" id={styles.game}>
-            <div className="board" id={styles.board}>
-                <ChessBoard />
+            <div className="section" id={styles.menu}>
+              <Menu/>
 
             </div>
 
-          </div>
+            <div className="section" id={styles.game}>
+              <div className="board" id={styles.board}>
+                <ChessBoard />
+                <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
+                </WinLosePopUp>
+
+              </div>
+
+            </div>
+
+            <div>
 
           <div className="section" id={styles.log}>
 
             <p id="time">00:00
             </p>
-            
-            <button id="inviteLink">
-              inviteLink
-            </button>
-            
-            <button id="startbutton" onClick={callAPI}>
-              Start/End
-            </button>
 
-            <div id={styles.playerMoveHistory}>
-              <p>erster Zug</p>
-              <p>zweiter Zug</p>
+              <div className={styles.buttons}>
+                <button id="inviteLink">
+                  inviteLink
+                </button>
+
+                <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
+                  {checkGame ? 'END' : 'START'}
+                </button>
+              </div>
+
+              <div id={styles.playerMoveHistory}>
+                <p>erster Zug</p>
+                <p>zweiter Zug</p>
+                <a className={styles.link}>
+                  <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
+
+                </a>
+              </div>
+
             </div>
 
-          </div>
 
-
-      <style global jsx>{`
+            <style global jsx>{`
         html,
         body{
           background-image: url("../public/background.jpg");
@@ -142,9 +170,17 @@ export default function Home({chessboardData}) {
             Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
             sans-serif;
           }
-        `}</style>
-    
+         `}</style>
 
-    </div>
-  )
+
+          </div>
+          </div>
+      )
+    }
+    return (
+        <div>
+          <UserNotLoggedIn></UserNotLoggedIn>
+        </div>
+    )
+
 }

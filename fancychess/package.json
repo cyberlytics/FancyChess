@@ -8,11 +8,22 @@
     "test": "jest --coverage -o --watch"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.6",
+    "@nextui-org/react": "^1.0.0-beta.13",
     "@prisma/client": "^4.15.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "babel-runtime": "^6.26.0",
     "next": "latest",
     "next-auth": "^4.22.1",
+    "prisma": "^4.15.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "prisma": "^4.15.0"
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0"
   }
 }
