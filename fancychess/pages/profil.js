@@ -67,19 +67,19 @@ export default function Profil() {
               
               <div className={styles.profilpannel}>
 
-              </div>
-              <div className={styles.gamehistory}>
+                    </div>
+                    <div className={styles.gamehistory}>
 
-              </div>
-          </div>
+                    </div>
+                </div>
 
-          <div className={styles.rightpannel}></div>
+                <div className={styles.rightpannel}></div>
 
-      </body>
+                </body>
 
-      <footer>
-      </footer>
-        <style global jsx>{`
+                <footer>
+                </footer>
+                <style global jsx>{`
         html,
         body{
           height: 100vh;
