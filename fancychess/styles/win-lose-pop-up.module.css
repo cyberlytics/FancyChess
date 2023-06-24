@@ -11,10 +11,72 @@
     align-items: center;
 }
 
+
+
 .popup_inner{
     position: relative;
     padding: 32px;
     width: 100%;
     max-width: 640px;
     background-color: #fff;
+}
+
+.profilpic_winner{
+    width: 20vh;
+    height: 20vh;
+    background-color: green;
+    float:left;
+}
+
+.player1details{
+    width: 29vh;
+    height: 20vh;
+    float: left;
+    margin-left: 1vh;
+}
+
+.player1name{
+    text-align: center;
+}
+
+.player1elo{
+    text-align: center;
+}
+.player1plus{
+    text-align: center;
+    color: green;
+}
+
+.player2details{
+    width: 30vh;
+    height: 20vh;
+    float: left;
+    margin-left: 5vh;
+}
+
+
+.player2name{
+    text-align: center;
+}
+
+.player2elo{
+    text-align: center;
+}
+.player2minus{
+    text-align: center;
+    color: red;
+}
+
+
+.profilpic_loser{
+    width: 20vh;
+    height: 20vh;
+    background-color: red;
+    float:right;
+}
+
+.accept_button{
+    float: left;
+    margin-left: 45%;
+    margin-top: 15%;
 }

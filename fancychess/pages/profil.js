@@ -1,32 +1,71 @@
 import Head from 'next/head';
 import styles from '../styles/profil.module.css';
 import Link from "next/link";
+import {Dropdown} from "@nextui-org/react";
 import Menu from './menu.js';
-import UserNotLoggedIn from './user_not_logged_in.js';
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 
 export default function Profil() {
-    const { data: session } = useSession()
+  const { data: session } = useSession()
+  if (!session) {
+    return(
+      <div>
+        <body onLoad={signIn()}>
+        </body>
+      </div>
+    );
+  }
 
+  const dropdownmenu = () => {
+      return(
+        <Dropdown>
+          <Dropdown.Button edit>edit</Dropdown.Button>
+          <Dropdown.Menu aria-label="Static Actions">
+            <Dropdown.Item key="W_Bauer">W_Bauer</Dropdown.Item>
+            <Dropdown.Item key="W_Turm">W_Turm</Dropdown.Item>
+            <Dropdown.Item key="W_Springer">W_Springer</Dropdown.Item>
+            <Dropdown.Item key="W_Laufer">W_Läufer</Dropdown.Item>
+            <Dropdown.Item key="W_Koenig">W_König</Dropdown.Item>
+            <Dropdown.Item key="W_Dame">W_Dame</Dropdown.Item>
+            <Dropdown.Item key="S_Bauer">S_Bauer</Dropdown.Item>
+            <Dropdown.Item key="S_Turm">S_Turm</Dropdown.Item>
+            <Dropdown.Item key="S_Springer">S_Springer</Dropdown.Item>
+            <Dropdown.Item key="S_Laufer">S_Läufer</Dropdown.Item>
+            <Dropdown.Item key="S_Koenig">S_König</Dropdown.Item>
+            <Dropdown.Item key="S_Dame">S_Dame</Dropdown.Item>
+          </Dropdown.Menu>
+          {dropdownchoice(Dropdown.key)}
+        </Dropdown>
+      )
+  }
 
-    if (!session) {
-        return (
-            <div className={styles.container}>
-                <Head>
-                    <title>Profil</title>
-                    <link rel="icon" href="../public/logo.ico" />
-                </Head>
-                <body>
-                <div className={styles.leftpannel}>
-                    <Menu />
-                    {/*<div className={styles.navpannel}>
-                  <h1>Fancy Chess</h1>
-                </div>*/}
-                </div>
+  const dropdownchoice = (key) => {
+    switch(key){
+      case "W_Bauer":{
+        return(
+          <image src="../public/Pawn-W.svg"/>
+        )
+      }
+    }
+  }
 
-                <div className={styles.midpannel}>
-                    <div role='profilpicture' className={styles.profilpicture}></div>
-                    <div className={styles.profilpannel}>
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Profil</title>
+        <link rel="icon" href="../public/logo.ico" />
+      </Head>
+      <body>
+          <div className={styles.leftpannel}>
+            <Menu />
+          </div>
+
+          <div className={styles.midpannel}>
+              <div role='profilpicture' className={styles.profilpicture}>
+                {dropdownmenu()}
+              </div>
+              
+              <div className={styles.profilpannel}>
 
                     </div>
                     <div className={styles.gamehistory}>
@@ -51,17 +90,8 @@ export default function Profil() {
             sans-serif;
           }
         `}
-                </style>
-            </div>
-        )
-    }
-    return (
-        <div>
-            <UserNotLoggedIn></UserNotLoggedIn>
-        </div>
-    )
-
-
-
+        </style>
+    </div>
+  )
 
 }

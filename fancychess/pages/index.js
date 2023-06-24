@@ -6,6 +6,9 @@ import UserNotLoggedIn from './user_not_logged_in.js';
 import { useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
+import WinLosePopUp from './win-lose-pop-up.js'
+import { useState } from 'react';
+
 
 
 
@@ -103,6 +106,15 @@ export default function Home({chessboardData}) {
     }
   }
 
+  //für Pop up window zum testen
+  const [buttonPopup, setButtonPopUp] = useState(false);
+
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>FancyChess</title>
+          <link rel="icon"  href="../public/logo.ico" />
+      </Head>
 
     if (!session) {
       return (
@@ -120,6 +132,8 @@ export default function Home({chessboardData}) {
             <div className="section" id={styles.game}>
               <div className="board" id={styles.board}>
                 <ChessBoard />
+                <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
+                </WinLosePopUp>
 
               </div>
 
@@ -127,8 +141,28 @@ export default function Home({chessboardData}) {
 
             <div className="section" id={styles.log}>
 
-              <p id="time">00:00
-              </p>
+          <div className="section" id={styles.log}>
+
+            <p id="time">00:00
+            </p>
+            
+            <button id="inviteLink">
+              inviteLink
+            </button>
+            
+            <button id="startbutton" onClick={callAPI}>
+              Start/End
+            </button>
+
+            <div id={styles.playerMoveHistory}>
+              <p>erster Zug</p>
+              <p>zweiter Zug</p>
+              <a className={styles.link}>
+                <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
+                
+              </a>
+              
+            </div>
 
               <div className={styles.buttons}>
                 <button id="inviteLink">
