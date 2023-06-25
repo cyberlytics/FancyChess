@@ -74,13 +74,12 @@ const getBoard = async (url) => {
       firstclick = null;
       temp = null;
 
-      //TODO: Fordere hier das neue Board an!
-
+      //Ziehe hier das nun neue Board
       url = "api/game/update"
       const response = getBoard(url);
-      console.log(response.body)
-
-
+      response.then(function(result){
+        console.log(result)
+      })
     }
 
   };
