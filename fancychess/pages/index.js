@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import UserNotLoggedIn from './user_not_logged_in.js';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
 import WinLosePopUp from './win-lose-pop-up.js'
@@ -33,6 +33,42 @@ export default function Home({chessboardData}) {
     setGameStart(!checkGame);
   };
 
+
+// You have to click.
+  var switchi = true;
+  var temp;
+  var firstclick = null;
+
+  let handleMouseHover;
+  handleMouseHover = (event) => {
+
+    temp = event.target.id;
+      console.log('1:',temp)
+
+
+  };
+
+  let handleClick;
+  handleClick = () => {
+    switchi = false;
+    console.log('2:', temp);
+    if(firstclick == null){
+      firstclick = temp;
+    } else {
+      console.log("Von: ", firstclick)
+      console.log("Nach: ",temp)
+
+      //TODO:senden des Zuges - nicht ueberprueft
+
+      firstclick = null;
+      temp = null;
+    }
+
+  };
+
+
+  // End click
+
   // Async Function to fetch the API with getStaticProps and place the figures
   const callAPI = async () => {
     console.log("Call API");
@@ -50,6 +86,11 @@ export default function Home({chessboardData}) {
       let button = document.createElement('button');
       button.id = spielfeld[k];
       button.classList.add(styles.button_click);
+
+      // Füge hier ein onMouseEnter hinzu
+      Container.onmouseenter = handleMouseHover;
+      //Und hier den Click irgendwo im Fenster als trigger
+      window.addEventListener('click', handleClick);
 
       if (spielfeld[k] !== "-"){
 
@@ -115,7 +156,6 @@ export default function Home({chessboardData}) {
               <title>FancyChess</title>
               <link rel="icon"  href="../public/logo.ico" />
             </Head>
-
             <div className="section" id={styles.menu}>
               <Menu/>
 
@@ -174,6 +214,7 @@ export default function Home({chessboardData}) {
 
 
           </div>
+
           </div>
       )
     }
@@ -182,5 +223,5 @@ export default function Home({chessboardData}) {
           <UserNotLoggedIn></UserNotLoggedIn>
         </div>
     )
-
 }
+
