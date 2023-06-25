@@ -71,8 +71,14 @@ describe('Mechanics', () => {
     });
 
     it('Invalid Code to Board', () => {
-        let validCode = codeToBoard("WFJHBDHJFLQLLLLLL--------------------------------KKKKKKKKEIGACGIE");
-        let expectedBoard = "Ungueltiger Code";
-        expect(validCode == expectedBoard).toBe(true);
+        let invalidCode = codeToBoard("WFJHBDHJFLQLLLLLL--------------------------------KKKKKKKKEIGACGIE");
+        let expectedC2BResponse = "Ungueltiger Code";
+        expect(invalidCode == expectedC2BResponse).toBe(true);
+    });
+
+    it('Generate Chess Board', () => {
+        let generateChessCall = generateChess();
+        let expectedNewBoard = [["t","s","l","k","d","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","K","D","L","S","T"]];
+        expect(generateChessCall == expectedNewBoard).toBe(true);
     });
   });
