@@ -11,3 +11,15 @@
 .content {
     text-align: center;
 }
+
+.sign_in_button {
+    padding-top: 1em;
+    padding-bottom: 2em;
+}
+
+.notlogged button {
+    font-size: 16px;
+    border-radius: 0.5em;
+    background-color: white;
+    border: none;
+}

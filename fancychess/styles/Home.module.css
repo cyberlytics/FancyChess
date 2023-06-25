@@ -41,7 +41,7 @@
 }
 
 .time {
-  padding-top: 1em;
+  padding-top: 2em;
   text-align: center;
   font-size: 2em;
 }
@@ -71,6 +71,7 @@
   margin-top: 3em;
   padding-left: 2em;
   padding-right: 2em;
+  padding-bottom: 1.5em;
 }
 
 #logout{
@@ -91,4 +92,8 @@
   width:100%;
   background-color: transparent;
   border-color: transparent;
+}
+
+.time {
+  font-size: 18px;
 }
