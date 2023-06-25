@@ -43,9 +43,9 @@ export default async function handler(req, res) {
             }
             case 'GET':{
                 //Übergebe die individuelle GameID
-                const { ID, von, nach } = req.body
+                //const { ID, von, nach } = req.body
                 //Hole das Board aus der Datenbank
-                const board = await getBoard(ID)
+                const board = await getBoard(req.body["ID"])
                 return  res.status(200).json(board)
             }
             default:

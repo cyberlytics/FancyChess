@@ -67,6 +67,7 @@ export default function Home({chessboardData}) {
       var data = JSON.stringify({"ID": SpieleID, "von": firstclick,"nach":temp});
       xhr.send(data);
 
+
       firstclick = null;
       temp = null;
 
