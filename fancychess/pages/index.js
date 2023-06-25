@@ -79,25 +79,30 @@ const getBoard = async (url) => {
       const response = getBoard(url);
       response.then(function(result){
         console.log(result)
+        //Lösche das alte Board und erstelle das neue
+        place_figures(result);
       })
     }
 
   };
 
+  // Function for updating chess-figures with a given json 
+  const place_figures = async (spielfeld) => {
+    
+    let elementExists = document.getElementById("-");
+    console.log(elementExists);
+    if(elementExists != null){
 
-  // End click
-  // Async Function to fetch the API with getStaticProps and place the figures
-  const callAPI = async () => {
-    console.log("Call API");
+      let table = document.getElementById('chess-board');
+      let buttons = table.getElementsByTagName('button');
 
-    // Search trough data of the json we got from the api
-    const data = chessboardData;
-    const body = JSON.parse(data["body"]);
-    const spielfeld = body["spielfeld"];
-    SpieleID = body["controller"]["id"];
-    console.log(spielfeld);
+      let len_buttons = buttons.length;
+      
+      for(let i = len_buttons -1; i >= 0; i--){
+        buttons[i].remove();
+      } 
+    } 
 
-    // Place each chess-figure
     for (let k in spielfeld){
  
       let Container = document.getElementById(k);
@@ -162,6 +167,23 @@ const getBoard = async (url) => {
 
       Container.appendChild(button);
     }
+  }
+
+
+  // End click
+  // Async Function to fetch the API with getStaticProps and place the figures
+  const callAPI = async () => {
+    console.log("Call API");
+
+    // Search trough data of the json we got from the api
+    const data = chessboardData;
+    const body = JSON.parse(data["body"]);
+    const spielfeld = body["spielfeld"];
+    SpieleID = body["controller"]["id"];
+    console.log(spielfeld);
+
+    // Place each chess-figure
+    place_figures(spielfeld);
   }
 
   //für Pop up window zum testen
