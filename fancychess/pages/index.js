@@ -3,10 +3,11 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import UserNotLoggedIn from './user_not_logged_in.js';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
 import WinLosePopUp from './win-lose-pop-up.js'
+
 
 
 
@@ -19,6 +20,8 @@ export const getStaticProps = async () => {
   const response = await fetch(url);
   const data = await response.json();
 
+
+
   return {
     props: {chessboardData: data}
   }
@@ -28,10 +31,34 @@ export default function Home({chessboardData}) {
   const { data: session } = useSession()
 
   const [checkGame , setGameStart] = useState(false);
+  const [time, setTime] = useState(600);
 
   const handleStartEnd = () => {
     setGameStart(!checkGame);
   };
+
+  useEffect(() => {
+    let interval = null;
+
+    if (checkGame) {
+      interval = setInterval(() => {
+        setTime(prevTime => {
+          if (prevTime === 0) {
+            clearInterval(interval);
+            // Hier kannst du weitere Aktionen ausführen, wenn der Timer abgelaufen ist
+            return prevTime;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => {
+      clearInterval(interval); // Beim Aufräumen den Intervall löschen
+    };
+  }, [checkGame]);
 
 
 // You have to click.
@@ -186,10 +213,10 @@ export default function Home({chessboardData}) {
 
           <div className="section" id={styles.log}>
 
-            <p id="time">00:00
-            </p>
+            <p id="time">{Math.floor(time / 60).toString().padStart(2, '0')}:{(time % 60).toString().padStart(2, '0')}</p>
 
-              <div className={styles.buttons}>
+
+            <div className={styles.buttons}>
                 <button id="inviteLink">
                   inviteLink
                 </button>

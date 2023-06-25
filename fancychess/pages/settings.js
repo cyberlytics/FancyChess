@@ -33,14 +33,14 @@ export default function Settings() {
 
             <main className={styles.content}>
                 <h1 className={styles.title}>Settings</h1>
-
                 <div className={styles.grid}>
-                    <a className={styles.card}>
-                        <h3>Show possible moves</h3>
-                        <button onClick={handleTogglePossibleMoves}>
-                            {showPossibleMoves ? 'ON' : 'OFF'}
-                        </button>
-                    </a>
+                    <h2>Show possible moves</h2>
+                </div>
+
+                <div>
+                    <button onClick={handleTogglePossibleMoves}>
+                        {showPossibleMoves ? 'ON' : 'OFF'}
+                    </button>
                 </div>
             </main>
 
