@@ -39,19 +39,17 @@ export default function Home({chessboardData}) {
   var temp;
   var firstclick = null;
 
+  var SpieleID;
+
   let handleMouseHover;
   handleMouseHover = (event) => {
-
+    //update
     temp = event.target.id;
-      console.log('1:',temp)
-
-
   };
 
   let handleClick;
   handleClick = () => {
     switchi = false;
-    console.log('2:', temp);
     if(firstclick == null){
       firstclick = temp;
     } else {
@@ -60,8 +58,19 @@ export default function Home({chessboardData}) {
 
       //TODO:senden des Zuges - nicht ueberprueft
 
+      // Sending and receiving data in JSON format using POST method
+//
+      var xhr = new XMLHttpRequest();
+      var url = "api/game/update";
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      var data = JSON.stringify({"ID": SpieleID, "von": firstclick,"nach":temp});
+      xhr.send(data);
+
       firstclick = null;
       temp = null;
+
+      //TODO: Fordere hier das neue Board an!
     }
 
   };
@@ -77,6 +86,7 @@ export default function Home({chessboardData}) {
     const data = chessboardData;
     const body = JSON.parse(data["body"]);
     const spielfeld = body["spielfeld"];
+    SpieleID = body["controller"]["id"];
     console.log(spielfeld);
 
     // Place each chess-figure

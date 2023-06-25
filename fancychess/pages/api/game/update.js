@@ -20,19 +20,25 @@ export default async function handler(req, res) {
         switch (req.method){
             //Schicke die Daten zum Server
             case 'POST':{
-
                 // Update durchführen, wenn das Spielbrett schon vorhanden ist
-                const { ID, von, nach } = req.body
+                //const { ID, von, nach } = req.body
+                const ID = req.body["ID"];
+                const von = req.body["von"];
+                const nach = req.body["nach"];
 
                 //Entnehme das Board aus der Datenbank
-                const live_board = await getBoard(ID)
+                //const live_board = await getBoard(ID)
+
                 //TODO:Logik hier mit einbauen
+                console.log("ID: ",ID)
+                console.log("von: ",von)
+                console.log("nach: ",nach)
 
 
                 let neuesBoard;
                 //Speichere das Board in der Datenbank
-                const board = await updateBoard(ID, neuesBoard)
-                return res.status(200).json(board)
+                //const board = await updateBoard(ID, neuesBoard)
+                return res.status(200).json({info:req.body});
 
             }
             case 'GET':{
