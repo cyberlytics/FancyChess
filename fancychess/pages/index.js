@@ -31,18 +31,23 @@ export default function Home({chessboardData}) {
   };
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
-const getBoard = async (url) => {
+const getBoard = async (url,gameID) => {
+    url += "?ID="+gameID
+  console.log(url)
     const response = await fetch(url);
     return await response.json();
   }
 
 
 // You have to click.
-  var switchi = true;
-  var temp;
-  var firstclick = null;
+  let switchi = true;
+  let temp;
+  let firstclick = null;
 
-  var SpieleID;
+  let SpieleID;
+  let url;
+
+  let firstTurn = true;
 
   let handleMouseHover;
   handleMouseHover = (event) => {
@@ -62,13 +67,27 @@ const getBoard = async (url) => {
       //TODO:senden des Zuges - nicht ueberprueft
 
       // Sending and receiving data in JSON format using POST method
-//
-      let xhr = new XMLHttpRequest();
-      let url = "api/game/update";
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
-      xhr.send(data);
+
+      //Ist das der erste Zug?
+      if(firstTurn){
+        let xhr = new XMLHttpRequest();
+        url = "api/game/createDB";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
+        xhr.send(data);
+        firstTurn = false;
+
+      }else{
+        let xhr = new XMLHttpRequest();
+        url = "api/game/update";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
+        xhr.send(data);
+      }
+
+
 
 
       firstclick = null;
@@ -76,7 +95,7 @@ const getBoard = async (url) => {
 
       //Ziehe hier das nun neue Board
       url = "api/game/update"
-      const response = getBoard(url);
+      const response = getBoard(url,SpieleID);
       response.then(function(result){
         console.log(result)
       })

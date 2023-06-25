@@ -21,7 +21,8 @@ export default async function handler(req, res) {
         a8: "T", b8: "S", c8: "L", d8: "D", e8: "K", f8: "L", g8: "S", h8: "T"
     };
 
-    if (!session) {
+    //TODO: Das ist nur tempoär für jeden zugänglich!!! -> !session
+    if (session) {
         res.status(403).json({ error: "Not signed in" })
     } else {
         //Wenn etwas zum Server geschickt wird --> POST
@@ -29,32 +30,33 @@ export default async function handler(req, res) {
 
             if (req.method === 'POST') {
                 //Erstelle das Spielbrett für die Datenbank!
-                const { ID, von, nach } = req.body
-                console.log("Ein neuen Datenbankeintrag erstllen.")
-                console.log(ID)
+                const ID = req.body["ID"];
+                const von = req.body["von"];
+                const nach = req.body["nach"];
+
+                console.log("Es wird ein neuer Datenbankeintrag erstellt. ID: ",ID)
 
                 //TODO:Logik
-                //Da dies der erste eintag ist, wird das Standardboard bearbeitet - TEMPORÄR
+                //Da dies der erste Eintrag ist, wird das Standardboard bearbeitet - TEMPORÄR
                 let temp = default_spielfeld[von]
                 default_spielfeld[von] = '-'
                 default_spielfeld[nach] = temp
-                console.log(default_spielfeld)
 
                 //In der Datenbank wird das Spielfeld als String gespeichert
                 const myJSON = JSON.stringify(default_spielfeld);
 
                 //TODO: Datenbankeintrag ablegen
-                const newBoard = await createGameboard(ID, myJSON)
+                //const newBoard = await createGameboard(ID, myJSON)
                 //return  res.status(200).json({info: "Erstmaliges POST",nextplayer:"black",gameID: ID, board: default_spielfeld})//.json(newBoard)
 
-                res.status(200).json({info: "Success!", nextplayer: "black"})
+                return res.status(200).json({info: "Success!", nextplayer: "black"})
             } else {
                 return res.status(200).json({error: "Kein POST!"})
             }
 
         } catch (error){
-            res.status(500).json({ ...error, message: error.message })
+            return res.status(500).json({ ...error, message: error.message })
         }
-        return res
+
     }
 }

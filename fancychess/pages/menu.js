@@ -38,12 +38,6 @@ export default function Menu() {
               </Link> }
         </div>
 
-
-
-
-
-
-
       <style global jsx>{`
         html,
         body{
