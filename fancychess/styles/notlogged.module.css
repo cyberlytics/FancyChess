@@ -19,7 +19,7 @@
 
 .notlogged button {
     font-size: 16px;
-    padding: 0.5em;
     border-radius: 0.5em;
-    background-color: #66afe9;
+    background-color: white;
+    border: none;
 }

@@ -1,14 +1,16 @@
 import Head from 'next/head';
 import styles from '../styles/profil.module.css';
-import { Dropdown } from "@nextui-org/react";
+import { Dropdown, Link } from "@nextui-org/react";
 import Menu from './menu.js';
 import { useSession, signIn } from "next-auth/react"
+import { useState } from 'react';
 import UserNotLoggedIn from "./user_not_logged_in";
 import React from "react";
+import GameHistoryPopUp from "./gamehistory-pop-up";
 
 export default function Profil() {
   const { data: session } = useSession()
-
+  const [buttonPopup, setButtonPopUp] = useState(false);
 
   const [selected, setSelected] = React.useState(new Set(["S_Bauer"]));
   const dropdownmenu = () => {
@@ -103,102 +105,121 @@ export default function Profil() {
 
   }
 
-    if (session) {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Profil</title>
-        <link rel="icon" href="../public/logo.ico" />
-      </Head>
-      <body>
-        <div className={styles.leftpannel}>
-          <Menu />
-        </div>
-
-        <div className={styles.midpannel}>
-          <div role='profilpicture' className={styles.profilpicture}>
-            {dropdownmenu()}
-            <img src="/Pawn-B.svg" height={"100%"} width={"100%"} className={styles.profilPicture_user} id='profilPicture_img'></img>
-
+  if (!session) {
+    return (
+      <div className={styles.container}>
+        <Head>
+          <title>Profil</title>
+          <link rel="icon" href="../public/logo.ico" />
+        </Head>
+        <body>
+          <div className={styles.leftpannel}>
+            <Menu />
           </div>
 
-          <div className={styles.profilpannel}>
-            <h1>GAMERTAG</h1>
-            <h1 id='elo_number'>
-              532
-              <img src="/Pawn-B.svg" height={"5%"} width={"5%"} className={styles.elo_icon} id='elo_img'></img>
-              {elo_icon()}
-            </h1>
+          <div className={styles.midpannel}>
+            <div role='profilpicture' className={styles.profilpicture}>
+              {dropdownmenu()}
+              <img src="/Pawn-B.svg" height={"100%"} width={"100%"} className={styles.profilPicture_user} id='profilPicture_img'></img>
+
+            </div>
+
+            <div className={styles.profilpannel}>
+              <h1>GAMERTAG</h1>
+              <h1 id='elo_number'>
+                532
+                <img src="/Pawn-B.svg" height={"5%"} width={"5%"} className={styles.elo_icon} id='elo_img'></img>
+                {elo_icon()}
+              </h1>
 
 
+            </div>
+            <div className={styles.gamehistory}>
+              <table id="tableID" className={styles.gamehistory_table}>
+                <thead>
+                  <tr>
+                    <th>Gegenspieler</th>
+                    <th>Spielverlauf</th>
+                    <th>Datum</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Gegenspieler1</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf1</button>
+                    </td>
+                    <td>Datum1</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler2</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf2</button>
+                    </td>
+                    <td>Datum2</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler3</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf3</button>
+                    </td>
+                    <td>Datum3</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler4</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf4</button>
+                    </td>
+                    <td>Datum4</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler5</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf5</button>
+                    </td>
+                    <td>Datum5</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler6</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf6</button>
+                    </td>
+                    <td>Datum6</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler7</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf7</button>
+                    </td>
+                    <td>Datum7</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler8</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf8</button>
+                    </td>
+                    <td>Datum8</td>
+                  </tr>
+                  <tr>
+                    <td>Gegenspieler9</td>
+                    <td>
+                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf9</button>
+                    </td>
+                    <td>Datum9</td>
+                  </tr>
+                </tbody>
+              </table>
+              <GameHistoryPopUp trigger={buttonPopup} setTrigger={setButtonPopUp}></GameHistoryPopUp>
+            </div>
           </div>
-          <div className={styles.gamehistory}>
-            <table id="tableID" className={styles.gamehistory_table}>
-              <thead>
-                <tr>
-                  <th>Enemy Name</th>
-                  <th>Game Moves</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-              <tr>
-                  <th>Enemy Name2</th>
-                  <th>Game Moves2</th>
-                  <th>Date2</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name3</th>
-                  <th>Game Moves3</th>
-                  <th>Date3</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name4</th>
-                  <th>Game Moves4</th>
-                  <th>Date4</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name5</th>
-                  <th>Game Moves5</th>
-                  <th>Date5</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name6</th>
-                  <th>Game Moves6</th>
-                  <th>Date6</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name7</th>
-                  <th>Game Moves7</th>
-                  <th>Date7</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name8</th>
-                  <th>Game Moves8</th>
-                  <th>Date8</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name9</th>
-                  <th>Game Moves9</th>
-                  <th>Date9</th>
-                </tr>
-                <tr>
-                  <th>Enemy Name10</th>
-                  <th>Game Moves10</th>
-                  <th>Date10</th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
 
-        <div className={styles.rightpannel}></div>
+          <div className={styles.rightpannel}></div>
 
-                </body>
+        </body>
 
-      <footer>
-      </footer>
-      <style global jsx>{`
+        <footer>
+        </footer>
+        <style global jsx>{`
         html,
         body{
           height: 100vh;
@@ -209,17 +230,17 @@ export default function Profil() {
             sans-serif;
           }
         `}
-      </style>
+        </style>
+      </div>
+    )
+
+
+  }
+  return (
+    <div>
+      <UserNotLoggedIn></UserNotLoggedIn>
     </div>
   )
-
-
-}
-return (
-    <div>
-        <UserNotLoggedIn></UserNotLoggedIn>
-    </div>
-)
 
 
 

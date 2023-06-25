@@ -3,18 +3,24 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import UserNotLoggedIn from './user_not_logged_in.js';
-import React, {useState} from 'react';
-import {useSession} from "next-auth/react"
+import React, { useState, useEffect } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react"
+import Link from 'next/link';
 import WinLosePopUp from './win-lose-pop-up.js'
+
+
+
 
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
 export const getStaticProps = async () => {
 
-  const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart'
+  const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart';
 
   const response = await fetch(url);
   const data = await response.json();
+
+
 
   return {
     props: {chessboardData: data}
@@ -25,16 +31,34 @@ export default function Home({chessboardData}) {
   const { data: session } = useSession()
 
   const [checkGame , setGameStart] = useState(false);
+  const [time, setTime] = useState(600);
 
   const handleStartEnd = () => {
     setGameStart(!checkGame);
   };
 
-// get Static Props async function to negate the CORS-Error and to fetch the api
-const getBoard = async (url) => {
-    const response = await fetch(url);
-    return await response.json();
-  }
+  useEffect(() => {
+    let interval = null;
+
+    if (checkGame) {
+      interval = setInterval(() => {
+        setTime(prevTime => {
+          if (prevTime === 0) {
+            clearInterval(interval);
+            // Nach Ablauf der Zeit weiter Interaktionen möglich
+            return prevTime;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [checkGame]);
 
 
 // You have to click.
@@ -63,11 +87,11 @@ const getBoard = async (url) => {
 
       // Sending and receiving data in JSON format using POST method
 //
-      let xhr = new XMLHttpRequest();
-      let url = "api/game/update";
+      var xhr = new XMLHttpRequest();
+      var url = "api/game/update";
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-Type", "application/json");
-      let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
+      var data = JSON.stringify({"ID": SpieleID, "von": firstclick,"nach":temp});
       xhr.send(data);
 
 
@@ -93,8 +117,11 @@ const getBoard = async (url) => {
     console.log(elementExists);
     if(elementExists != null){
 
-      let table = document.getElementById('chess-board');
-      let buttons = table.getElementsByTagName('button');
+  // End click
+
+  // Async Function to fetch the API with getStaticProps and place the figures
+  const callAPI = async () => {
+    console.log("Call API");
 
       let len_buttons = buttons.length;
       
@@ -214,11 +241,11 @@ const getBoard = async (url) => {
             <div>
 
           <div className="section" id={styles.log}>
+            <div className={styles.time}>
+              <p id="time">{Math.floor(time / 60).toString().padStart(2, '0')}:{(time % 60).toString().padStart(2, '0')}</p>
+            </div>
 
-            <p id="time">00:00
-            </p>
-
-              <div className={styles.buttons}>
+            <div className={styles.buttons}>
                 <button id="inviteLink">
                   inviteLink
                 </button>

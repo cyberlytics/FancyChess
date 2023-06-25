@@ -77,4 +77,14 @@
     float: left;
     margin-left: 45%;
     margin-top: 15%;
+    background-color: white;
+    border-color: rgb(80,70,255,1);
+    border-radius: 50%;
+    font-weight: bold;
+    width: 10%;
+    height: 10vh;
+}
+.accept_button:hover{
+    color: white;
+    background-color: rgb(80,70,255,1);
 }
