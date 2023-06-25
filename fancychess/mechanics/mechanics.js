@@ -71,7 +71,33 @@ function codeToBoard(code) {
     let ctbCount = 0;
 
     for(let i = 1; i < code.length; i++) {
-        temp.push(code[i]);
+        if(code[i] == "A") {
+            temp.push("K");
+        } else if(code[i] == "B") {
+            temp.push("k");
+        } else if(code[i] == "C") {
+            temp.push("D");
+        } else if(code[i] == "D") {
+            temp.push("d");
+        } else if(code[i] == "E") {
+            temp.push("T");
+        } else if(code[i] == "F") {
+            temp.push("t");
+        } else if(code[i] == "G") {
+            temp.push("L");
+        } else if(code[i] == "H") {
+            temp.push("l");
+        } else if(code[i] == "I") {
+            temp.push("S");
+        } else if(code[i] == "J") {
+            temp.push("s");
+        } else if(code[i] == "K") {
+            temp.push("B");
+        } else if(code[i] == "L") {
+            temp.push("b");
+        } else {
+            return "Ungueltiger Code";
+        }
         ctbCount++;
 
         if(ctbCount > 7) {
