@@ -6,7 +6,7 @@ let prisma
 import {
     getBoard,
     updateBoard
-} from '../../prisma/access_db'
+} from '../../../lib/access_db'
 import jQuery from "prisma";
 
 export default async function handler(req, res) {
