@@ -16,7 +16,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "babel-runtime": "^6.26.0",
-    "next": "^13.4.8-canary.1",
+    "next": "latest",
     "next-auth": "^4.22.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
