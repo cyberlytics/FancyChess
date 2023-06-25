@@ -64,6 +64,25 @@ function boardToCode(board, turn) {
     return code;
 }
 
+function codeToBoard(code) {
+    let board = [];
+    let turn = code[0]; // Wie das uebergeben wird, ist noch nicht sicher
+    let temp = [];
+    let ctbCount = 0;
+
+    for(let i = 1; i < code.length; i++) {
+        temp.push(code[i]);
+        ctbCount++;
+
+        if(ctbCount > 7) {
+            board.push(temp);
+            temp = [];
+        }
+    }
+
+    return board;
+}
+
 function generateChess() {
     let schachbrett = [["t","s","l","k","d","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","K","D","L","S","T"]];
     schwarzerKoenig[0] = 4;
