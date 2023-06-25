@@ -45,7 +45,7 @@ export default function Home({chessboardData}) {
         setTime(prevTime => {
           if (prevTime === 0) {
             clearInterval(interval);
-            // Hier kannst du weitere Aktionen ausführen, wenn der Timer abgelaufen ist
+            // Nach Ablauf der Zeit weiter Interaktionen möglich
             return prevTime;
           }
           return prevTime - 1;
@@ -56,7 +56,7 @@ export default function Home({chessboardData}) {
     }
 
     return () => {
-      clearInterval(interval); // Beim Aufräumen den Intervall löschen
+      clearInterval(interval);
     };
   }, [checkGame]);
 
@@ -212,9 +212,9 @@ export default function Home({chessboardData}) {
             <div>
 
           <div className="section" id={styles.log}>
-
-            <p id="time">{Math.floor(time / 60).toString().padStart(2, '0')}:{(time % 60).toString().padStart(2, '0')}</p>
-
+            <div className={styles.time}>
+              <p id="time">{Math.floor(time / 60).toString().padStart(2, '0')}:{(time % 60).toString().padStart(2, '0')}</p>
+            </div>
 
             <div className={styles.buttons}>
                 <button id="inviteLink">
