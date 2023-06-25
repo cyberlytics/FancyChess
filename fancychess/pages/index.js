@@ -103,22 +103,24 @@ export default function Home({chessboardData}) {
 
   };
 
+  const place_figures = async (spielfeld) => {
+    
+    let elementExists = document.getElementById("-");
+    console.log(elementExists);
+    if(elementExists != null){
 
-  // End click
-  // Async Function to fetch the API with getStaticProps and place the figures
-  const callAPI = async () => {
-    console.log("Call API");
+      let table = document.getElementById('chess-board');
+      let buttons = table.getElementsByTagName('button');
 
-    // Search trough data of the json we got from the api
-    const data = chessboardData;
-    const body = JSON.parse(data["body"]);
-    const spielfeld = body["spielfeld"];
-    SpieleID = body["controller"]["id"];
-    console.log(spielfeld);
+      let len_buttons = buttons.length;
+      
+      for(let i = len_buttons -1; i >= 0; i--){
+        buttons[i].remove();
+      } 
+    } 
 
-    // Place each chess-figure
     for (let k in spielfeld){
-
+ 
       let Container = document.getElementById(k);
       let button = document.createElement('button');
       button.id = spielfeld[k];
@@ -133,7 +135,7 @@ export default function Home({chessboardData}) {
 
         let image = document.createElement('img');
         let src = "../";
-
+      
         switch (spielfeld[k]){
           case "t":
             src += "Rook-W.svg";
@@ -177,10 +179,27 @@ export default function Home({chessboardData}) {
         image.id = spielfeld[k];
 
         button.appendChild(image);
-      }
+      } 
 
       Container.appendChild(button);
     }
+  }
+
+
+  // End click
+  // Async Function to fetch the API with getStaticProps and place the figures
+  const callAPI = async () => {
+    console.log("Call API");
+
+    // Search trough data of the json we got from the api
+    const data = chessboardData;
+    const body = JSON.parse(data["body"]);
+    const spielfeld = body["spielfeld"];
+    SpieleID = body["controller"]["id"];
+    console.log(spielfeld);
+
+    // Place each chess-figure
+    place_figures(spielfeld);
   }
 
   //für Pop up window zum testen
