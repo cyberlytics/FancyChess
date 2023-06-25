@@ -47,7 +47,6 @@ export default function Menu() {
       <style global jsx>{`
         html,
         body{
-          background-image: url("../public/background.jpg");
           height: 100vh;
           margin: 0;
           }

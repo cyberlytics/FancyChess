@@ -221,7 +221,6 @@ const getBoard = async (url) => {
             <style global jsx>{`
         html,
         body{
-          background-image: url("../public/background.jpg");
           height: 100vh;
           margin: 0;
           font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
