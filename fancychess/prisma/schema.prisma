@@ -7,13 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model fancy_chess_test {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  @@map("fancy-chess-test")
-}
-
-model fancy_chess {
+model games {
 
     id    String @id @default(auto()) @map("_id") @db.ObjectId
     gameID    String
