@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import UserNotLoggedIn from './user_not_logged_in.js';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link';
 import WinLosePopUp from './win-lose-pop-up.js'
@@ -33,6 +33,52 @@ export default function Home({chessboardData}) {
     setGameStart(!checkGame);
   };
 
+
+// You have to click.
+  var switchi = true;
+  var temp;
+  var firstclick = null;
+
+  var SpieleID;
+
+  let handleMouseHover;
+  handleMouseHover = (event) => {
+    //update
+    temp = event.target.id;
+  };
+
+  let handleClick;
+  handleClick = () => {
+    switchi = false;
+    if(firstclick == null){
+      firstclick = temp;
+    } else {
+      console.log("Von: ", firstclick)
+      console.log("Nach: ",temp)
+
+      //TODO:senden des Zuges - nicht ueberprueft
+
+      // Sending and receiving data in JSON format using POST method
+//
+      var xhr = new XMLHttpRequest();
+      var url = "api/game/update";
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      var data = JSON.stringify({"ID": SpieleID, "von": firstclick,"nach":temp});
+      xhr.send(data);
+
+
+      firstclick = null;
+      temp = null;
+
+      //TODO: Fordere hier das neue Board an!
+    }
+
+  };
+
+
+  // End click
+
   // Async Function to fetch the API with getStaticProps and place the figures
   const callAPI = async () => {
     console.log("Call API");
@@ -41,6 +87,7 @@ export default function Home({chessboardData}) {
     const data = chessboardData;
     const body = JSON.parse(data["body"]);
     const spielfeld = body["spielfeld"];
+    SpieleID = body["controller"]["id"];
     console.log(spielfeld);
 
     // Place each chess-figure
@@ -50,6 +97,11 @@ export default function Home({chessboardData}) {
       let button = document.createElement('button');
       button.id = spielfeld[k];
       button.classList.add(styles.button_click);
+
+      // Füge hier ein onMouseEnter hinzu
+      Container.onmouseenter = handleMouseHover;
+      //Und hier den Click irgendwo im Fenster als trigger
+      window.addEventListener('click', handleClick);
 
       if (spielfeld[k] !== "-"){
 
@@ -115,7 +167,6 @@ export default function Home({chessboardData}) {
               <title>FancyChess</title>
               <link rel="icon"  href="../public/logo.ico" />
             </Head>
-
             <div className="section" id={styles.menu}>
               <Menu/>
 
@@ -174,6 +225,7 @@ export default function Home({chessboardData}) {
 
 
           </div>
+
           </div>
       )
     }
@@ -182,5 +234,5 @@ export default function Home({chessboardData}) {
           <UserNotLoggedIn></UserNotLoggedIn>
         </div>
     )
-
 }
+

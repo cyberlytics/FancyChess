@@ -12,3 +12,13 @@ model fancy_chess_test {
 
   @@map("fancy-chess-test")
 }
+
+model fancy_chess {
+
+    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    gameID    String
+    board     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+

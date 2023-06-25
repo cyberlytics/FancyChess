@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import Head from 'next/head';
-import Script from 'next/script';
 import styles from '../styles/chess-board.module.css'
 
 import React from 'react';
@@ -68,11 +65,11 @@ export default function ChessBoard() {
     const create_label = (x,y) => {
         let label = "";
 
-        if((x == 0 || x == 9) && !(y == 0 || y == 9)){
+        if((x === 0 || x === 9) && !(y === 0 || y === 9)){
             label += invert_number(y);
         }
 
-        if((y == 0 || y == 9) && !(x == 0 || x == 9)){
+        if((y === 0 || y === 9) && !(x === 0 || x === 9)){
             label = number_to_label(x);
         }
 
@@ -81,9 +78,9 @@ export default function ChessBoard() {
 
     // Function to change coordinates into their respective color
     const create_color = (x,y) => {
-        if ((x == 0 || x == 9) || (y == 0 || y == 9)){
+        if ((x === 0 || x === 9) || (y === 0 || y === 9)){
             return("label");
-        } else if (((y % 2 == 1) && (x % 2 == 1)) || (y % 2 == 0) && (x % 2 == 0)){
+        } else if (((y % 2 === 1) && (x % 2 === 1)) || (y % 2 === 0) && (x % 2 === 0)){
             return("white");
         } else {
             return("black");
@@ -92,11 +89,11 @@ export default function ChessBoard() {
 
     // Function to change colors into their css-classname
     const create_cell_color = (color) => {
-        if (color == "label"){
+        if (color === "label"){
             return(styles.cell_l);
-        } else if (color == "white"){
+        } else if (color === "white"){
             return(styles.cell_w);
-        } else if (color == "black"){
+        } else if (color === "black"){
             return(styles.cell_b);
         }
     }
