@@ -2,7 +2,9 @@ import prisma from './prisma'
 
 // READ
 export const getBoard = async gameID => {
-    const database = await prisma.fancy_chess.findUnique({
+    await prisma.$connect()
+
+    const database = await prisma.games.findUnique({
         where: { gameID }
     })
     return database
@@ -10,7 +12,9 @@ export const getBoard = async gameID => {
 
 // CREATE
 export const createGameboard = async (gameID, board) => {
-    const database = await prisma.fancy_chess.create({
+    await prisma.$connect()
+
+    const database = await prisma.games.create({
         data: {
             gameID,
             board
@@ -21,7 +25,9 @@ export const createGameboard = async (gameID, board) => {
 
 // UPDATE
 export const updateBoard = async (gameID, board) => {
-    const database = await prisma.fancy_chess.update({
+    await prisma.$connect()
+
+    const database = await prisma.games.update({
         where: {
             gameID
         },
