@@ -28,20 +28,21 @@ export default async function handler(req, res) {
                 const nach = req.body["nach"];
 
                 //Entnehme das Board aus der Datenbank
-                //const live_board = getBoard(ID)
+                const live_board = getBoard(ID)
 
-               // console.log(live_board)
+                //TODO:Logik hier mit einbauen  -> Das ist nur temporär!!!
+                let temp = live_board[von]
+                live_board[von] = '-'
+                live_board[nach] = temp
 
-                //TODO:Logik hier mit einbauen
+
                 console.log("ID: ",ID)
                 console.log("von: ",von)
                 console.log("nach: ",nach)
 
-
-                let neuesBoard;
                 //Speichere das Board in der Datenbank
-                //const board = await updateBoard(ID, neuesBoard)
-                return res.status(200).json({info:req.body});
+                const board = updateBoard(ID, live_board)
+                return res.status(200).json(live_board);
 
             }
             case 'GET':{
@@ -50,10 +51,10 @@ export default async function handler(req, res) {
                 console.log(ID)
 
                 //Hole das Board aus der Datenbank
-                //const board = await getBoard(ID)
+                const board = getBoard(ID)
 
                 //TODO: Temporäres Spielfeld, bis die Datenbankanbindung steht
-
+/*
                 const default_spielfeld = {
                     a1: "t", b1: "s", c1: "l", d1: "d", e1: "k", f1: "l", g1: "s", h1: "t",
                     a2: "b", b2: "b", c2: "b", d2: "b", e2: "b", f2: "b", g2: "b", h2: "b",
@@ -63,9 +64,9 @@ export default async function handler(req, res) {
                     a6: "-", b6: "-", c6: "-", d6: "-", e6: "-", f6: "-", g6: "-", h6: "-",
                     a7: "B", b7: "B", c7: "B", d7: "-", e7: "B", f7: "B", g7: "B", h7: "B",
                     a8: "T", b8: "S", c8: "L", d8: "D", e8: "K", f8: "L", g8: "S", h8: "T"
-                };
+                };*/
 
-                return  res.status(200).json(default_spielfeld)
+                return  res.status(200).json(board)
             }
             default:
                 return res.status(200).json({error: "Kein POST oder GET!"})
