@@ -98,11 +98,24 @@ export default function Home({chessboardData}) {
       firstclick = null;
       temp = null;
 
-      //TODO: Fordere hier das neue Board an!
+      //Ziehe hier das nun neue Board
+      url = "api/game/update"
+      const response = getBoard(url);
+      response.then(function(result){
+        console.log(result)
+        //Lösche das alte Board und erstelle das neue
+        place_figures(result);
+      })
     }
 
   };
 
+  // Function for updating chess-figures with a given json 
+  const place_figures = async (spielfeld) => {
+    
+    let elementExists = document.getElementById("-");
+    console.log(elementExists);
+    if(elementExists != null){
 
   // End click
 
@@ -110,14 +123,13 @@ export default function Home({chessboardData}) {
   const callAPI = async () => {
     console.log("Call API");
 
-    // Search trough data of the json we got from the api
-    const data = chessboardData;
-    const body = JSON.parse(data["body"]);
-    const spielfeld = body["spielfeld"];
-    SpieleID = body["controller"]["id"];
-    console.log(spielfeld);
+      let len_buttons = buttons.length;
+      
+      for(let i = len_buttons -1; i >= 0; i--){
+        buttons[i].remove();
+      } 
+    } 
 
-    // Place each chess-figure
     for (let k in spielfeld){
  
       let Container = document.getElementById(k);
@@ -182,6 +194,23 @@ export default function Home({chessboardData}) {
 
       Container.appendChild(button);
     }
+  }
+
+
+  // End click
+  // Async Function to fetch the API with getStaticProps and place the figures
+  const callAPI = async () => {
+    console.log("Call API");
+
+    // Search trough data of the json we got from the api
+    const data = chessboardData;
+    const body = JSON.parse(data["body"]);
+    const spielfeld = body["spielfeld"];
+    SpieleID = body["controller"]["id"];
+    console.log(spielfeld);
+
+    // Place each chess-figure
+    place_figures(spielfeld);
   }
 
   //für Pop up window zum testen
