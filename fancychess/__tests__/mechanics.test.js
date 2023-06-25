@@ -81,4 +81,32 @@ describe('Mechanics', () => {
         let expectedNewBoard = [["t","s","l","k","d","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","K","D","L","S","T"]];
         expect(generateChessCall == expectedNewBoard).toBe(true);
     });
+
+    it('Check Winner with Black as Winner', () => {
+        let boardBlackWin = [["t","s","l","-","d","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","K","D","L","S","T"]];
+        let checkWinnerBlack = checkWinner(boardBlackWin);
+        let winnerBlackResult = "S";
+        expect(checkWinnerBlack == winnerBlackResult).toBe(true);
+    });
+
+    it('Check Winner with White as Winner', () => {
+        let boardWhiteWin = [["t","s","l","k","d","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","-","D","L","S","T"]];
+        let checkWinnerWhite = checkWinner(boardWhiteWin);
+        let winnerWhiteResult = "W";
+        expect(checkWinnerWhite == winnerWhiteResult).toBe(true);
+    });
+
+    it('Check Winner with No Winner yet', () => {
+        let boardNoWin = [["t","s","l","k","d","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","K","D","L","S","T"]];
+        let checkWinnerNobody = checkWinner(boardNoWin);
+        let winnerNobodyResult = "continue";
+        expect(checkWinnerNobody == winnerNobodyResult).toBe(true);
+    });
+
+    it('Check Winner Error Case', () => {
+        let boardErrorWin = [["t","s","l","-","d","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","-","D","L","S","T"]];
+        let checkWinnerError = checkWinner(boardErrorWin);
+        let winnerErrorResult = "error";
+        expect(checkWinnerError == winnerErrorResult).toBe(true);
+    });
   });
