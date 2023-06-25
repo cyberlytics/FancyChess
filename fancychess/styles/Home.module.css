@@ -41,7 +41,7 @@
 }
 
 .time {
-  padding-top: 1em;
+  padding-top: 2em;
   text-align: center;
   font-size: 2em;
 }
@@ -92,4 +92,8 @@
   width:100%;
   background-color: transparent;
   border-color: transparent;
+}
+
+.time {
+  font-size: 18px;
 }
