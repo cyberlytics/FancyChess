@@ -3,18 +3,15 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import UserNotLoggedIn from './user_not_logged_in.js';
-import React, { useState } from 'react';
-import { useSession, signIn, signOut } from "next-auth/react"
-import Link from 'next/link';
+import React, {useState} from 'react';
+import {useSession} from "next-auth/react"
 import WinLosePopUp from './win-lose-pop-up.js'
-
-
 
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
 export const getStaticProps = async () => {
 
-  const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart';
+  const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart'
 
   const response = await fetch(url);
   const data = await response.json();
@@ -32,6 +29,12 @@ export default function Home({chessboardData}) {
   const handleStartEnd = () => {
     setGameStart(!checkGame);
   };
+
+// get Static Props async function to negate the CORS-Error and to fetch the api
+const getBoard = async (url) => {
+    const response = await fetch(url);
+    return await response.json();
+  }
 
 
 // You have to click.
@@ -60,11 +63,11 @@ export default function Home({chessboardData}) {
 
       // Sending and receiving data in JSON format using POST method
 //
-      var xhr = new XMLHttpRequest();
-      var url = "api/game/update";
+      let xhr = new XMLHttpRequest();
+      let url = "api/game/update";
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-Type", "application/json");
-      var data = JSON.stringify({"ID": SpieleID, "von": firstclick,"nach":temp});
+      let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
       xhr.send(data);
 
 
@@ -72,13 +75,18 @@ export default function Home({chessboardData}) {
       temp = null;
 
       //TODO: Fordere hier das neue Board an!
+
+      url = "api/game/update"
+      const response = getBoard(url);
+      console.log(response.body)
+
+
     }
 
   };
 
 
   // End click
-
   // Async Function to fetch the API with getStaticProps and place the figures
   const callAPI = async () => {
     console.log("Call API");
