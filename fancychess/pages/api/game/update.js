@@ -7,6 +7,7 @@ import {
     getBoard,
     updateBoard
 } from '../../prisma/access_db'
+import jQuery from "prisma";
 
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions)
@@ -27,7 +28,9 @@ export default async function handler(req, res) {
                 const nach = req.body["nach"];
 
                 //Entnehme das Board aus der Datenbank
-                //const live_board = await getBoard(ID)
+                //const live_board = getBoard(ID)
+
+               // console.log(live_board)
 
                 //TODO:Logik hier mit einbauen
                 console.log("ID: ",ID)
@@ -43,9 +46,11 @@ export default async function handler(req, res) {
             }
             case 'GET':{
                 //Übergebe die individuelle GameID
-                //const { ID, von, nach } = req.body
+                const ID = req.query.ID;
+                console.log(ID)
+
                 //Hole das Board aus der Datenbank
-                //const board = await getBoard(req.body["ID"])
+                //const board = await getBoard(ID)
 
                 //TODO: Temporäres Spielfeld, bis die Datenbankanbindung steht
 
