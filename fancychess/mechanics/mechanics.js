@@ -55,9 +55,9 @@ function boardToCode(board, turn) {
                 code += "I";
             } else if(board[i][j][1] == "Springer" && board[i][j][2] == "W") {
                 code += "J";
-            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "S") {
+            } else if((board[i][j][1] == "usedBauer" || board[i][j][1] == "unusedBauer") && board[i][j][2] == "S") {
                 code += "K";
-            } else if(board[i][j][1] == "Bauer" && board[i][j][2] == "W") {
+            } else if((board[i][j][1] == "usedBauer" || board[i][j][1] == "unusedBauer") && board[i][j][2] == "W") {
                 code += "L";
             }
         }
