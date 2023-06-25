@@ -3,24 +3,18 @@ import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
 import UserNotLoggedIn from './user_not_logged_in.js';
-import React, { useState, useEffect } from 'react';
-import { useSession, signIn, signOut } from "next-auth/react"
-import Link from 'next/link';
+import React, {useState} from 'react';
+import {useSession} from "next-auth/react"
 import WinLosePopUp from './win-lose-pop-up.js'
-
-
-
 
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
 export const getStaticProps = async () => {
 
-  const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart';
+  const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart'
 
   const response = await fetch(url);
   const data = await response.json();
-
-
 
   return {
     props: {chessboardData: data}
@@ -31,42 +25,29 @@ export default function Home({chessboardData}) {
   const { data: session } = useSession()
 
   const [checkGame , setGameStart] = useState(false);
-  const [time, setTime] = useState(600);
 
   const handleStartEnd = () => {
     setGameStart(!checkGame);
   };
 
-  useEffect(() => {
-    let interval = null;
-
-    if (checkGame) {
-      interval = setInterval(() => {
-        setTime(prevTime => {
-          if (prevTime === 0) {
-            clearInterval(interval);
-            // Nach Ablauf der Zeit weiter Interaktionen möglich
-            return prevTime;
-          }
-          return prevTime - 1;
-        });
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [checkGame]);
+// get Static Props async function to negate the CORS-Error and to fetch the api
+  const getBoard = async (url,gameID) => {
+    url += "?ID="+gameID
+    console.log(url)
+    const response = await fetch(url);
+    return await response.json();
+  }
 
 
 // You have to click.
-  var switchi = true;
-  var temp;
-  var firstclick = null;
+  let switchi = true;
+  let temp;
+  let firstclick = null;
 
-  var SpieleID;
+  let SpieleID;
+  let url;
+
+  let firstTurn = true;
 
   let handleMouseHover;
   handleMouseHover = (event) => {
@@ -86,13 +67,27 @@ export default function Home({chessboardData}) {
       //TODO:senden des Zuges - nicht ueberprueft
 
       // Sending and receiving data in JSON format using POST method
-//
-      var xhr = new XMLHttpRequest();
-      var url = "api/game/update";
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      var data = JSON.stringify({"ID": SpieleID, "von": firstclick,"nach":temp});
-      xhr.send(data);
+
+      //Ist das der erste Zug?
+      if(firstTurn){
+        let xhr = new XMLHttpRequest();
+        url = "api/game/createDB";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
+        xhr.send(data);
+        firstTurn = false;
+
+      }else{
+        let xhr = new XMLHttpRequest();
+        url = "api/game/update";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
+        xhr.send(data);
+      }
+
+
 
 
       firstclick = null;
@@ -100,38 +95,30 @@ export default function Home({chessboardData}) {
 
       //Ziehe hier das nun neue Board
       url = "api/game/update"
-      const response = getBoard(url);
+      const response = getBoard(url,SpieleID);
       response.then(function(result){
         console.log(result)
-        //Lösche das alte Board und erstelle das neue
-        place_figures(result);
       })
     }
 
   };
 
-  // Function for updating chess-figures with a given json 
-  const place_figures = async (spielfeld) => {
-    
-    let elementExists = document.getElementById("-");
-    console.log(elementExists);
-    if(elementExists != null){
 
   // End click
-
   // Async Function to fetch the API with getStaticProps and place the figures
   const callAPI = async () => {
     console.log("Call API");
 
-      let len_buttons = buttons.length;
-      
-      for(let i = len_buttons -1; i >= 0; i--){
-        buttons[i].remove();
-      } 
-    } 
+    // Search trough data of the json we got from the api
+    const data = chessboardData;
+    const body = JSON.parse(data["body"]);
+    const spielfeld = body["spielfeld"];
+    SpieleID = body["controller"]["id"];
+    console.log(spielfeld);
 
+    // Place each chess-figure
     for (let k in spielfeld){
- 
+
       let Container = document.getElementById(k);
       let button = document.createElement('button');
       button.id = spielfeld[k];
@@ -146,7 +133,7 @@ export default function Home({chessboardData}) {
 
         let image = document.createElement('img');
         let src = "../";
-      
+
         switch (spielfeld[k]){
           case "t":
             src += "Rook-W.svg";
@@ -190,62 +177,45 @@ export default function Home({chessboardData}) {
         image.id = spielfeld[k];
 
         button.appendChild(image);
-      } 
+      }
 
       Container.appendChild(button);
     }
   }
 
-
-  // End click
-  // Async Function to fetch the API with getStaticProps and place the figures
-  const callAPI = async () => {
-    console.log("Call API");
-
-    // Search trough data of the json we got from the api
-    const data = chessboardData;
-    const body = JSON.parse(data["body"]);
-    const spielfeld = body["spielfeld"];
-    SpieleID = body["controller"]["id"];
-    console.log(spielfeld);
-
-    // Place each chess-figure
-    place_figures(spielfeld);
-  }
-
   //für Pop up window zum testen
   const [buttonPopup, setButtonPopUp] = useState(false);
 
-    if (!session) {
-      return (
-          <div className={styles.container}>
-            <Head>
-              <title>FancyChess</title>
-              <link rel="icon"  href="../public/logo.ico" />
-            </Head>
-            <div className="section" id={styles.menu}>
-              <Menu/>
+  if (!session) {
+    return (
+        <div className={styles.container}>
+          <Head>
+            <title>FancyChess</title>
+            <link rel="icon"  href="../public/logo.ico" />
+          </Head>
+          <div className="section" id={styles.menu}>
+            <Menu/>
+
+          </div>
+
+          <div className="section" id={styles.game}>
+            <div className="board" id={styles.board}>
+              <ChessBoard />
+              <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
+              </WinLosePopUp>
 
             </div>
 
-            <div className="section" id={styles.game}>
-              <div className="board" id={styles.board}>
-                <ChessBoard />
-                <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
-                </WinLosePopUp>
+          </div>
 
-              </div>
+          <div>
 
-            </div>
+            <div className="section" id={styles.log}>
 
-            <div>
+              <p id="time">00:00
+              </p>
 
-          <div className="section" id={styles.log}>
-            <div className={styles.time}>
-              <p id="time">{Math.floor(time / 60).toString().padStart(2, '0')}:{(time % 60).toString().padStart(2, '0')}</p>
-            </div>
-
-            <div className={styles.buttons}>
+              <div className={styles.buttons}>
                 <button id="inviteLink">
                   inviteLink
                 </button>
@@ -270,7 +240,6 @@ export default function Home({chessboardData}) {
             <style global jsx>{`
         html,
         body{
-          background-image: url("../public/background.jpg");
           height: 100vh;
           margin: 0;
           font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
@@ -282,13 +251,12 @@ export default function Home({chessboardData}) {
 
           </div>
 
-          </div>
-      )
-    }
-    return (
-        <div>
-          <UserNotLoggedIn></UserNotLoggedIn>
         </div>
     )
+  }
+  return (
+      <div>
+        <UserNotLoggedIn></UserNotLoggedIn>
+      </div>
+  )
 }
-
