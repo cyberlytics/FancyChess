@@ -122,8 +122,18 @@ function generateChess() {
 function checkCheck(board, X, Y) {
     for(let x = 0; x < 8; x++) {
         for(let y = 0; y < 8; y++) {
-            if(checkMove(board, x, y, X, Y)) {
-                return true;
+            if(board[Y][X] == "K" && board[Y][X] == "D" && board[Y][X] == "T" && board[Y][X] == "L" && board[Y][X] == "S" && board[Y][X] == "B") {
+                if(board[y][x] == "k" && board[y][x] == "d" && board[y][x] == "t" && board[y][x] == "l" && board[y][x] == "s" && board[y][x] == "b") {
+                    if(checkMove(board, x, y, X, Y)) {
+                        return true;
+                    }
+                }
+            } else if(board[Y][X] == "k" && board[Y][X] == "d" && board[Y][X] == "t" && board[Y][X] == "l" && board[Y][X] == "s" && board[Y][X] == "b") {
+                if(board[y][x] == "K" && board[y][x] == "D" && board[y][x] == "T" && board[y][x] == "L" && board[y][x] == "S" && board[y][x] == "B") {
+                    if(checkMove(board, x, y, X, Y)) {
+                        return true;
+                    }
+                }
             }
         }
     }
