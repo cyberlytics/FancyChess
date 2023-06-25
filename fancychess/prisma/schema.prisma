@@ -15,9 +15,10 @@ model fancy_chess_test {
 
 model fancy_chess {
 
-    id        String  @id @default(dbgenerated()) @map("_id") @db.ObjectID
-    gameID    Int
+    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    gameID    String
     board     String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
+
