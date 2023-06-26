@@ -71,7 +71,33 @@ function codeToBoard(code) {
     let ctbCount = 0;
 
     for(let i = 1; i < code.length; i++) {
-        temp.push(code[i]);
+        if(code[i] == "A") {
+            temp.push("K");
+        } else if(code[i] == "B") {
+            temp.push("k");
+        } else if(code[i] == "C") {
+            temp.push("D");
+        } else if(code[i] == "D") {
+            temp.push("d");
+        } else if(code[i] == "E") {
+            temp.push("T");
+        } else if(code[i] == "F") {
+            temp.push("t");
+        } else if(code[i] == "G") {
+            temp.push("L");
+        } else if(code[i] == "H") {
+            temp.push("l");
+        } else if(code[i] == "I") {
+            temp.push("S");
+        } else if(code[i] == "J") {
+            temp.push("s");
+        } else if(code[i] == "K") {
+            temp.push("B");
+        } else if(code[i] == "L") {
+            temp.push("b");
+        } else {
+            return "Ungueltiger Code";
+        }
         ctbCount++;
 
         if(ctbCount > 7) {
@@ -96,8 +122,18 @@ function generateChess() {
 function checkCheck(board, X, Y) {
     for(let x = 0; x < 8; x++) {
         for(let y = 0; y < 8; y++) {
-            if(checkMove(board, x, y, X, Y)) {
-                return true;
+            if(board[Y][X] == "K" && board[Y][X] == "D" && board[Y][X] == "T" && board[Y][X] == "L" && board[Y][X] == "S" && board[Y][X] == "B") {
+                if(board[y][x] == "k" && board[y][x] == "d" && board[y][x] == "t" && board[y][x] == "l" && board[y][x] == "s" && board[y][x] == "b") {
+                    if(checkMove(board, x, y, X, Y)) {
+                        return true;
+                    }
+                }
+            } else if(board[Y][X] == "k" && board[Y][X] == "d" && board[Y][X] == "t" && board[Y][X] == "l" && board[Y][X] == "s" && board[Y][X] == "b") {
+                if(board[y][x] == "K" && board[y][x] == "D" && board[y][x] == "T" && board[y][x] == "L" && board[y][x] == "S" && board[y][x] == "B") {
+                    if(checkMove(board, x, y, X, Y)) {
+                        return true;
+                    }
+                }
             }
         }
     }
