@@ -9,7 +9,7 @@ export default function Menu() {
   return (
 
     <div id={styles.innermenu}>
-        <Link href={"http://localhost:3000"}>
+        <Link href={"http://localhost:3000/"}>
             <img src="/logo.png" alt="logo" className={styles.logo} />
         </Link>
         

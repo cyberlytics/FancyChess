@@ -205,7 +205,7 @@ export default function Home({chessboardData}) {
   //für Pop up window zum testen
   const [buttonPopup, setButtonPopUp] = useState(false);
 
-  if (!session) {
+  if (session) {
     return (
         <div className={styles.container}>
           <Head>
@@ -273,6 +273,7 @@ export default function Home({chessboardData}) {
         </div>
     )
   }
+
   return (
       <div>
         <UserNotLoggedIn></UserNotLoggedIn>
