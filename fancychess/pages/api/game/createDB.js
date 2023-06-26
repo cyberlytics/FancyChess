@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     };
 
     //TODO: Das ist nur tempoär für jeden zugänglich!!! -> !session
-    if (session) {
+    if (!session) {
         res.status(403).json({ error: "Not signed in" })
     } else {
         //Wenn etwas zum Server geschickt wird --> POST
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
                 const myJSON = JSON.stringify(default_spielfeld);
 
                 //TODO: Datenbankeintrag ablegen
-                //const newBoard = await createGameboard(ID, myJSON)
+                const newBoard = await createGameboard(ID, myJSON)
                 //return  res.status(200).json({info: "Erstmaliges POST",nextplayer:"black",gameID: ID, board: default_spielfeld})//.json(newBoard)
 
                 return res.status(200).json({info: "Success!", nextplayer: "black"})
