@@ -72,7 +72,7 @@ export default function Home({chessboardData}) {
       if(firstTurn){
         let xhr = new XMLHttpRequest();
         url = "api/game/createDB";
-        xhr.open("POST", url, true);
+        xhr.open("POST", url, false);
         xhr.setRequestHeader("Content-Type", "application/json");
         let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
         xhr.send(data);
@@ -81,7 +81,7 @@ export default function Home({chessboardData}) {
       }else{
         let xhr = new XMLHttpRequest();
         url = "api/game/update";
-        xhr.open("POST", url, true);
+        xhr.open("POST", url, false);
         xhr.setRequestHeader("Content-Type", "application/json");
         let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
         xhr.send(data);

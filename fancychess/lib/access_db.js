@@ -3,8 +3,9 @@ import prisma from './prisma'
 // READ
 export const getBoard = async gameID => {
     await prisma.$connect()
+    console.log("getBoard called")
 
-    const database = await prisma.games.findUnique({
+    const database = await prisma.games.findFirst({
         where: { gameID }
     })
     return database
