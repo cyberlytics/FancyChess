@@ -30,44 +30,67 @@ export default async function handler(req, res) {
                 //Entnehme das Board aus der Datenbank
                 const live_board = await getBoard(parseInt(ID))
 
+                //Ergebnis aus der Datenbank:
+                const ankommendesBoard = live_board["board"];
+                const ankommendeID = live_board["gameID"]
+
                 //TODO:Logik hier mit einbauen  -> Das ist nur temporär!!!
-                let temp = live_board[von]
-                live_board[von] = '-'
-                live_board[nach] = temp
+                let temp = ankommendesBoard[von]
+                ankommendesBoard[von] = '-'
+                ankommendesBoard[nach] = temp
 
 
-                console.log("ID: ",ID)
+                console.log("ID: ",ankommendeID)
                 console.log("von: ",von)
                 console.log("nach: ",nach)
 
                 //Speichere das Board in der Datenbank
-                const board = updateBoard(ID, live_board)
-                return res.status(200).json(live_board);
+                const board = updateBoard(ankommendeID, ankommendesBoard)
+                return res.status(200).json(ankommendesBoard);
 
             }
             case 'GET':{
                 //Übergebe die individuelle GameID
                 const ID = req.query.ID;
-                console.log(ID)
 
                 //Hole das Board aus der Datenbank
-                const board = await getBoard(parseInt(ID))
+                const data_server = await getBoard(parseInt(ID))
 
-                //TODO: Temporäres Spielfeld, bis die Datenbankanbindung steht
-/*
-                const default_spielfeld = {
-                    a1: "t", b1: "s", c1: "l", d1: "d", e1: "k", f1: "l", g1: "s", h1: "t",
-                    a2: "b", b2: "b", c2: "b", d2: "b", e2: "b", f2: "b", g2: "b", h2: "b",
-                    a3: "-", b3: "-", c3: "-", d3: "-", e3: "-", f3: "-", g3: "-", h3: "-",
-                    a4: "-", b4: "-", c4: "-", d4: "-", e4: "-", f4: "-", g4: "-", h4: "-",
-                    a5: "-", b5: "-", c5: "-", d5: "B", e5: "-", f5: "-", g5: "-", h5: "-",
-                    a6: "-", b6: "-", c6: "-", d6: "-", e6: "-", f6: "-", g6: "-", h6: "-",
-                    a7: "B", b7: "B", c7: "B", d7: "-", e7: "B", f7: "B", g7: "B", h7: "B",
-                    a8: "T", b8: "S", c8: "L", d8: "D", e8: "K", f8: "L", g8: "S", h8: "T"
-                };*/
+                //Hier sind die Daten vom Server
+                const ankommendesBoard = data_server["board"];
+                const ankommendeID = data_server["gameID"]
 
-                return  res.status(200).json(board)
+                //Schicke nun das Board mit der ID zurück
+                return  res.status(200).json({ID: ankommendeID,board:ankommendesBoard})
             }
+
+            case 'PUT': {
+                const ID = req.body["ID"];
+                const von = req.body["von"];
+                const nach = req.body["nach"];
+
+                // Query the existing board
+                const data_server = await getBoard(parseInt(ID));
+                if (!data_server) {
+                    return res.status(404).json({ error: "Board not found" });
+                }
+                const ankommendesBoard = data_server.board;
+                const ankommendeID = data_server.gameID;
+
+                // Implement game logic and update the board
+                let temp = ankommendesBoard[von];
+                ankommendesBoard[von] = '-';
+                ankommendesBoard[nach] = temp;
+
+                // Update the board in the database
+                await updateBoard(ankommendeID, ankommendesBoard);
+
+                res.status(200).json({ board: ankommendesBoard });
+                break;
+            }
+
+
+
             default:
                 return res.status(200).json({error: "Kein POST oder GET!"})
         }

@@ -33,9 +33,18 @@ export default function Home({chessboardData}) {
 // get Static Props async function to negate the CORS-Error and to fetch the api
   const getBoard = async (url,gameID) => {
     url += "?ID="+gameID
-    console.log(url)
+    //TODO: wirft einen Fehler wenn es einen NULL-Wert zurück bekommt
     const response = await fetch(url);
-    return await response.json();
+    const data = await response.json();
+    return {
+      props: {chessboardData: data}
+    }
+
+  }
+
+  function holeBoard(url,SpieleID){
+    //Ziehe hier das nun neue Board
+
   }
 
 
@@ -81,24 +90,32 @@ export default function Home({chessboardData}) {
       }else{
         let xhr = new XMLHttpRequest();
         url = "api/game/update";
-        xhr.open("POST", url, false);
+        xhr.open("PUT", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
         xhr.send(data);
       }
 
-
-
-
       firstclick = null;
       temp = null;
+      let xhr = new XMLHttpRequest();
+      url = `api/game/update?ID=${SpieleID}`;
+      xhr.open("GET", url, false);
+      xhr.setRequestHeader("Content-Type", "application/json");
 
-      //Ziehe hier das nun neue Board
-      url = "api/game/update"
-      const response = getBoard(url,SpieleID);
-      response.then(function(result){
-        console.log(result)
-      })
+      xhr.onreadystatechange = async function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            await place_figures_again(response["board"]);
+          } else {
+            console.error('Error:', xhr.status);
+          }
+        }
+      };
+
+      xhr.send();
+
     }
 
   };
@@ -127,9 +144,15 @@ export default function Home({chessboardData}) {
       button.classList.add(styles.button_click);
 
       // Füge hier ein onMouseEnter hinzu
-      Container.onmouseenter = handleMouseHover;
-      //Und hier den Click irgendwo im Fenster als trigger
-      window.addEventListener('click', handleClick);
+      try {
+        Container.onmouseenter = handleMouseHover;
+
+        //Und hier den Click irgendwo im Fenster als trigger
+        window.addEventListener('click', handleClick);
+
+      } catch (error) {
+        console.error(error);
+      }
 
       if (spielfeld[k] !== "-"){
 
@@ -180,7 +203,85 @@ export default function Home({chessboardData}) {
 
         button.appendChild(image);
       } 
+      Container.appendChild(button);
+    }
+  }
 
+
+  const place_figures_again = async (spielfeld) => {
+
+    spielfeld = JSON.parse(spielfeld);
+
+    let elementExists = document.getElementById("-");
+    if(elementExists != null){
+
+      let table = document.getElementById('chess-board');
+      let buttons = table.getElementsByTagName('button');
+
+      let len_buttons = buttons.length;
+
+      for(let i = len_buttons -1; i >= 0; i--){
+        buttons[i].remove();
+      }
+    }
+
+    for (let k in spielfeld){
+
+      let Container = document.getElementById(k);
+      let button = document.createElement('button');
+      button.id = spielfeld[k];
+      button.classList.add(styles.button_click);
+
+
+      if (spielfeld[k] !== "-"){
+
+        let image = document.createElement('img');
+        let src = "../";
+
+        switch (spielfeld[k]){
+          case "t":
+            src += "Rook-W.svg";
+            break;
+          case "T":
+            src += "Rook-B.svg";
+            break;
+          case "s":
+            src += "Knight-W.svg";
+            break;
+          case "S":
+            src += "Knight-B.svg";
+            break;
+          case "l":
+            src += "Bishop-W.svg";
+            break;
+          case "L":
+            src += "Bishop-B.svg";
+            break;
+          case "d":
+            src += "Queen-W.svg";
+            break;
+          case "D":
+            src += "Queen-B.svg";
+            break;
+          case "k":
+            src += "King-W.svg";
+            break;
+          case "K":
+            src += "King-B.svg";
+            break;
+          case "b":
+            src += "Pawn-W.svg";
+            break;
+          case "B":
+            src += "Pawn-B.svg";
+            break;
+        }
+
+        image.src = src;
+        image.id = spielfeld[k];
+
+        button.appendChild(image);
+      }
       Container.appendChild(button);
     }
   }
@@ -189,7 +290,6 @@ export default function Home({chessboardData}) {
   // End click
   // Async Function to fetch the API with getStaticProps and place the figures
   const callAPI = async () => {
-    console.log("Call API");
 
     // Search trough data of the json we got from the api
     const data = chessboardData;
@@ -199,13 +299,13 @@ export default function Home({chessboardData}) {
     console.log(spielfeld);
 
     // Place each chess-figure
-    place_figures(spielfeld);
+    await place_figures(spielfeld);
   }
 
   //für Pop up window zum testen
   const [buttonPopup, setButtonPopUp] = useState(false);
 
-  if (session) {
+  if (!session) {
     return (
         <div className={styles.container}>
           <Head>
