@@ -7,7 +7,7 @@ import {
     getBoard,
     createGameboard,
     updateBoard
-} from '../../prisma/access_db'
+} from '../../../lib/access_db'
 
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions)
