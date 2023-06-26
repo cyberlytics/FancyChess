@@ -28,7 +28,7 @@ export default async function handler(req, res) {
                 const nach = req.body["nach"];
 
                 //Entnehme das Board aus der Datenbank
-                const live_board = getBoard(ID)
+                const live_board = await getBoard(parseInt(ID))
 
                 //TODO:Logik hier mit einbauen  -> Das ist nur temporär!!!
                 let temp = live_board[von]
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
                 console.log(ID)
 
                 //Hole das Board aus der Datenbank
-                const board = getBoard(ID)
+                const board = await getBoard(parseInt(ID))
 
                 //TODO: Temporäres Spielfeld, bis die Datenbankanbindung steht
 /*
