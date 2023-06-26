@@ -11,7 +11,7 @@ datasource db {
 model games {
 
     id    String @id @default(auto()) @map("_id") @db.ObjectId
-    gameID    String
+    gameID    Int
     board     String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
