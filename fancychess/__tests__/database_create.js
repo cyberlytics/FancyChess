@@ -36,7 +36,7 @@ describe('getBoard', () => {
 
         //Wir wollen nur überprüfen, ob das Board und die ID stimmen
         const ankommendesBoard = result["board"];
-        const ankommendeID = result["gameID"]
+        const ankommendeID = result["gameID"];
 
         // Assert
         expect(ankommendeID).toEqual(gameID);

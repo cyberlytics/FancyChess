@@ -46,7 +46,7 @@ export const updateBoard = async (gameID, board) => {
     try {
         await prisma.$connect();
 
-        await prisma.games.update({
+        await prisma.games.updateMany({
             where: {
                 gameID: String(gameID),
             },

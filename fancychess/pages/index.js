@@ -80,7 +80,7 @@ export default function Home({chessboardData}) {
       //Ist das der erste Zug?
       if(firstTurn){
         let xhr = new XMLHttpRequest();
-        url = "api/game/createDB";
+        let url = "api/game/createDB";
         xhr.open("POST", url, false);
         xhr.setRequestHeader("Content-Type", "application/json");
         let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
@@ -89,17 +89,18 @@ export default function Home({chessboardData}) {
 
       }else{
         let xhr = new XMLHttpRequest();
-        url = "api/game/update";
-        xhr.open("PUT", url, true);
+        let url = "api/game/update";
+        xhr.open("PUT", url, false);  // Make the request asynchronous
         xhr.setRequestHeader("Content-Type", "application/json");
-        let data = JSON.stringify({"ID": SpieleID, "von": firstclick, "nach": temp});
+        let data = JSON.stringify({ "ID": SpieleID, "von": firstclick, "nach": temp });
         xhr.send(data);
+
       }
 
       firstclick = null;
       temp = null;
       let xhr = new XMLHttpRequest();
-      url = `api/game/update?ID=${SpieleID}`;
+      let url = `api/game/update?ID=${SpieleID}`;
       xhr.open("GET", url, false);
       xhr.setRequestHeader("Content-Type", "application/json");
 
