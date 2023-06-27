@@ -15,8 +15,8 @@ describe('updateBoard', () => {
 
     it('should update the board in the database', async () => {
 
-        // Create a sample game entry in the database
-        const gameID = "565656";
+        // Demoeintrag
+        const gameID = "565651";
         const default_spielfeld = {
             a1: "t", b1: "s", c1: "l", d1: "d", e1: "k", f1: "l", g1: "s", h1: "t",
             a2: "b", b2: "b", c2: "b", d2: "b", e2: "b", f2: "b", g2: "b", h2: "b",
