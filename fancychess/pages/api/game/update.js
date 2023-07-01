@@ -69,7 +69,7 @@ export default async function handler(req, res) {
                     return res.status(200).json({ ID: ankommendeID, board: ankommendesBoard });
 
                 } catch (error) {
-                    return res.status(500).json({ error: "Error in GET!" });
+                    return res.status(200).json({ error: "Error in GET!" });
                 }
 
             }

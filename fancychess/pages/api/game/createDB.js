@@ -45,7 +45,6 @@ export default async function handler(req, res) {
                 //In der Datenbank wird das Spielfeld als String gespeichert
                 const myJSON = JSON.stringify(default_spielfeld);
 
-                //TODO: Datenbankeintrag ablegen
                 const newBoard = await createGameboard(ID, myJSON)
                 //return  res.status(200).json({info: "Erstmaliges POST",nextplayer:"black",gameID: ID, board: default_spielfeld})//.json(newBoard)
 

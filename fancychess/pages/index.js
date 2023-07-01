@@ -6,6 +6,7 @@ import UserNotLoggedIn from './user_not_logged_in.js';
 import React, {useEffect, useState} from 'react';
 import {useSession} from "next-auth/react"
 import WinLosePopUp from './win-lose-pop-up.js'
+const axios = require('axios');
 
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
@@ -26,6 +27,8 @@ export default function Home({chessboardData}) {
 
   const [checkGame , setGameStart] = useState(false);
   const [GameID, setGameID] = useState(NaN);
+  const [updateBoard, setupdateBoard] = useState(NaN);
+  const [currentGameLive, setcurrentGameLive] = useState(NaN);
 
   const handleStartEnd = () => {
     setGameStart(!checkGame);
@@ -70,6 +73,21 @@ export default function Home({chessboardData}) {
 
       // Sending and receiving data in JSON format using POST method
 
+      //Ist das ein bestehendes Spiel?
+      //Ist der Einladungslink vorhanden?
+
+
+      //Wurde das Board über einen Einladungslink angefordert?
+      let surl = new URL(window.location.href);
+      console.log(surl["search"])
+      if(surl["search"] === ""){
+        console.log("neu");
+      }else {
+        console.log("eingeladen!")
+        setcurrentGameLive(true);
+        firstTurn = false;
+      }
+
       //Ist das der erste Zug?
       if(firstTurn){
         let xhr = new XMLHttpRequest();
@@ -102,6 +120,10 @@ export default function Home({chessboardData}) {
           if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             await place_figures_again(response["board"]);
+            //Speichere hier der lokale aktuelle Bord zwischen, um es später zu vergleichen
+
+            setupdateBoard(response["board"]);
+
           } else {
             console.error('Error:', xhr.status);
           }
@@ -318,7 +340,7 @@ export default function Home({chessboardData}) {
     textField.remove();
   };
 
-  //Wenn ich über einen Einladungslink auf die Webseite gehe soll direkt das passende Spielangezeit werden
+  //Wenn ich über einen Einladungslink auf die Webseite gehe, soll direkt das passende Spielangezeit werden
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const invitelink = urlParams.get('invitelink');
@@ -377,14 +399,94 @@ export default function Home({chessboardData}) {
   }, [GameID]);
 
 
-  // Seite aktualisieren
-  function refreshPage() {
-    // Lade die Seite neu
-    window.location.reload();
+
+  /*
+
+ //Wurde das Board abgeändert?
+ function boardChanged() {
+
+   //Frage das aktuelle Spiel in der Datenbank ab
+   let xhr = new XMLHttpRequest();
+   let url = `api/game/update?ID=${GameID}`;
+   xhr.open("GET", url, false);
+   xhr.setRequestHeader("Content-Type", "application/json");
+
+   xhr.onreadystatechange = async function () {
+     if (xhr.readyState === XMLHttpRequest.DONE) {
+       if (xhr.status === 200) {
+         const response = JSON.parse(xhr.responseText);
+
+         if(!isNaN(updateBoard) && !isNaN(response["board"])){
+           console.log("Beide Board vorhanden!")
+         }
+
+         if(!isNaN(updateBoard)){
+           console.log("UpdateBoard:")
+           console.log(updateBoard)
+         }
+
+         //await place_figures_again(response["board"]);
+         //Speichere hier der lokale aktuelle Bord zwischen, um es später zu vergleichen
+         //setupdateBoard(response["board"]);
+       } else {
+         console.error('Error:', xhr.status);
+       }
+     }
+   };
+
+   xhr.send();
+
+   // Lade die Seite neu
+   //window.location.reload();
+
+
+ }
+
+ setInterval(boardChanged,4000);
+
+ function bordo(){
+   if (!isNaN(updateBoard)){
+     console.log("ADKLASHODISAOIDh")
+   }
+ }
+*/
+
+  //setInterval(bordo,200);
+
+
+/*
+  async function updateGame() {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const GameIDLoc = urlParams.get('invitelink');
+
+    try {
+      const response = await axios.get(`api/game/update?ID=${GameIDLoc}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Process the response data
+
+      console.log("alteBoard");
+      console.log(updateBoard)
+
+      console.log("test")
+      if(!isNaN(updateBoard)){
+        console.log("neuesBoard: ")
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      // Handle the error
+      console.error(error);
+    }
   }
 
-// Aktualisiere die Seite alle 5 Sekunden (5000 Millisekunden)
-  //setInterval(refreshPage, 5000);
+
+  setInterval(updateGame,4000);
+*/
 
 
   // End click
