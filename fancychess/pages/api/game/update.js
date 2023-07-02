@@ -105,7 +105,7 @@ export default async function handler(req, res) {
             }
 
             default:
-                return res.status(200).json({ error: "Kein POST oder GET!" });
+                return res.status(500).json({ error: "Kein POST oder GET!" });
         }
 
     } catch (error) {

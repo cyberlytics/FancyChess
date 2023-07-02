@@ -6,6 +6,7 @@ import UserNotLoggedIn from './user_not_logged_in.js';
 import React, {useEffect, useState} from 'react';
 import {useSession} from "next-auth/react"
 import WinLosePopUp from './win-lose-pop-up.js'
+const axios = require('axios');
 
 
 // get Static Props async function to negate the CORS-Error and to fetch the api
@@ -26,6 +27,8 @@ export default function Home({chessboardData}) {
 
   const [checkGame , setGameStart] = useState(false);
   const [GameID, setGameID] = useState(NaN);
+  const [updateBoard, setupdateBoard] = useState(NaN);
+  const [currentGameLive, setcurrentGameLive] = useState(NaN);
 
   const handleStartEnd = () => {
     setGameStart(!checkGame);
@@ -70,6 +73,21 @@ export default function Home({chessboardData}) {
 
       // Sending and receiving data in JSON format using POST method
 
+      //Ist das ein bestehendes Spiel?
+      //Ist der Einladungslink vorhanden?
+
+
+      //Wurde das Board über einen Einladungslink angefordert?
+      let surl = new URL(window.location.href);
+      console.log(surl["search"])
+      if(surl["search"] === ""){
+        console.log("neu");
+      }else {
+        console.log("eingeladen!")
+        setcurrentGameLive(true);
+        firstTurn = false;
+      }
+
       //Ist das der erste Zug?
       if(firstTurn){
         let xhr = new XMLHttpRequest();
@@ -102,6 +120,10 @@ export default function Home({chessboardData}) {
           if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             await place_figures_again(response["board"]);
+            //Speichere hier der lokale aktuelle Bord zwischen, um es später zu vergleichen
+
+            setupdateBoard(response["board"]);
+
           } else {
             console.error('Error:', xhr.status);
           }
@@ -318,7 +340,7 @@ export default function Home({chessboardData}) {
     textField.remove();
   };
 
-  //Wenn ich über einen Einladungslink auf die Webseite gehe soll direkt das passende Spielangezeit werden
+  //Wenn ich über einen Einladungslink auf die Webseite gehe, soll direkt das passende Spielangezeit werden
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const invitelink = urlParams.get('invitelink');
@@ -326,7 +348,7 @@ export default function Home({chessboardData}) {
       console.log('Invite Link:', invitelink);
 
       //Frage wie oben das Spiel an
-
+      firstTurn = false;
 
       let xhr = new XMLHttpRequest();
       let url = `api/game/update?ID=${invitelink}`;
@@ -360,16 +382,54 @@ export default function Home({chessboardData}) {
 
       //Füge überall den MouseHOver hinzu
       for (let i = 0; i < myList.length; i++) {
-        let container = document.getElementById(myList[i]);
-        container.onmouseenter = handleMouseHover;
-        //Und hier den Click irgendwo im Fenster als trigger
-        window.addEventListener('click', handleClick);
+        try {
+          let container = document.getElementById(myList[i]);
+          container.onmouseenter = handleMouseHover;
+          //Und hier den Click irgendwo im Fenster als trigger
+          window.addEventListener('click', handleClick);
+        } catch(e) {
+          console.log(e)
+        }
       }
       //nun noch die GameID festlegen
       gameID = invitelink;
 
+      startUpdateBoardInterval()
     }
   }, []);
+
+  const startUpdateBoardInterval = () => {
+    setInterval(() => {
+      console.log("Check for update...")
+      if (firstclick != null)
+        return;
+
+      if (firstTurn) {
+        return;
+      }
+
+      let xhr = new XMLHttpRequest();
+      let url = `api/game/update?ID=${gameID}`;
+      xhr.open("GET", url, false);
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = async function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            if (firstclick != null)
+              return;
+            
+            const response = JSON.parse(xhr.responseText);
+            await place_figures_again(response["board"]);
+          } else {
+            console.error('Error:', xhr.status);
+          }
+        }
+      };
+
+      xhr.send();
+    }, 250)
+  }
 
   useEffect(() => {
     console.log("GameID:", GameID);
@@ -377,14 +437,94 @@ export default function Home({chessboardData}) {
   }, [GameID]);
 
 
-  // Seite aktualisieren
-  function refreshPage() {
-    // Lade die Seite neu
-    window.location.reload();
+
+  /*
+
+ //Wurde das Board abgeändert?
+ function boardChanged() {
+
+   //Frage das aktuelle Spiel in der Datenbank ab
+   let xhr = new XMLHttpRequest();
+   let url = `api/game/update?ID=${GameID}`;
+   xhr.open("GET", url, false);
+   xhr.setRequestHeader("Content-Type", "application/json");
+
+   xhr.onreadystatechange = async function () {
+     if (xhr.readyState === XMLHttpRequest.DONE) {
+       if (xhr.status === 200) {
+         const response = JSON.parse(xhr.responseText);
+
+         if(!isNaN(updateBoard) && !isNaN(response["board"])){
+           console.log("Beide Board vorhanden!")
+         }
+
+         if(!isNaN(updateBoard)){
+           console.log("UpdateBoard:")
+           console.log(updateBoard)
+         }
+
+         //await place_figures_again(response["board"]);
+         //Speichere hier der lokale aktuelle Bord zwischen, um es später zu vergleichen
+         //setupdateBoard(response["board"]);
+       } else {
+         console.error('Error:', xhr.status);
+       }
+     }
+   };
+
+   xhr.send();
+
+   // Lade die Seite neu
+   //window.location.reload();
+
+
+ }
+
+ setInterval(boardChanged,4000);
+
+ function bordo(){
+   if (!isNaN(updateBoard)){
+     console.log("ADKLASHODISAOIDh")
+   }
+ }
+*/
+
+  //setInterval(bordo,200);
+
+
+/*
+  async function updateGame() {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const GameIDLoc = urlParams.get('invitelink');
+
+    try {
+      const response = await axios.get(`api/game/update?ID=${GameIDLoc}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Process the response data
+
+      console.log("alteBoard");
+      console.log(updateBoard)
+
+      console.log("test")
+      if(!isNaN(updateBoard)){
+        console.log("neuesBoard: ")
+        console.log(response.data);
+
+      }
+    } catch (error) {
+      // Handle the error
+      console.error(error);
+    }
   }
 
-// Aktualisiere die Seite alle 5 Sekunden (5000 Millisekunden)
-  //setInterval(refreshPage, 5000);
+
+  setInterval(updateGame,4000);
+*/
 
 
   // End click
@@ -399,87 +539,79 @@ export default function Home({chessboardData}) {
     console.log(gameID);
     setGameID(gameID);
 
-
-
     // Place each chess-figure
     await place_figures(spielfeld);
+
+    startUpdateBoardInterval();
   }
 
   //für Pop up window zum testen
   const [buttonPopup, setButtonPopUp] = useState(false);
 
-  if (!session) {
-    return (
-        <div className={styles.container}>
-          <Head>
-            <title>FancyChess</title>
-            <link rel="icon"  href="../public/logo.ico" />
-          </Head>
-          <div className="section" id={styles.menu}>
-            <Menu/>
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>FancyChess</title>
+        <link rel="icon"  href="../public/logo.ico" />
+      </Head>
+      <div className="section" id={styles.menu}>
+        <Menu/>
 
+      </div>
+
+      <div className="section" id={styles.game}>
+        <div className="board" id={styles.board}>
+          <ChessBoard />
+          <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
+          </WinLosePopUp>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <div className="section" id={styles.log}>
+
+          <p id="time">00:00
+          </p>
+
+          <div className={styles.buttons}>
+            <button id="inviteLink" onClick={()=>{createInviteLink();}} >
+              inviteLink
+            </button>
+
+            <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
+              {checkGame ? 'END' : 'START'}
+            </button>
           </div>
 
-          <div className="section" id={styles.game}>
-            <div className="board" id={styles.board}>
-              <ChessBoard />
-              <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
-              </WinLosePopUp>
+          <div id={styles.playerMoveHistory}>
+            <p>erster Zug</p>
+            <p>zweiter Zug</p>
+            <a className={styles.link}>
+              <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
 
-            </div>
-
-          </div>
-
-          <div>
-
-            <div className="section" id={styles.log}>
-
-              <p id="time">00:00
-              </p>
-
-              <div className={styles.buttons}>
-                <button id="inviteLink" onClick={()=>{createInviteLink();}} >
-                  inviteLink
-                </button>
-
-                <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
-                  {checkGame ? 'END' : 'START'}
-                </button>
-              </div>
-
-              <div id={styles.playerMoveHistory}>
-                <p>erster Zug</p>
-                <p>zweiter Zug</p>
-                <a className={styles.link}>
-                  <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
-
-                </a>
-              </div>
-
-            </div>
-
-
-            <style global jsx>{`
-        html,
-        body{
-          height: 100vh;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-          }
-         `}</style>
-
-
+            </a>
           </div>
 
         </div>
-    )
-  }
 
-  return (
-      <div>
-        <UserNotLoggedIn></UserNotLoggedIn>
+
+        <style global jsx>{`
+    html,
+    body{
+      height: 100vh;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+        sans-serif;
+      }
+     `}</style>
+
+
       </div>
+
+    </div>
   )
 }
