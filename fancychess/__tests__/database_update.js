@@ -1,4 +1,4 @@
-const { updateBoard, getBoard} = require("../lib/access_db");
+const { updateBoard, getBoard, createGameboard} = require("../lib/access_db");
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
@@ -16,7 +16,7 @@ describe('updateBoard', () => {
     it('should update the board in the database', async () => {
 
         // Demoeintrag
-        const gameID = "565651";
+        const gameID = (Math.random() * (999 - 100) + 100).toString();
         const default_spielfeld = {
             a1: "t", b1: "s", c1: "l", d1: "d", e1: "k", f1: "l", g1: "s", h1: "t",
             a2: "b", b2: "b", c2: "b", d2: "b", e2: "b", f2: "b", g2: "b", h2: "b",
@@ -41,18 +41,19 @@ describe('updateBoard', () => {
 
 
         const board = JSON.stringify(default_spielfeld);
-        await prisma.games.create({ data: {gameID,board} });
+        //await prisma.games.create({data: {gameID, board}});
+        const creating = await createGameboard(gameID,board);
 
         // Nun wollen wir das Schachbrett uns ziehen
         const results = await getBoard(gameID);
 
         //Wir wollen nur überprüfen, ob das Board und die ID stimmen
         const ankommendesBoard = results["board"];
-        const ankommendeID = results["gameID"]
+        const ankommendeID = results["gameID"];
 
-        // Assert - wurde der Datenbankeintrag erstellt und die DB ordungsgemäß abgelegt?
+        // Assert - wurde der Datenbankeintrag erstellt und d ie DB ordungsgemäß abgelegt?
         expect(ankommendeID).toEqual(gameID);
-        expect(ankommendesBoard).toEqual(board);
+        expect(board).toEqual(ankommendesBoard);
 
         // Nun wollen wir ein Update durchführen
         const board_update = JSON.stringify(updatedBoard);
