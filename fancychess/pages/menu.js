@@ -2,17 +2,12 @@ import styles from '../styles/menu.module.css';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from "next-auth/react"
 
-function GoToHomePage()
-{
-    window.location = '/';
-}
-
 export default function Menu() {
   const { data: session } = useSession()
   return (
 
     <div id={styles.innermenu}>
-        <Link href={GoToHomePage}>
+        <Link href="/">
             <img src="/logo.png" alt="logo" className={styles.logo} />
         </Link>
         
