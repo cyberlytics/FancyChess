@@ -105,7 +105,7 @@ export default function Profil() {
 
   }
 
-  if (!session) {
+  if (session) {
     return (
       <div className={styles.container}>
         <Head>

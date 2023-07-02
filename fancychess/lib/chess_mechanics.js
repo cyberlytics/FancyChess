@@ -22,6 +22,14 @@ class ChessMechanics {
         return null
     }
 
+    static addInstance(pGameId) {
+        if (ChessMechanics.getInstance(pGameId) !== null) {
+            return
+        }
+        
+        ChessMechanics.instances.push(new ChessMechanics(pGameId))
+    }
+
     convertColumn(column) {
         if(column == "A" || column == "a") {
             return 0;
