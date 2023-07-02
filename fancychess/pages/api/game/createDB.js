@@ -6,6 +6,7 @@ let prisma
 import {
     createGameboard
 } from '../../../lib/access_db'
+import ChessMechanics from "../../../lib/chess_mechanics"
 
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions)
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
     };
 
     //TODO: Das ist nur tempoär für jeden zugänglich!!! -> !session
-    if (session) {
+    if (!session) {
         res.status(403).json({ error: "Not signed in" })
     } else {
         //Wenn etwas zum Server geschickt wird --> POST
@@ -47,6 +48,9 @@ export default async function handler(req, res) {
 
                 const newBoard = await createGameboard(ID, myJSON)
                 //return  res.status(200).json({info: "Erstmaliges POST",nextplayer:"black",gameID: ID, board: default_spielfeld})//.json(newBoard)
+
+                // Create Mechanics-Handler Instance and attach it to the Game
+                ChessMechanics.addInstance(parseInt(ID));
 
                 return res.status(200).json({info: "Success!", nextplayer: "black"})
             } else {

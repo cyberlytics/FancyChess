@@ -348,7 +348,7 @@ export default function Home({chessboardData}) {
       console.log('Invite Link:', invitelink);
 
       //Frage wie oben das Spiel an
-
+      firstTurn = false;
 
       let xhr = new XMLHttpRequest();
       let url = `api/game/update?ID=${invitelink}`;
@@ -382,16 +382,54 @@ export default function Home({chessboardData}) {
 
       //Füge überall den MouseHOver hinzu
       for (let i = 0; i < myList.length; i++) {
-        let container = document.getElementById(myList[i]);
-        container.onmouseenter = handleMouseHover;
-        //Und hier den Click irgendwo im Fenster als trigger
-        window.addEventListener('click', handleClick);
+        try {
+          let container = document.getElementById(myList[i]);
+          container.onmouseenter = handleMouseHover;
+          //Und hier den Click irgendwo im Fenster als trigger
+          window.addEventListener('click', handleClick);
+        } catch(e) {
+          console.log(e)
+        }
       }
       //nun noch die GameID festlegen
       gameID = invitelink;
 
+      startUpdateBoardInterval()
     }
   }, []);
+
+  const startUpdateBoardInterval = () => {
+    setInterval(() => {
+      console.log("Check for update...")
+      if (firstclick != null)
+        return;
+
+      if (firstTurn) {
+        return;
+      }
+
+      let xhr = new XMLHttpRequest();
+      let url = `api/game/update?ID=${gameID}`;
+      xhr.open("GET", url, false);
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = async function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            if (firstclick != null)
+              return;
+            
+            const response = JSON.parse(xhr.responseText);
+            await place_figures_again(response["board"]);
+          } else {
+            console.error('Error:', xhr.status);
+          }
+        }
+      };
+
+      xhr.send();
+    }, 250)
+  }
 
   useEffect(() => {
     console.log("GameID:", GameID);
@@ -501,87 +539,79 @@ export default function Home({chessboardData}) {
     console.log(gameID);
     setGameID(gameID);
 
-
-
     // Place each chess-figure
     await place_figures(spielfeld);
+
+    startUpdateBoardInterval();
   }
 
   //für Pop up window zum testen
   const [buttonPopup, setButtonPopUp] = useState(false);
 
-  if (!session) {
-    return (
-        <div className={styles.container}>
-          <Head>
-            <title>FancyChess</title>
-            <link rel="icon"  href="../public/logo.ico" />
-          </Head>
-          <div className="section" id={styles.menu}>
-            <Menu/>
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>FancyChess</title>
+        <link rel="icon"  href="../public/logo.ico" />
+      </Head>
+      <div className="section" id={styles.menu}>
+        <Menu/>
 
+      </div>
+
+      <div className="section" id={styles.game}>
+        <div className="board" id={styles.board}>
+          <ChessBoard />
+          <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
+          </WinLosePopUp>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <div className="section" id={styles.log}>
+
+          <p id="time">00:00
+          </p>
+
+          <div className={styles.buttons}>
+            <button id="inviteLink" onClick={()=>{createInviteLink();}} >
+              inviteLink
+            </button>
+
+            <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
+              {checkGame ? 'END' : 'START'}
+            </button>
           </div>
 
-          <div className="section" id={styles.game}>
-            <div className="board" id={styles.board}>
-              <ChessBoard />
-              <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
-              </WinLosePopUp>
+          <div id={styles.playerMoveHistory}>
+            <p>erster Zug</p>
+            <p>zweiter Zug</p>
+            <a className={styles.link}>
+              <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
 
-            </div>
-
-          </div>
-
-          <div>
-
-            <div className="section" id={styles.log}>
-
-              <p id="time">00:00
-              </p>
-
-              <div className={styles.buttons}>
-                <button id="inviteLink" onClick={()=>{createInviteLink();}} >
-                  inviteLink
-                </button>
-
-                <button id="startbutton" onClick={() => { callAPI(); handleStartEnd(); }}>
-                  {checkGame ? 'END' : 'START'}
-                </button>
-              </div>
-
-              <div id={styles.playerMoveHistory}>
-                <p>erster Zug</p>
-                <p>zweiter Zug</p>
-                <a className={styles.link}>
-                  <button onClick={() => setButtonPopUp(true)}>Pop Up Window</button>
-
-                </a>
-              </div>
-
-            </div>
-
-
-            <style global jsx>{`
-        html,
-        body{
-          height: 100vh;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-          }
-         `}</style>
-
-
+            </a>
           </div>
 
         </div>
-    )
-  }
 
-  return (
-      <div>
-        <UserNotLoggedIn></UserNotLoggedIn>
+
+        <style global jsx>{`
+    html,
+    body{
+      height: 100vh;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+        sans-serif;
+      }
+     `}</style>
+
+
       </div>
+
+    </div>
   )
 }
