@@ -4,7 +4,17 @@ import {boardArrToDict} from "../lib/chessboard_converter.js";
 import {compareArrBoards} from "../lib/compare_boards.js";
 import {compareDictBoards} from "../lib/compare_boards.js";
 
+// oben wurden benoetigte Funktionen und Bibliotheken importiert
+// unter anderem meine externe Funktion compareArrBoards, um Schachbretter miteinander vergleichen zu koennen, was mit dem == Operator nicht funktioniert.
+
+// SYNTAX DER TESTS
+// Es sind zwei jeweils identische Schachbretter definiert
+// Eins ist in Array-Form, eins in Dictionary-Form
+// Es wird geprueft, ob die Konvertierung funktioniert und das konvertierte Schachbrett mit dem zweiten vordefinierten Schachbrett (was dem gewollten Ergebnis gleicht) uebereinstimmt.
+// Der Vergleich laeuft ueber meine compareArrBoards bzw. compareDictBoards Funktionen
+
 describe('Convert Boards', () => {
+    // Dictionary-Schachbrett in Array-Schachbrett konvertieren
     it('Board Dict to Arr', () => {
         let dictboard = {
             a1: "t", b1: "s", c1: "l", d1: "d", e1: "k", f1: "l", g1: "s", h1: "t",
@@ -31,6 +41,7 @@ describe('Convert Boards', () => {
         expect(compareArrBoards(dict2arr_prompt, arrboard_expect)).toBe(true);
     });
 
+    // Array-Schachbrett in Dictionary-Schachbrett konvertieren
     it('Board Arr to Dict', () => {
         let arrboard = [
             ["t","s","l","d","k","l","s","t"],
