@@ -1,9 +1,6 @@
 import '@testing-library/jest-dom';
-import boardDictToArr from "../lib/chessboard_converter.js";
-import boardArrToDict from "../lib/chessboard_converter.js";
-
-const boardDictToArr = require("../lib/chessboard_converter")
-const boardArrToDict = require("../lib/chessboard_converter")
+import {boardDictToArr} from "../lib/chessboard_converter.js";
+import {boardArrToDict} from "../lib/chessboard_converter.js";
 
 describe('Mechanics', () => {
     it('Board Dict to Arr', () => {
