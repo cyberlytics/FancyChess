@@ -1,8 +1,6 @@
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
-import { PrismaClient } from '@prisma/client'
 
-let prisma
 import {
     createGameboard
 } from '../../../lib/access_db'
@@ -22,7 +20,6 @@ export default async function handler(req, res) {
         a8: "T", b8: "S", c8: "L", d8: "D", e8: "K", f8: "L", g8: "S", h8: "T"
     };
 
-    //TODO: Das ist nur tempoär für jeden zugänglich!!! -> !session
     if (!session) {
         res.status(403).json({ error: "Not signed in" })
     } else {
@@ -37,7 +34,6 @@ export default async function handler(req, res) {
 
                 console.log("Es wird ein neuer Datenbankeintrag erstellt. ID: ",ID)
 
-                //TODO:Logik
                 //Da dies der erste Eintrag ist, wird das Standardboard bearbeitet - TEMPORÄR
                 let temp = default_spielfeld[von]
                 default_spielfeld[von] = '-'
@@ -45,18 +41,13 @@ export default async function handler(req, res) {
 
                 //In der Datenbank wird das Spielfeld als String gespeichert
                 const myJSON = JSON.stringify(default_spielfeld);
-
                 const newBoard = await createGameboard(ID, myJSON)
-                //return  res.status(200).json({info: "Erstmaliges POST",nextplayer:"black",gameID: ID, board: default_spielfeld})//.json(newBoard)
-
-                // Create Mechanics-Handler Instance and attach it to the Game
                 ChessMechanics.addInstance(parseInt(ID));
 
                 return res.status(200).json({info: "Success!", nextplayer: "black"})
             } else {
                 return res.status(200).json({error: "Kein POST!"})
             }
-
         } catch (error){
             return res.status(500).json({ ...error, message: error.message })
         }

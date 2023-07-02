@@ -1,15 +1,18 @@
-import Head from 'next/head';
 import styles from '../styles/menu.module.css';
-import ChessBoard from './chess-board.js'
 import Link from 'next/link';
 import { useSession, signIn, signOut } from "next-auth/react"
+
+function GoToHomePage()
+{
+    window.location = '/';
+}
 
 export default function Menu() {
   const { data: session } = useSession()
   return (
 
     <div id={styles.innermenu}>
-        <Link href={"http://localhost:3000/"}>
+        <Link href={GoToHomePage}>
             <img src="/logo.png" alt="logo" className={styles.logo} />
         </Link>
         
@@ -45,8 +48,6 @@ export default function Menu() {
           margin: 0;
           }
         `}</style>
-    
-
     </div>
   )
 }

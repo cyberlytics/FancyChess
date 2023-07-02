@@ -10,9 +10,7 @@ export const getBoard = async gameID => {
         });
         //Kein Eintrag gefunden
         if (!database) {return null;}
-        //console.log("Das ist der Rueckgabewert:",database)
         return database;
-        //Fange nen Fehler auf, falls einer auftaucht
     } catch (error) {
         console.error('Error (getBoard):', error);
         throw error;

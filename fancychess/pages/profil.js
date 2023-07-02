@@ -2,7 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/profil.module.css';
 import { Dropdown, Link } from "@nextui-org/react";
 import Menu from './menu.js';
-import { useSession, signIn } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { useState } from 'react';
 import UserNotLoggedIn from "./user_not_logged_in";
 import React from "react";
@@ -36,29 +36,29 @@ export default function Profil() {
   }
 
   const dropdownchoice = (key) => {
-    if (key == "W_Bauer") {
+    if (key === "W_Bauer") {
       document.getElementById("profilPicture_img").src = "/Pawn-W.svg"
-    } else if (key == "S_Bauer") {
+    } else if (key === "S_Bauer") {
       document.getElementById("profilPicture_img").src = "/Pawn-B.svg"
-    } else if (key == "W_Turm") {
+    } else if (key === "W_Turm") {
       document.getElementById("profilPicture_img").src = "/Rook-W.svg"
-    } else if (key == "S_Turm") {
+    } else if (key === "S_Turm") {
       document.getElementById("profilPicture_img").src = "/Rook-B.svg"
-    } else if (key == "W_Springer") {
+    } else if (key === "W_Springer") {
       document.getElementById("profilPicture_img").src = "/Knight-W.svg"
-    } else if (key == "S_Springer") {
+    } else if (key === "S_Springer") {
       document.getElementById("profilPicture_img").src = "/Knight-B.svg"
-    } else if (key == "W_Laufer") {
+    } else if (key === "W_Laufer") {
       document.getElementById("profilPicture_img").src = "/Bishop-W.svg"
-    } else if (key == "S_Laufer") {
+    } else if (key === "S_Laufer") {
       document.getElementById("profilPicture_img").src = "/Bishop-B.svg"
-    } else if (key == "W_Koenig") {
+    } else if (key === "W_Koenig") {
       document.getElementById("profilPicture_img").src = "/King-W.svg"
-    } else if (key == "S_Koenig") {
+    } else if (key === "S_Koenig") {
       document.getElementById("profilPicture_img").src = "/King-B.svg"
-    } else if (key == "W_Dame") {
+    } else if (key === "W_Dame") {
       document.getElementById("profilPicture_img").src = "/Queen-W.svg"
-    } else if (key == "S_Dame") {
+    } else if (key === "S_Dame") {
       document.getElementById("profilPicture_img").src = "/Queen-B.svg"
     }
   }
@@ -70,7 +70,7 @@ export default function Profil() {
       let elo = elo_html.substring(0, elo_html.indexOf('<'));
       console.log(elo);
       console.log(B_or_W[0])
-      if (B_or_W[0] == "W") {
+      if (B_or_W[0] === "W") {
         if (elo >= 0 && elo <= 400) {
           document.getElementById("elo_img").src = "/Pawn-W.svg"
         } else if (elo > 400 && elo <= 800) {
@@ -84,7 +84,7 @@ export default function Profil() {
         } else if (elo > 2000) {
           document.getElementById("elo_img").src = "/King-W.svg"
         }
-      } else if (B_or_W[0] == "S") {
+      } else if (B_or_W[0] === "S") {
         console.log(elo > 400)
         if (elo >= 0 && elo <= 400) {
           document.getElementById("elo_img").src = "/Pawn-B.svg"
@@ -154,56 +154,56 @@ export default function Profil() {
                   <tr>
                     <td>Gegenspieler2</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf2</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf2</button>
                     </td>
                     <td>Datum2</td>
                   </tr>
                   <tr>
                     <td>Gegenspieler3</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf3</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf3</button>
                     </td>
                     <td>Datum3</td>
                   </tr>
                   <tr>
                     <td>Gegenspieler4</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf4</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf4</button>
                     </td>
                     <td>Datum4</td>
                   </tr>
                   <tr>
                     <td>Gegenspieler5</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf5</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf5</button>
                     </td>
                     <td>Datum5</td>
                   </tr>
                   <tr>
                     <td>Gegenspieler6</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf6</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf6</button>
                     </td>
                     <td>Datum6</td>
                   </tr>
                   <tr>
                     <td>Gegenspieler7</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf7</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf7</button>
                     </td>
                     <td>Datum7</td>
                   </tr>
                   <tr>
                     <td>Gegenspieler8</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf8</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf8</button>
                     </td>
                     <td>Datum8</td>
                   </tr>
                   <tr>
                     <td>Gegenspieler9</td>
                     <td>
-                      <button onClick={() => setButtonPopUp(true)}className={styles.gamehistory_button}>Spielverlauf9</button>
+                      <button onClick={() => setButtonPopUp(true)} className={styles.gamehistory_button}>Spielverlauf9</button>
                     </td>
                     <td>Datum9</td>
                   </tr>

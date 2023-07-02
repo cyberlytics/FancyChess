@@ -1,18 +1,10 @@
 import Head from 'next/head';
 import styles from '../styles/settings.module.css';
 import { useState } from 'react';
-import { Switch } from '@mui/material';
-import Link from "next/link";
 import Menu from './menu.js';
-import { useSession, signIn, signOut } from "next-auth/react"
-import UserNotLoggedIn from './user_not_logged_in.js';
-
-
-
 
 
 export default function Settings() {
-    const { data: session } = useSession()
     const [showPossibleMoves, setShowPossibleMoves] = useState(false);
 
     const handleTogglePossibleMoves = () => {
@@ -54,10 +46,7 @@ export default function Settings() {
                 display: flex;
                 flex-direction: column;
               }
-
-
-
-
+              
             `}</style>
 
             <style jsx global>{`

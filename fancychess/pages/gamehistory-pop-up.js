@@ -1,9 +1,7 @@
-import Head from 'next/head';
 import React from 'react';
 import styles from '../styles/gamehistory-pop-up.module.css'
 
 export default function GameHistoryPopUp(props) {
-
 
     return (props.trigger) ? (
         <div className={styles.popup}>
