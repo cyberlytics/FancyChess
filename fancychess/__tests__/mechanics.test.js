@@ -1,15 +1,15 @@
 import '@testing-library/jest-dom';
-import boardToCode from "../mechanics/mechanics.js";
-import convertColumn from "../mechanics/mechanics.js";
-import codeToBoard from "../mechanics/mechanics.js";
-import generateChess from "../mechanics/mechanics.js";
-import checkWinner from "../mechanics/mechanics.js";
+import boardToCode from "../lib/chess_mechanics.js";
+import convertColumn from "../lib/chess_mechanics.js";
+import codeToBoard from "../lib/chess_mechanics.js";
+import generateChess from "../lib/chess_mechanics.js";
+import checkWinner from "../lib/chess_mechanics.js";
 
-const boardToCode = require("../mechanics/mechanics")
-const convertColumn = require("../mechanics/mechanics")
-const codeToBoard = require("../mechanics/mechanics")
-const generateChess = require("../mechanics/mechanics")
-const checkWinner = require("../mechanics/mechanics")
+const boardToCode = require("../lib/chess_mechanics")
+const convertColumn = require("../lib/chess_mechanics")
+const codeToBoard = require("../lib/chess_mechanics")
+const generateChess = require("../lib/chess_mechanics")
+const checkWinner = require("../lib/chess_mechanics")
 
 describe('Mechanics', () => {
     it('Board to Code', () => {
