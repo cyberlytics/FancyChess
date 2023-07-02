@@ -1,4 +1,6 @@
+// Funktion, um Schachbrett in Dictionary-Form in ein zweidimensionales Array zu konvertieren
 export function boardDictToArr(dictboard) {
+    // Ergebnisboard und temporaere Variablen
     let arrboard = [];
     let tmparr1 = [];
     let tmparr2 = [];
@@ -8,6 +10,9 @@ export function boardDictToArr(dictboard) {
     let tmparr6 = [];
     let tmparr7 = [];
     let tmparr8 = [];
+
+    // Abrufen jedes einzelnen Elements und Hinzufuegen in entsprechende temporaere Array-Variable
+    // am Ende einer Reihe wird das jeweilige temporaere Array in das Ergebnisarray eingefuegt
 
     let a1 = dictboard['a1'];
     let b1 = dictboard['b1'];
@@ -156,7 +161,10 @@ export function boardDictToArr(dictboard) {
     return arrboard;
 }
 
+// Funktion, um Schachbrett in Array-Form (zweidimensionales Array) in eins in Dictionary-Form zu konvertieren
 export function boardArrToDict(arrboard) {
+    // einzelne Festlegung der Werte des neuen Dictionary-Schachbrettes
+    
     let dictboard = {
         a1: arrboard[0][0], b1: arrboard[0][1], c1: arrboard[0][2], d1: arrboard[0][3], e1: arrboard[0][4], f1: arrboard[0][5], g1: arrboard[0][6], h1: arrboard[0][7],
         a2: arrboard[1][0], b2: arrboard[1][1], c2: arrboard[1][2], d2: arrboard[1][3], e2: arrboard[1][4], f2: arrboard[1][5], g2: arrboard[1][6], h2: arrboard[1][7],
