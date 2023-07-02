@@ -156,6 +156,13 @@ describe('Mechanics', () => {
         expect(checkMoveOORPrompt).toBe(false);
     });
 
+    // Ungueltige Bewegung, da auf dem Feld, dessen Figur man bewegen moechte, gar keine Figur liegt
+    it('Check Move, No Piece on Defined Place', () => {
+        let grundboard = [["t","s","l","d","k","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","D","K","L","S","T"]];
+        let checkMoveNPprompt = mechanics.checkMove(grundboard, 2, 2, 2, 3);
+        expect(checkMoveNPprompt).toBe(false);
+    });
+
     // Erlaubte Koenig-Bewegung
     it('Check Move, Valid King Move', () => {
         let kingboard = [["t","s","l","d","-","l","s","t"],["b","b","b","b","b","b","b","b"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","k","-","-","-"],["-","-","-","-","-","-","-","-"],["B","B","B","B","B","B","B","B"],["T","S","L","D","K","L","S","T"]];
