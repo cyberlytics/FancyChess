@@ -125,6 +125,8 @@ class ChessMechanics {
                 temp.push("B");
             } else if(code[i] === "L") {
                 temp.push("b");
+            } else if(code[i] === "-") {
+                temp.push("-");
             } else {
                 return "Ungueltiger Code";
             }
@@ -133,6 +135,7 @@ class ChessMechanics {
             if(ctbCount > 7) {
                 board.push(temp);
                 temp = [];
+                ctbCount = 0;
             }
         }
         return board;
@@ -140,14 +143,14 @@ class ChessMechanics {
 
     generateChess() {
         let schachbrett =
-            [["t","s","l","k","d","l","s","t"],
+            [["t","s","l","d","k","l","s","t"],
             ["b","b","b","b","b","b","b","b"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["B","B","B","B","B","B","B","B"],
-            ["T","S","L","K","D","L","S","T"]];
+            ["T","S","L","D","K","L","S","T"]];
         this.schwarzerKoenig[0] = 4;
         this.schwarzerKoenig[1] = 7;
         this.weisserKoenig[0]   = 4;
@@ -160,14 +163,14 @@ class ChessMechanics {
     checkCheck(board, X, Y) {
         for(let x = 0; x < 8; x++) {
             for(let y = 0; y < 8; y++) {
-                if(board[Y][X] === "K" && board[Y][X] === "D" && board[Y][X] === "T" && board[Y][X] === "L" && board[Y][X] === "S" && board[Y][X] === "B") {
-                    if(board[y][x] === "k" && board[y][x] === "d" && board[y][x] === "t" && board[y][x] === "l" && board[y][x] === "s" && board[y][x] === "b") {
+                if(board[Y][X] === "K" || board[Y][X] === "D" || board[Y][X] === "T" || board[Y][X] === "L" || board[Y][X] === "S" || board[Y][X] === "B") {
+                    if(board[y][x] === "k" || board[y][x] === "d" || board[y][x] === "t" || board[y][x] === "l" || board[y][x] === "s" || board[y][x] === "b") {
                         if(this.checkMove(board, x, y, X, Y)) {
                             return true;
                         }
                     }
-                } else if(board[Y][X] === "k" && board[Y][X] === "d" && board[Y][X] === "t" && board[Y][X] === "l" && board[Y][X] === "s" && board[Y][X] === "b") {
-                    if(board[y][x] === "K" && board[y][x] === "D" && board[y][x] === "T" && board[y][x] === "L" && board[y][x] === "S" && board[y][x] === "B") {
+                } else if(board[Y][X] === "k" || board[Y][X] === "d" || board[Y][X] === "t" || board[Y][X] === "l" || board[Y][X] === "s" || board[Y][X] === "b") {
+                    if(board[y][x] === "K" || board[y][x] === "D" || board[y][x] === "T" || board[y][x] === "L" || board[y][x] === "S" || board[y][x] === "B") {
                         if(this.checkMove(board, x, y, X, Y)) {
                             return true;
                         }
