@@ -100,7 +100,7 @@ export default function Home({chessboardData}) {
 
       }else{
         let xhr = new XMLHttpRequest();
-        let url = "api/game/update";
+        let url = `api/game/update?seed=${genRandomString(5)}`;
         xhr.open("PUT", url, false);  // Make the request asynchronous
         xhr.setRequestHeader("Content-Type", "application/json");
         let data = JSON.stringify({ "ID": gameID, "von": firstclick, "nach": temp });
@@ -111,7 +111,7 @@ export default function Home({chessboardData}) {
       firstclick = null;
       temp = null;
       let xhr = new XMLHttpRequest();
-      let url = `api/game/update?ID=${gameID}`;
+      let url = `api/game/update?ID=${gameID}&seed=${genRandomString(5)}`;
       xhr.open("GET", url, false);
       xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -135,6 +135,16 @@ export default function Home({chessboardData}) {
     }
 
   };
+
+  const genRandomString = (length) => {
+    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+    var charLength = chars.length;
+    var result = '';
+    for ( var i = 0; i < length; i++ ) {
+        result += chars.charAt(Math.floor(Math.random() * charLength));
+    }
+    return result;
+  }
 
   const place_figures = async (spielfeld) => {
 
@@ -351,7 +361,7 @@ export default function Home({chessboardData}) {
       firstTurn = false;
 
       let xhr = new XMLHttpRequest();
-      let url = `api/game/update?ID=${invitelink}`;
+      let url = `api/game/update?ID=${invitelink}&seed=${genRandomString(5)}`;
       xhr.open("GET", url, false);
       xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -409,7 +419,7 @@ export default function Home({chessboardData}) {
       }
 
       let xhr = new XMLHttpRequest();
-      let url = `api/game/update?ID=${gameID}`;
+      let url = `api/game/update?ID=${gameID}&seed=${genRandomString(5)}`;
       xhr.open("GET", url, false);
       xhr.setRequestHeader("Content-Type", "application/json");
 
