@@ -100,7 +100,7 @@ export default function Home({chessboardData}) {
       firstclick = null;
       temp = null;
       let xhr = new XMLHttpRequest();
-      let url = `api/game/update?ID=${gameID}`;
+      let url = `api/game/update?ID=${gameID}&seed=${Math.floor(Math.random() * (500000 - 1) + 1)}`;
       xhr.open("GET", url, false);
       xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -326,7 +326,7 @@ export default function Home({chessboardData}) {
       firstTurn = false;
 
       let xhr = new XMLHttpRequest();
-      let url = `api/game/update?ID=${invitelink}`;
+      let url = `api/game/update?ID=${gameID}&seed=${Math.floor(Math.random() * (500000 - 1) + 1)}`;
       xhr.open("GET", url, false);
       xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -384,7 +384,7 @@ export default function Home({chessboardData}) {
       }
 
       let xhr = new XMLHttpRequest();
-      let url = `api/game/update?ID=${gameID}`;
+      let url = `api/game/update?ID=${gameID}&seed=${Math.floor(Math.random() * (500000 - 1) + 1)}`;
       xhr.open("GET", url, false);
       xhr.setRequestHeader("Content-Type", "application/json");
 
