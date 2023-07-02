@@ -16,7 +16,7 @@ export default function Profil() {
   const dropdownmenu = () => {
     return (
       <Dropdown>
-        <Dropdown.Button edit></Dropdown.Button>
+        <Dropdown.Button edit style={{backgroundColor: 'rgb(226, 184, 154)'}} ></Dropdown.Button>
         <Dropdown.Menu disabledKeys={selected} onAction={dropdownchoice(selected.anchorKey)} selectionMode="single" selectedKeys={selected} aria-label="Static Actions" onSelectionChange={setSelected}>
           <Dropdown.Item key="W_Bauer">W_Bauer</Dropdown.Item>
           <Dropdown.Item key="W_Turm">W_Turm</Dropdown.Item>
@@ -105,7 +105,7 @@ export default function Profil() {
 
   }
 
-  if (session) {
+  if (!session) {
     return (
       <div className={styles.container}>
         <Head>

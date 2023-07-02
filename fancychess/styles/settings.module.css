@@ -1,15 +1,14 @@
 .container {
   min-height: 100vh;
   display: flex;
-  background: rgb(80,70,255);
-  background: linear-gradient(180deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  background: #212223;
+  color: rgb(226, 184, 154);
 }
 
 .sidebar {
   flex: 0 0 15%;
   overflow: auto;
-  background: rgb(80, 70, 255);
-  background: linear-gradient(0deg, rgba(80, 70, 255, 1) 0%, rgba(56, 140, 167, 1) 32%, rgba(0, 212, 255, 1) 100%);
+  background: #212223;
   position: relative;
   text-align: center;
 }
@@ -41,8 +40,10 @@
 }
 
 .container button {
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 1em;
+  border-radius: 1em;
+  border: none;
 }
 
 @media (max-width: 600px) {

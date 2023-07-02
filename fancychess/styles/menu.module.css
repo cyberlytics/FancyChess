@@ -1,17 +1,17 @@
 #innermenu{
     text-align: center;
-    background-color:#ffffff87;
+    background-color:#292a2a;
     height:100vh;
     width: auto;
     margin: 5%;
     display: flex;
     flex-direction: column;
-  }
+}
 
- .link{
+.link{
     text-decoration: none;
-    color: black;
- }
+    color: rgb(226, 184, 154);
+}
 
 .lower_menu_section {
     margin-top: auto;

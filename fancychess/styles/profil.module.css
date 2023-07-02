@@ -1,8 +1,7 @@
 .leftpannel{
   width: 15%;
   height: 100%;
-  background: rgb(80,70,255);
-  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  background: #212223;
   float:left;
 }
 .navpannel{
@@ -15,7 +14,7 @@
 .midpannel{
   width: 70%;
   height: 100%;
-  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  background: #212223;
   float: left;
 }
 .profilpicture{
@@ -27,7 +26,7 @@
 .profilpannel{
   width: 64%;
   height: 25%;
-  background-color:#ffffff87;
+  background-color: rgb(226, 184, 154);
   float:right;
   margin-top: 3%;
   margin-right: 4%;
@@ -41,8 +40,7 @@
 .rightpannel{
   width: 15%;
   height: 100%;
-  background: rgb(80,70,255);
-  background: linear-gradient(0deg, rgba(80,70,255,1) 0%, rgba(56,140,167,1) 32%, rgba(0,212,255,1) 100%);
+  background: #212223;
   float:right;
 }
 .selct-picture-button{
@@ -67,7 +65,7 @@
   background-color:#ffffff87;
 }
 .gamehistory_table thead tr{
-  background-color: rgb(80,70,255,1);
+  background-color: rgb(226, 184, 154);
   color: white;
   font-weight: bold;
 }
@@ -77,16 +75,15 @@
   padding: 12px 15px;
 }
 .gamehistory_table tbody tr{
-  border-bottom: 1px solid rgb(0,212,255,1);
+  border-bottom: 1px solid rgb(226, 184, 154);;
   text-align: center;
 }
-.gamehistory_table tbody tr:last-of-type{
-  border-bottom: 1px solid rgb(80,70,255,1);
-}
+
+
 
 .gamehistory_button:hover,
 .gamehistory_table tbody tr:hover{
-  color: rgb(80,70,255,1);
+  color: rgb(226, 184, 154);
 }
 .gamehistory_button{
   font-weight: bold;
