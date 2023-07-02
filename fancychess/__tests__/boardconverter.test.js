@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import {boardDictToArr} from "../lib/chessboard_converter.js";
 import {boardArrToDict} from "../lib/chessboard_converter.js";
+import {compareArrBoards} from "../lib/compare_boards.js";
+import {compareDictBoards} from "../lib/compare_boards.js";
 
 describe('Convert Boards', () => {
     it('Board Dict to Arr', () => {
@@ -16,29 +18,29 @@ describe('Convert Boards', () => {
         };
         let dict2arr_prompt = boardDictToArr(dictboard);
         let arrboard_expect = [
-            ["t","s","l","k","d","l","s","t"],
+            ["t","s","l","d","k","l","s","t"],
             ["b","b","b","b","b","b","b","b"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["B","B","B","B","B","B","B","B"],
-            ["T","S","L","K","D","L","S","T"]
+            ["T","S","L","D","K","L","S","T"]
         ];
 
-        expect(dict2arr_prompt == arrboard_expect).toBe(true);
+        expect(compareArrBoards(dict2arr_prompt, arrboard_expect)).toBe(true);
     });
 
     it('Board Arr to Dict', () => {
         let arrboard = [
-            ["t","s","l","k","d","l","s","t"],
+            ["t","s","l","d","k","l","s","t"],
             ["b","b","b","b","b","b","b","b"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["-","-","-","-","-","-","-","-"],
             ["B","B","B","B","B","B","B","B"],
-            ["T","S","L","K","D","L","S","T"]
+            ["T","S","L","D","K","L","S","T"]
         ];
         let arr2dict_prompt = boardArrToDict(arrboard);
         let dictboard_expect = {
@@ -52,6 +54,6 @@ describe('Convert Boards', () => {
             a8: "T", b8: "S", c8: "L", d8: "D", e8: "K", f8: "L", g8: "S", h8: "T",
         };
 
-        expect(arr2dict_prompt == dictboard_expect).toBe(true);
+        expect(compareDictBoards(arr2dict_prompt, dictboard_expect)).toBe(true);
     });
-  });
+});
