@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import {boardDictToArr} from "../lib/chessboard_converter.js";
 import {boardArrToDict} from "../lib/chessboard_converter.js";
 
-describe('Mechanics', () => {
+describe('Convert Boards', () => {
     it('Board Dict to Arr', () => {
         let dictboard = {
             a1: "t", b1: "s", c1: "l", d1: "d", e1: "k", f1: "l", g1: "s", h1: "t",
