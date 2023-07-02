@@ -26,9 +26,7 @@ describe('Compare Boards', () => {
             ["T","S","L","K","D","L","S","T"]
         ];
 
-        let cabPrompt = compareArrBoards(arrboard1, arrboard2);
-
-        expect(cabPrompt).toBe(true);
+        expect(compareArrBoards(arrboard1, arrboard2)).toBe(true);
     });
 
     it('Compare Dict Boards', () => {
@@ -54,8 +52,6 @@ describe('Compare Boards', () => {
             a8: "T", b8: "S", c8: "L", d8: "D", e8: "K", f8: "L", g8: "S", h8: "T",
         };
 
-        let cdbPrompt = compareDictBoards(dictboard1, dictboard2);
-
-        expect(cdbPrompt).toBe(true);
+        expect(compareDictBoards(dictboard1, dictboard2)).toBe(true);
     });
   });
