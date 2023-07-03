@@ -1,8 +1,6 @@
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
-import { PrismaClient } from '@prisma/client'
 
-let prisma
 import {
     getBoard,
     createGameboard,
@@ -23,9 +21,6 @@ export default async function handler(req, res) {
         a8: "T", b8: "S", c8: "L", d8: "D", e8: "K", f8: "L", g8: "S", h8: "T"
     };
 
-    //if (!session) {
-      //  res.status(403).json({ error: "Not signed in" })
-    //} else {
         //Wenn etwas zum Server geschickt wird --> POST
     try {
 
@@ -39,17 +34,14 @@ export default async function handler(req, res) {
                     const { ID, von, nach } = req.body
                     const newBoard = await createGameboard(ID, default_spielfeld)
                     res.status(200).json(newBoard)
+                    break;
                 }else{
                     // Update durchführen, wenn das Spielbrett schon vorhanden ist
                     const { ID, von, nach } = req.body
-
-                    //TODO: Spielbrett updaten
                     const live_board = await getBoard(ID)
-
-                    //TODO:Logik hier mit einbauen
-
                     const board = await updateBoard(ID, live_board)
                     res.status(200).json(board)
+                    break;
                 }
             }
             case 'GET':{
@@ -57,6 +49,7 @@ export default async function handler(req, res) {
                 //Gib die board id mit, dann bekommst du das board
                 const board = await getBoard(req.query.id)
                 return res.status(200).json(board)
+
             }
             default:
                 break

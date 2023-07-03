@@ -1,21 +1,14 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
-import { PrismaClient } from '@prisma/client';
 
-let prisma;
 import {
     getBoard,
     updateBoard
 } from '../../../lib/access_db';
-import jQuery from "prisma";
 import {errorToJSON} from "next/dist/server/render";
 
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions);
-
-    //if (!session) {
-    //  res.status(403).json({ error: "Not signed in" })
-    //} else {
     //Wenn etwas zum Server geschickt wird --> POST
     try {
 
@@ -24,7 +17,6 @@ export default async function handler(req, res) {
             case 'POST': {
                 try {
                     // Update durchführen, wenn das Spielbrett schon vorhanden ist
-                    //const { ID, von, nach } = req.body
                     const ID = req.body["ID"];
                     const von = req.body["von"];
                     const nach = req.body["nach"];
@@ -36,7 +28,6 @@ export default async function handler(req, res) {
                     const ankommendesBoard = live_board["board"];
                     const ankommendeID = live_board["gameID"];
 
-                    //TODO:Logik hier mit einbauen  -> Das ist nur temporär!!!
                     let temp = ankommendesBoard[von];
                     ankommendesBoard[von] = '-';
                     ankommendesBoard[nach] = temp;
@@ -88,7 +79,6 @@ export default async function handler(req, res) {
                     const ankommendesBoard = JSON.parse(results["board"]);
                     const ankommendeID = results["gameID"];
 
-                    //TODO: Implement game logic and update the board
                     let temp = ankommendesBoard[von];
                     ankommendesBoard[von] = '-';
                     ankommendesBoard[nach] = temp;

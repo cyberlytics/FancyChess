@@ -1,14 +1,12 @@
 import styles from '../styles/chess-board.module.css'
-
 import React from 'react';
 
 export default function ChessBoard() {
 
-    // Create 10 rows for our Chess-Board
+    // Erstelle 10 Reihen für unser Spielbrett
     const create_rows = () => {
         return <>
             {
-                // Loop ten times and create 10 unique rows
                 Array.from({length:10},(v,y) => {
 
                     // Unique keys for all tablerows
@@ -24,14 +22,13 @@ export default function ChessBoard() {
         </>
     }
 
-    // Function to create all cells of the tabel with unique ids and keys dynamically
+    // Erstelle jedes Feld mit einer einzigartigen ID
     const create_cells = (y) => {
         return <>
             {
-                // Loop 10 times to create 10 cells in each row
                 Array.from({length:10},(v,x) => {
     
-                    // Const variables to create diffrent div-Container in each cell
+                    // Const's variables to create diffrent div-Container in each cell
                     const key_x = number_to_label(x);
                     const key_y = invert_number(y);
                     const label = create_label(x,y);
@@ -47,7 +44,7 @@ export default function ChessBoard() {
         </>
     }
     
-    // Function for creating diffrent dif-Container in each cell
+    // Erstelle unterschiedliche Div-Container in jeder Zelle
     const create_div = (x,y,color,label) => {
 
         const key_x = x.toLowerCase();
@@ -61,7 +58,7 @@ export default function ChessBoard() {
         
     }
 
-    // Function to create the label (A,B,C, ... , 1,2,3, ...) via coordinates
+    // Erstelle die Label (A,B,C, ... , 1,2,3, ...) mithilfe den Koordinaten
     const create_label = (x,y) => {
         let label = "";
 
@@ -76,7 +73,7 @@ export default function ChessBoard() {
         return label;
     }
 
-    // Function to change coordinates into their respective color
+    // Aendere die Koordinaten zu ihrer jeweiligen Farbe -> Schwarz / Weiß
     const create_color = (x,y) => {
         if ((x === 0 || x === 9) || (y === 0 || y === 9)){
             return("label");
@@ -87,7 +84,7 @@ export default function ChessBoard() {
         }
     }
 
-    // Function to change colors into their css-classname
+    // Nun wir das noch in den Styles abgeaendert
     const create_cell_color = (color) => {
         if (color === "label"){
             return(styles.cell_l);
@@ -98,7 +95,7 @@ export default function ChessBoard() {
         }
     }
 
-    // Function for changing numbers into letters (labeling)
+    // Zahlen zu Buchstaben konvertieren
     const number_to_label = (num) => {
         switch (num){
             case 0:
@@ -123,8 +120,8 @@ export default function ChessBoard() {
                 return('I');
         }
     }
-    
-    // Function for inverting numbers (labeling)
+
+    // Zahlen zu Zahlen konvertieren..
     const invert_number = (num) => {
         switch (num){
             case 1:
@@ -146,7 +143,7 @@ export default function ChessBoard() {
         }
     }
 
-    // Main return of chess-board.js (table will be created here)
+    // Hier wird das Spielbrett erstellt
     return (
         <div className={styles.board}>
             <table className={styles.table} key = {`1`} id = {"chess-board"}>

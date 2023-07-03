@@ -2,7 +2,15 @@ import '@testing-library/jest-dom';
 import {compareArrBoards} from "../lib/compare_boards.js";
 import {compareDictBoards} from "../lib/compare_boards.js";
 
+// oben wurden benoetigte Funktionen und Bibliotheken importiert
+
+// SYNTAX DER TESTS
+// Es sind zwei jeweils identische Schachbretter definiert
+// Da es aber verschiedene Variablen sind, sind sie nicht per == Operator als gleich anzusehen
+// Es wird geprueft, ob die beiden Schachbretter laut meiner Funktion gleich sind.
+
 describe('Compare Boards', () => {
+    // Vergleiche zwei Schachbretter in Array-Form (zweidimensionales Array)
     it('Compare Array Boards', () => {
         let arrboard1 = [
             ["t","s","l","k","d","l","s","t"],
@@ -29,6 +37,7 @@ describe('Compare Boards', () => {
         expect(compareArrBoards(arrboard1, arrboard2)).toBe(true);
     });
 
+    // vergleiche zwei Schachbretter in Dictionary-Form
     it('Compare Dict Boards', () => {
         let dictboard1 = {
             a1: "t", b1: "s", c1: "l", d1: "d", e1: "k", f1: "l", g1: "s", h1: "t",

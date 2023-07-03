@@ -2,14 +2,13 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import ChessBoard from './chess-board.js';
 import Menu from './menu.js';
-import UserNotLoggedIn from './user_not_logged_in.js';
 import React, {useEffect, useState} from 'react';
 import {useSession} from "next-auth/react"
 import WinLosePopUp from './win-lose-pop-up.js'
 const axios = require('axios');
 
 
-// get Static Props async function to negate the CORS-Error and to fetch the api
+//Hinter dieser API ist das Spielbrett verborgen
 export const getStaticProps = async () => {
 
   const url = 'https://f798gy610d.execute-api.eu-central-1.amazonaws.com/startGamer/GameStart'
@@ -24,7 +23,6 @@ export const getStaticProps = async () => {
 
 export default function Home({chessboardData}) {
   const { data: session } = useSession()
-
   const [checkGame , setGameStart] = useState(false);
   const [GameID, setGameID] = useState(NaN);
   const [updateBoard, setupdateBoard] = useState(NaN);
@@ -34,10 +32,9 @@ export default function Home({chessboardData}) {
     setGameStart(!checkGame);
   };
 
-// get Static Props async function to negate the CORS-Error and to fetch the api
+// Spielbrett anfordern. Die neue URL erstellen
   const getBoard = async (url,GameID) => {
     url += "?ID="+GameID
-    //TODO: wirft einen Fehler wenn es einen NULL-Wert zurück bekommt
     const response = await fetch(url);
     const data = await response.json();
     return {
@@ -68,14 +65,6 @@ export default function Home({chessboardData}) {
     } else {
       console.log("Von: ", firstclick)
       console.log("Nach: ",temp)
-
-      //TODO:senden des Zuges - nicht ueberprueft
-
-      // Sending and receiving data in JSON format using POST method
-
-      //Ist das ein bestehendes Spiel?
-      //Ist der Einladungslink vorhanden?
-
 
       //Wurde das Board über einen Einladungslink angefordert?
       let surl = new URL(window.location.href);
@@ -121,19 +110,14 @@ export default function Home({chessboardData}) {
             const response = JSON.parse(xhr.responseText);
             await place_figures_again(response["board"]);
             //Speichere hier der lokale aktuelle Bord zwischen, um es später zu vergleichen
-
             setupdateBoard(response["board"]);
-
           } else {
             console.error('Error:', xhr.status);
           }
         }
       };
-
       xhr.send();
-
     }
-
   };
 
   const genRandomString = (length) => {
@@ -226,7 +210,6 @@ export default function Home({chessboardData}) {
 
         image.src = src;
         image.id = spielfeld[k];
-
         button.appendChild(image);
       }
       Container.appendChild(button);
@@ -235,32 +218,24 @@ export default function Home({chessboardData}) {
 
 
   const place_figures_again = async (spielfeld) => {
-
     spielfeld = JSON.parse(spielfeld);
-
     let elementExists = document.getElementById("-");
     if(elementExists != null){
-
       let table = document.getElementById('chess-board');
       let buttons = table.getElementsByTagName('button');
-
       let len_buttons = buttons.length;
-
       for(let i = len_buttons -1; i >= 0; i--){
         buttons[i].remove();
       }
     }
 
     for (let k in spielfeld){
-
       let Container = document.getElementById(k);
       let button = document.createElement('button');
       button.id = spielfeld[k];
       button.classList.add(styles.button_click);
 
-
       if (spielfeld[k] !== "-"){
-
         let image = document.createElement('img');
         let src = "../";
 
@@ -447,101 +422,9 @@ export default function Home({chessboardData}) {
   }, [GameID]);
 
 
-
-  /*
-
- //Wurde das Board abgeändert?
- function boardChanged() {
-
-   //Frage das aktuelle Spiel in der Datenbank ab
-   let xhr = new XMLHttpRequest();
-   let url = `api/game/update?ID=${GameID}`;
-   xhr.open("GET", url, false);
-   xhr.setRequestHeader("Content-Type", "application/json");
-
-   xhr.onreadystatechange = async function () {
-     if (xhr.readyState === XMLHttpRequest.DONE) {
-       if (xhr.status === 200) {
-         const response = JSON.parse(xhr.responseText);
-
-         if(!isNaN(updateBoard) && !isNaN(response["board"])){
-           console.log("Beide Board vorhanden!")
-         }
-
-         if(!isNaN(updateBoard)){
-           console.log("UpdateBoard:")
-           console.log(updateBoard)
-         }
-
-         //await place_figures_again(response["board"]);
-         //Speichere hier der lokale aktuelle Bord zwischen, um es später zu vergleichen
-         //setupdateBoard(response["board"]);
-       } else {
-         console.error('Error:', xhr.status);
-       }
-     }
-   };
-
-   xhr.send();
-
-   // Lade die Seite neu
-   //window.location.reload();
-
-
- }
-
- setInterval(boardChanged,4000);
-
- function bordo(){
-   if (!isNaN(updateBoard)){
-     console.log("ADKLASHODISAOIDh")
-   }
- }
-*/
-
-  //setInterval(bordo,200);
-
-
-/*
-  async function updateGame() {
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const GameIDLoc = urlParams.get('invitelink');
-
-    try {
-      const response = await axios.get(`api/game/update?ID=${GameIDLoc}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      // Process the response data
-
-      console.log("alteBoard");
-      console.log(updateBoard)
-
-      console.log("test")
-      if(!isNaN(updateBoard)){
-        console.log("neuesBoard: ")
-        console.log(response.data);
-
-      }
-    } catch (error) {
-      // Handle the error
-      console.error(error);
-    }
-  }
-
-
-  setInterval(updateGame,4000);
-*/
-
-
-  // End click
-  // Async Function to fetch the API with getStaticProps and place the figures
+// Beziehe das Spielbrett
   const callAPI = async () => {
 
-    // Search trough data of the json we got from the api
     const body = JSON.parse(chessboardData["body"]);
     const spielfeld = body["spielfeld"];
     gameID = body["controller"]["id"];
@@ -549,7 +432,7 @@ export default function Home({chessboardData}) {
     console.log(gameID);
     setGameID(gameID);
 
-    // Place each chess-figure
+    // Plaziere die Figuren
     await place_figures(spielfeld);
 
     startUpdateBoardInterval();
@@ -566,7 +449,6 @@ export default function Home({chessboardData}) {
       </Head>
       <div className="section" id={styles.menu}>
         <Menu/>
-
       </div>
 
       <div className="section" id={styles.game}>
@@ -574,17 +456,13 @@ export default function Home({chessboardData}) {
           <ChessBoard />
           <WinLosePopUp trigger={buttonPopup} setTrigger={setButtonPopUp}>
           </WinLosePopUp>
-
         </div>
-
       </div>
 
       <div>
 
         <div className="section" id={styles.log}>
-
-          <p id="time">00:00
-          </p>
+          <p id="time">00:00</p>
 
           <div className={styles.buttons}>
             <button id="inviteLink" onClick={()=>{createInviteLink();}} >
@@ -604,7 +482,6 @@ export default function Home({chessboardData}) {
 
             </a>
           </div>
-
         </div>
 
 
@@ -618,10 +495,7 @@ export default function Home({chessboardData}) {
         sans-serif;
       }
      `}</style>
-
-
       </div>
-
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import React from 'react';
 import styles from '../styles/win-lose-pop-up.module.css';
 
