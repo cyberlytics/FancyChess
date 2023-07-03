@@ -13,17 +13,19 @@ export default function Menu() {
         
 
         {
+          session ?
           <Link href="./profil" className={styles.link}>
             <h2>Account</h2>          
-          </Link>
+          </Link> :
+          ""
         }
 
         {
-
+          session ?
           <Link href="./settings" className={styles.link}>
             <h2>Settings</h2>
-          </Link>
-
+          </Link> :
+          ""
         }
 
         <div className={styles.lower_menu_section}>
